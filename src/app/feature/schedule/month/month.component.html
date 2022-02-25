@@ -1,0 +1,59 @@
+
+<div class="d-flex flex-column justify-content-center">
+  <div class="d-flex align-items-center">
+    <div>
+      {{ year }}/{{ month+1 }}
+    </div>
+    <div class="">
+      <button type="button" class="btn btn-link" (click)="changeMonth(month-1)"><</button>
+      <button type="button" class="btn btn-link" (click)="changeMonth(month+1)">></button>
+    </div>
+  </div>
+  <table class="" border='1'>
+    <thead>
+      <tr>
+        <th *ngFor="let header of headers"
+            class="header-week">
+          {{ header.value }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of data">
+
+        <td *ngFor="let date of week"
+            class="col-week">
+          <div class="d-flex flex-column h-100 col-week-div">
+            <div class="">
+              {{ date.moment?.format('DD') }}
+            </div>
+            <div class="d-flex flex-wrap mb-auto">
+              <ng-container *ngIf="date.streamers.length">
+                <div *ngFor="let streamer of date.streamers"
+                  class="streamer-icon position-relative"
+                  (click)="showStreamerDetail(streamer)">
+                  <img
+                    class="m-1 profile-icon"
+                    [src]="streamer.info.img"/>
+                  <span class="position-absolute start-100 translate-middle badge rounded-pill bg-light text-dark">
+                    {{ streamer.streams.length }}
+                  </span>
+                  <div class="d-flex flex-column position-absolute streamer-detail"
+                       [ngClass]="streamer.info.bgColor"
+                      [class.invisible]="!streamer.showDetail">
+                    <div>
+                      {{ streamer.info.name }}
+                    </div>
+                    <div class="streamer-detail-info" *ngFor="let stream of streamer.streams">
+                      {{ stream.title }}:{{ stream.displayTime }}
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,46 @@
+table {
+  border-collapse:collapse
+}
+
+th,
+td {
+  border:1px solid #aaa
+}
+
+.profile-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.header-week {
+  width: 100px
+}
+
+.col-week {
+  height: 1px;
+}
+
+.col-week-div {
+  min-height: 100px;
+}
+
+.streamer-icon {
+  .badge {
+    top: 7px
+  }
+}
+
+.streamer-detail {
+  z-index: 1;
+  top: 30px;
+  left: 5px;
+  border-radius: 10%;
+  min-height: 80px;
+  padding: 10px;
+
+  .streamer-detail-info {
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}

@@ -1,58 +1,10 @@
+
 <div class="container">
-  <div>
-    timezone: {{ timezone }}
+  <div class="d-flex justify-content-center">
+    <div routerLink="month">Month</div>
+    <div class="mx-1">|</div>
+    <div routerLink="week">Week</div>
   </div>
-  <table>
-    <thead>
-      <tr>
-        <ng-container *ngFor="let header of headers">
-          <ng-container *ngIf="header.key === 'streamer'; else streamDateRef">
-            <th>
-              {{ header.key }}
-            </th>
-          </ng-container>
-          <ng-template #streamDateRef>
-            <th class="stream-date-header">
-              {{ header.key }}
-              <br>
-              {{ header.value }}
-            </th>
-          </ng-template>
-        </ng-container>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let item of data">
-        <tr>
-          <ng-container *ngFor="let header of headers">
-            <ng-container *ngIf="header.key === 'streamer'; else streamRef">
-              <td class="data-streamer">
-                {{ item[header.key] }}
-              </td>
-            </ng-container>
-            <ng-template #streamRef>
-              <ng-container *ngIf="!item[header.key]; else hasStreamRef">
-                <td class="data-empty-stream"></td>
-              </ng-container>
-              <ng-template #hasStreamRef>
-                <td>
-                  <ng-container *ngFor="let stream of item[header.key]; let index=index">
-                    <a class="data-stream-link"
-                      *ngIf="stream.link; else textOnly" [href]="stream.link">
-                      {{ stream.text }}
-                    </a>
-                    <ng-template #textOnly>
-                      <div class="data-stream-text">
-                        {{ stream.text }}
-                      </div>
-                    </ng-template>
-                  </ng-container>
-                </td>
-              </ng-template>
-            </ng-template>
-          </ng-container>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+
+  <router-outlet></router-outlet>
 </div>

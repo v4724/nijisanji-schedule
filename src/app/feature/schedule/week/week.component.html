@@ -1,0 +1,124 @@
+<div class="container">
+  <div class="d-flex align-items-center week-selection-block">
+    <button type="button" class="btn btn-link " (click)="changeWeek(WeekType.Last)"
+            [class.disabled]="currWeek===WeekType.Last">
+      Last week
+    </button>
+    <div class="mx-1">|</div>
+    <button type="button" class="btn btn-link" (click)="changeWeek(WeekType.This)"
+            [class.disabled]="currWeek===WeekType.This">
+      This week
+    </button>
+    <div class="mx-1">|</div>
+    <button type="button" class="btn btn-link" (click)="changeWeek(WeekType.Next)"
+            [class.disabled]="currWeek===WeekType.Next">
+      Next week
+    </button>
+  </div>
+  <div class="d-flex toolbar">
+    <div class="d-flex align-items-center time-zone-block">
+      <div>
+        timezone:
+        <select
+          [(ngModel)]="timezone"
+          (change)="changeTimezone()">
+          <option *ngFor="let country of countries"
+                  [value]="country">
+            {{ country }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="d-flex align-items-center streamer-selection-block">
+      Streamer:
+      <select
+        [(ngModel)]="currStreamer"
+        (change)="changeStreamer()">
+        <option [value]="''">All</option>
+        <option *ngFor="let streamer of streamers"
+                [value]="streamer">
+          {{ streamer }}
+        </option>
+      </select>
+    </div>
+    <div class="d-flex align-items-center category-block">
+      <button type="button" class="btn btn-link" (click)="changeCategory(CategoryType.Streamer)"
+              [class.disabled]="categoryType===CategoryType.Streamer">
+        Streamer
+      </button>
+      <div class="mx-1">|</div>
+      <button type="button" class="btn btn-link" (click)="changeCategory(CategoryType.Guest)"
+              [class.disabled]="categoryType===CategoryType.Guest">
+        Guest
+      </button>
+      <div class="mx-1">|</div>
+      <button type="button" class="btn btn-link" (click)="changeCategory(CategoryType.All)"
+              [class.disabled]="categoryType===CategoryType.All">
+        All
+      </button>
+    </div>
+
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <ng-container *ngFor="let header of headers">
+          <ng-container *ngIf="header.key === 'streamer'; else streamDateRef">
+            <th>
+              {{ header.key }}
+            </th>
+          </ng-container>
+          <ng-template #streamDateRef>
+            <th class="stream-date-header">
+              {{ header.key }}
+              <br>
+              {{ header.value }}
+            </th>
+          </ng-template>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of data">
+        <tr>
+          <ng-container *ngFor="let header of headers">
+            <ng-container *ngIf="header.key === 'streamer'; else streamRef">
+              <td class="data-streamer">
+                <div class="d-flex flex-column align-items-center m-2">
+                  <img
+                    class="m-1 profile-icon"
+                    [src]="findStreamerInfo(item[header.key]).img"/>
+
+                    {{ item[header.key] }}
+                </div>
+              </td>
+            </ng-container>
+            <ng-template #streamRef>
+              <ng-container *ngIf="!item[header.key]; else hasStreamRef">
+                <td class="data-empty-stream"></td>
+              </ng-container>
+              <ng-template #hasStreamRef>
+                <td>
+                  <ng-container *ngFor="let stream of item[header.key]; let index=index">
+                    <div>
+                      <a class="data-stream-link"
+                         *ngIf="stream.link; else textOnly" [href]="stream.link">
+                        {{ stream.text }}
+                      </a>
+                    </div>
+                    <ng-template #textOnly>
+                      <div class="data-stream-text">
+                        {{ stream.text }}
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </td>
+              </ng-template>
+            </ng-template>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
