@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+  --undefine-primary-color: rgba(194, 194, 194, 0.67);
+  --ike-primary-color: rgba(129, 191, 245, 0.8);
+  --vox-primary-color: rgba(245, 129, 129, 0.8);
+  --luca-primary-color: rgba(241, 245, 129, 0.8);
+  --mysta-primary-color: rgba(245, 179, 129, 0.8);
+  --shu-primary-color: rgba(177, 129, 245, 0.8);
+}
+
+.undefine-primary-color {
+  color: var(--undefine-primary-color)
+}
+.ike-primary-color {
+  color: var(--ike-primary-color)
+}
+.vox-primary-color {
+  color: var(--vox-primary-color)
+}
+.luca-primary-color {
+  color: var(--luca-primary-color)
+}
+.mysta-primary-color {
+  color: var(--mysta-primary-color)
+}
+.shu-primary-color {
+  color: var(--shu-primary-color)
+}
+.ike-primary-color {
+  color: var(--ike-primary-color)
+}
+
+.undefine-primary-bg-color {
+  background-color: var(--undefine-primary-color)
+}
+.ike-primary-bg-color {
+  background-color: var(--ike-primary-color)
+}
+.vox-primary-bg-color {
+  background-color: var(--vox-primary-color)
+}
+.luca-primary-bg-color {
+  background-color: var(--luca-primary-color)
+}
+.mysta-primary-bg-color {
+  background-color: var(--mysta-primary-color)
+}
+.shu-primary-bg-color {
+  background-color: var(--shu-primary-color)
+}
