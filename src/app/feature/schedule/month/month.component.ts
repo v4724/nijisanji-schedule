@@ -144,7 +144,9 @@ export class MonthComponent implements OnInit {
         })
       }
       const cloneMoment = moment(tmpDate)
-      const isToday = cloneMoment.date() === moment().date()
+      const isToday = cloneMoment.year() === moment().year() &&
+        cloneMoment.month() === moment().month() &&
+        cloneMoment.date() === moment().date()
       weekItem.push({
         isToday: isToday,
         moment: cloneMoment,
