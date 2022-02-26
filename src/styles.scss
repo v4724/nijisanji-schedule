@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
 :root{
   --undefine-primary-color: rgba(194, 194, 194, 0.67);
   --ike-primary-color: rgba(129, 191, 245, 0.8);
@@ -6,6 +8,12 @@
   --luca-primary-color: rgba(241, 245, 129, 0.8);
   --mysta-primary-color: rgba(245, 179, 129, 0.8);
   --shu-primary-color: rgba(177, 129, 245, 0.8);
+
+  --column-title-color: #ffb8b8;
+
+  --is-today: #fefeeab8;
+  --is-streamer: #e37f7f;
+  --is-guest: #7480be;
 }
 
 .undefine-primary-color {
@@ -47,4 +55,19 @@
 }
 .shu-primary-bg-color {
   background-color: var(--shu-primary-color)
+}
+
+body {
+  font-family: auto;
+}
+.is-today {
+  background-color: var(--is-today);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.h-1 {
+  height: 1px;
 }

@@ -1,0 +1,15 @@
+<div>
+  timezone:
+  <select
+    *ngIf="selectable; else textRef"
+    [(ngModel)]="timezone"
+    (change)="changeTimezone()">
+    <option *ngFor="let country of countries"
+            [value]="country">
+      {{ country }}
+    </option>
+  </select>
+  <ng-template #textRef>
+    {{ timezone }}
+  </ng-template>
+</div>

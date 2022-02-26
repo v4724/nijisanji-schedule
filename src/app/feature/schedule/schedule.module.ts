@@ -4,7 +4,10 @@ import { ScheduleComponent } from './schedule.component';
 import { RouterModule, Routes } from '@angular/router'
 import { FormsModule } from '@angular/forms';
 import { WeekComponent } from './week/week.component';
-import { MonthComponent } from './month/month.component'
+import { MonthComponent } from './month/month.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { TimezoneComponent } from './toolbar/timezone/timezone.component';
+import { StreamTypeComponent } from './toolbar/stream-type/stream-type.component'
 
 const routes: Routes = [
   {
@@ -12,10 +15,10 @@ const routes: Routes = [
     component: ScheduleComponent,
     children: [{
       path: '',
-      component: MonthComponent
-    }, {
-      path: 'week',
       component: WeekComponent
+    }, {
+      path: 'month',
+      component: MonthComponent
     }]
   }
 ]
@@ -24,7 +27,10 @@ const routes: Routes = [
   declarations: [
     ScheduleComponent,
     WeekComponent,
-    MonthComponent
+    MonthComponent,
+    ToolbarComponent,
+    TimezoneComponent,
+    StreamTypeComponent
   ],
   imports: [
     CommonModule,

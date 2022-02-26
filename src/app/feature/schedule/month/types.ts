@@ -23,6 +23,7 @@ export interface Streamer {
 }
 
 export interface DayItem {
+  isToday: boolean,
   moment: Moment | null,
   streamers: Array<Streamer>
 }

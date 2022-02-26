@@ -5,6 +5,9 @@ import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
 import { Stream, StreamViewItem } from '../type'
 import { findStreamerInfo, setDisplayValue, streams } from '../data'
+import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { ScheduleService } from '@app/feature/schedule/schedule.service'
+import { combineLatest } from 'rxjs'
 
 
 @Component({
@@ -14,8 +17,9 @@ import { findStreamerInfo, setDisplayValue, streams } from '../data'
 })
 export class MonthComponent implements OnInit {
 
+  streams: Array<Stream> = []
+
   headers: Array<MonthHeader> = headers
-  origData: Array<Stream> = streams
   data: Array<WeekItem> = []
 
   year: number = -1
@@ -24,16 +28,23 @@ export class MonthComponent implements OnInit {
   timezone: string = ''
 
   lastStreamerDetail: Streamer | null = null
-  constructor() {
+  constructor(private scheduleService: ScheduleService,
+              private tzService: TimezoneService) {
     this.timezone = moment.tz.guess()
     const now = moment().tz(this.timezone)
     this.year = now.year()
     this.month = now.month()
 
-    this.updateSchedule(this.year, this.month)
   }
 
   ngOnInit(): void {
+    combineLatest([this.scheduleService.streams$, this.tzService.timezone$])
+      .subscribe((result) => {
+        this.streams = result[0]
+        this.timezone = result[1]
+
+        this.updateSchedule(this.year, this.month)
+      })
   }
 
   showStreamerDetail(streamer: Streamer): void {
@@ -59,7 +70,7 @@ export class MonthComponent implements OnInit {
 
   updateSchedule(year: number, month: number): void {
 
-    const streams = this.origData.filter((s) => {
+    const streams = this.streams.filter((s) => {
       const date = moment(s.timestamp).tz(this.timezone)
       const tmpYear = date.year()
       const tmpMonth = date.month()
@@ -102,6 +113,7 @@ export class MonthComponent implements OnInit {
     let firstWeekDay = tmpDate.day()
     while(firstWeekDay > 0) {
       weekItem.push({
+        isToday: false,
         moment: null,
         streamers: []
       })
@@ -132,7 +144,9 @@ export class MonthComponent implements OnInit {
         })
       }
       const cloneMoment = moment(tmpDate)
+      const isToday = cloneMoment.date() === moment().date()
       weekItem.push({
+        isToday: isToday,
         moment: cloneMoment,
         streamers
       })

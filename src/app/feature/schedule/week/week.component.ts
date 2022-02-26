@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Stream, StreamViewItem, CategoryType } from '../type'
+import { Stream, StreamViewItem } from '../type'
 import { setDisplayValue, findStreamerInfo, streams } from '../data'
 import { streamerList } from '../types/Streamer'
 import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
 import { WeekType, WeekHeader } from './types'
 import { Moment } from 'moment'
+import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { StreamType } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
+import { ScheduleService } from '@app/feature/schedule/schedule.service'
+import { combineLatest, forkJoin } from 'rxjs'
+import { combineAll } from 'rxjs/operators'
 
 @Component({
   selector: 'app-week',
@@ -14,12 +19,14 @@ import { Moment } from 'moment'
 })
 export class WeekComponent implements OnInit {
 
+  streams: Array<Stream> = []
+  timezone = ''
+
   headers: Array<WeekHeader> = []
-  origData: Array<Stream> = streams
   data: Array<any> = []
 
-  CategoryType = CategoryType
-  categoryType: CategoryType = CategoryType.Streamer
+  StreamType = StreamType
+  categoryType: StreamType = StreamType.Streamer
 
   WeekType = WeekType
   currWeek: WeekType = WeekType.This
@@ -29,40 +36,23 @@ export class WeekComponent implements OnInit {
 
   findStreamerInfo = findStreamerInfo
 
-  countries = moment.tz.names()
-
-  timezone: string = '';
-  constructor() {
-    this.timezone = moment.tz.guess()
-
-    const date = this.getDateByWeek(this.currWeek)
-    this.updateWeek(date)
-    this.updateSchedule()
-  }
-
-  get streamerStreams(): Array<Stream> {
-    return this.origData.filter((stream) => {
-      return stream.isStreamer
-    })
-  }
-
-  get guestStreams(): Array<Stream> {
-    const clone = lodash.cloneDeep(this.origData)
-    return clone
-      .filter((stream) => {
-        if (!stream.isStreamer) {
-          const guestId = stream.guestId
-          const mainStream = this.origData.find((i) => i.id === guestId)
-          if (mainStream) {
-            stream.link = mainStream.link
-            stream.timestamp = mainStream.timestamp
-          }
-        }
-        return !stream.isStreamer
-      })
+  constructor(private scheduleService: ScheduleService,
+              private tzService: TimezoneService) {
   }
 
   ngOnInit(): void {
+    combineLatest([this.scheduleService.streams$, this.tzService.timezone$])
+      .subscribe((result) => {
+        this.streams = result[0]
+        const timezone = result[1]
+
+        if (timezone !== this.timezone) {
+          this.timezone = timezone
+          this.changeTimezone()
+        } else {
+          this.updateSchedule()
+        }
+      })
   }
 
   getDateByWeek(type: WeekType): Moment{
@@ -97,35 +87,16 @@ export class WeekComponent implements OnInit {
     this.updateSchedule()
   }
 
-  changeCategory(type: CategoryType): void {
+  changeCategory(type: StreamType): void {
     this.categoryType = type
     this.updateSchedule()
-  }
-
-  getSteamsByCategory(type: CategoryType): Array<Stream> {
-    let list = []
-    switch (type) {
-      case CategoryType.Streamer:
-        list = this.streamerStreams
-        break;
-      case CategoryType.Guest:
-        list = this.guestStreams
-        break;
-      case CategoryType.All:
-        const streamer = this.streamerStreams
-        const guest = this.guestStreams
-        list = streamer.concat(guest)
-        break;
-    }
-
-    return list
   }
 
   updateWeek(nowDate: Moment): void {
     const nowDay = nowDate.day()
 
     const headerMap = new Map<number, WeekHeader>()
-    headerMap.set(0, { key: 'streamer', value: 'streamer' })
+    headerMap.set(0, { key: 'streamer', value: 'streamer', isToday: false })
 
     const setHeaders = (fromDay: number, toDay: number): void => {
       for (let day = fromDay; day < toDay; day++) {
@@ -134,8 +105,9 @@ export class WeekComponent implements OnInit {
         const timestamp = tmpDate.valueOf()
         const dateText = tmpDate.format('YYYY-MM-DD')
         const dayText = tmpDate.format('ddd')
+        const isToday = tmpDate.date() === moment().date()
 
-        headerMap.set(timestamp, { key: dateText, value: dayText })
+        headerMap.set(timestamp, { key: dateText, value: dayText, isToday: isToday })
       }
     }
     setHeaders(0, nowDay)
@@ -144,14 +116,13 @@ export class WeekComponent implements OnInit {
     const newMap = new Map([...headerMap.entries()].sort())
     this.headers = Array.from(newMap.values())
   }
-  updateSchedule(): void {
-    let streams = this.getSteamsByCategory(this.categoryType)
 
+  updateSchedule(): void {
     if (this.currStreamer) {
-      streams = streams.filter(i => i.streamer === this.currStreamer)
+      this.streams = this.streams.filter(i => i.streamer === this.currStreamer)
     }
 
-    this._updateScheduleByTZ(streams, this.timezone)
+    this._updateScheduleByTZ(this.streams, this.timezone)
   }
 
   _updateScheduleByTZ(streams: Array<Stream>, tz: string): void {
@@ -188,7 +159,8 @@ export class WeekComponent implements OnInit {
       if (week) {
         const stream = {
           text: `${viewItem.title} ${viewItem.displayTime}`,
-          link: viewItem.link
+          link: viewItem.link,
+          isStreamer: viewItem.isStreamer,
         }
         if (week[date]) {
           week[date].push(stream)

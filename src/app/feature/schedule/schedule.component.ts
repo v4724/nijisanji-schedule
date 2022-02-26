@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+enum Schedule {
+  Month='month',
+  Week=''
+}
 
 @Component({
   selector: 'app-schedule',
@@ -8,8 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScheduleComponent implements OnInit {
 
+  Schedule = Schedule
+  current: Schedule = Schedule.Week
+
   constructor() { }
 
   ngOnInit(): void {
   }
+
 }

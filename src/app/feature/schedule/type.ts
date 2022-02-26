@@ -4,7 +4,7 @@ export interface Stream {
   title: string,
   isStreamer: boolean,
   link: string,
-  isCollab: boolean,
+  isCollab: boolean | null,
   timestamp: number | null,
   guestId: number | null
 }
@@ -21,9 +21,4 @@ export interface StreamerInfo {
   bgColor: string
 }
 
-export enum CategoryType {
-  Streamer,
-  Guest,
-  All
-}
 

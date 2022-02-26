@@ -1,0 +1,17 @@
+
+<div class="d-flex align-items-center category-block">
+    <button type="button" class="btn btn-link" (click)="changeType(StreamType.Streamer)"
+            [class.disabled]="type===StreamType.Streamer">
+      Streamer
+    </button>
+    <div class="mx-1">|</div>
+    <button type="button" class="btn btn-link" (click)="changeType(StreamType.Guest)"
+            [class.disabled]="type===StreamType.Guest">
+      Guest
+    </button>
+    <div class="mx-1">|</div>
+    <button type="button" class="btn btn-link" (click)="changeType(StreamType.All)"
+            [class.disabled]="type===StreamType.All">
+      All
+    </button>
+</div>

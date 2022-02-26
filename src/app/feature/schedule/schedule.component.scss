@@ -1,0 +1,9 @@
+.schedule-lick.cursor-pointer:hover {
+  background-color: rgba(32,33,36,0.039);
+  border-radius: 25%;
+}
+
+.schedule-lick.active {
+  color: #123;
+  text-decoration: underline;
+}

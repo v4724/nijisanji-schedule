@@ -3,7 +3,8 @@ table {
 }
 
 th, td {
-  border:1px solid #aaa
+  border:1px solid #aaa;
+  padding: 0px 3px;
 }
 
 .profile-icon {
@@ -12,6 +13,38 @@ th, td {
   border-radius: 50%;
 }
 
-.stream-date-header {
-  min-width: 110px;
+.td-stream {
+  font-size: 0.6rem;
 }
+
+.stream-streamer-header,
+.stream-date-header {
+  background-color: var(--column-title-color);
+  width: 100px;
+  font-size: 1rem;
+}
+
+.streamer-name {
+  font-size: 1.2rem;
+  font-family: fantasy;
+}
+
+.data-stream-link {
+  color: var(--is-streamer);
+  cursor: pointer;
+  text-decoration: none;
+}
+.data-stream-text {
+  color: var(--is-streamer);
+}
+
+.is-guest {
+  .data-stream-link {
+    color: var(--is-guest);
+    cursor: pointer;
+  }
+  .data-stream-text {
+    color: var(--is-guest);
+  }
+}
+

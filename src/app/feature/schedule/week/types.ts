@@ -7,6 +7,7 @@ export enum WeekType {
 
 export interface WeekHeader {
   key: string,
-  value: string
+  value: string,
+  isToday: boolean,
 }
 
