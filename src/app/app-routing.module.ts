@@ -5,7 +5,7 @@ import { LayoutModule } from './layout/layout.module'
 
 const routes: Routes = [
   {
-    path: 'schedule',
+    path: '',
     component: LayoutComponent,
     children: [
       {

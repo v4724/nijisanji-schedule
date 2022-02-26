@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --base-href /nijisanji-schedule/ --deploy-url /nijisanji-schedule/",
+    "build": "ng build --base-href /nijisanji-schedule/ --deploy-url /nijisanji-schedule/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
