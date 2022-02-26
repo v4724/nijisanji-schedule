@@ -44,27 +44,27 @@ streams.push({id:37,streamer:'Shu',title:'Dread Hunger',isStreamer:true,link:'',
 streams.push({id:38,streamer:'Shu',title:'Pokemon Legends: Arceus',isStreamer:true,link:'',isCollab:false,timestamp:1645992000000.,guestId:null})
 
 export const streamers: Array<StreamerInfo> = [{
-  img: '/assets/imgs/ike_profile.jpg',
+  img: 'assets/imgs/ike_profile.jpg',
   name: Streamer.Ike,
   color: 'ike-primary-color',
   bgColor: 'ike-primary-bg-color',
 }, {
-  img: '/assets/imgs/vox_profile.jpg',
+  img: 'assets/imgs/vox_profile.jpg',
   name: Streamer.Vox,
   color: 'vox-primary-color',
   bgColor: 'vox-primary-bg-color',
 }, {
-  img: '/assets/imgs/luca_profile.jpg',
+  img: 'assets/imgs/luca_profile.jpg',
   name: Streamer.Luca,
   color: 'luca-primary-color',
   bgColor: 'luca-primary-bg-color',
 }, {
-  img: '/assets/imgs/mysta_profile.jpg',
+  img: 'assets/imgs/mysta_profile.jpg',
   name: Streamer.Mysta,
   color: 'mysta-primary-color',
   bgColor: 'mysta-primary-bg-color',
 }, {
-  img: '/assets/imgs/shu_profile.jpg',
+  img: 'assets/imgs/shu_profile.jpg',
   name: Streamer.Shu,
   color: 'shu-primary-color',
   bgColor: 'shu-primary-bg-color',
@@ -72,7 +72,7 @@ export const streamers: Array<StreamerInfo> = [{
 
 export function findStreamerInfo(streamer: Streamer | string): StreamerInfo{
   const defaultInfo = {
-    img: '/assets/imgs/undefine_profile.jpg',
+    img: 'assets/imgs/undefine_profile.jpg',
     name: streamer,
     color: 'undefine-primary-color',
     bgColor: 'undefine-primary-bg-color'

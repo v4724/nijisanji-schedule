@@ -11,11 +11,11 @@ const routes: Routes = [
     path: '',
     component: ScheduleComponent,
     children: [{
+      path: '',
+      component: MonthComponent
+    }, {
       path: 'week',
       component: WeekComponent
-    }, {
-      path: 'month',
-      component: MonthComponent
     }]
   }
 ]
