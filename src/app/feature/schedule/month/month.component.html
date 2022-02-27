@@ -30,23 +30,31 @@
             <div class="d-flex flex-wrap mb-auto">
               <ng-container *ngIf="date.streamers.length">
                 <div *ngFor="let streamer of date.streamers"
-                  class="streamer-icon position-relative mx-1"
+                  class="streamer-icon position-relative mx-1 tooltip-div"
                   (click)="showStreamerDetail(streamer)">
                   <img
                     class="m-1 profile-icon"
                     [src]="streamer.info.img"/>
-                  <span class="position-absolute start-100 translate-middle badge rounded-pill text-dark">
+                  <span class="position-absolute start-100 translate-middle badge rounded-pill"
+                        [ngClass]="streamer.info.color">
                     {{ streamer.streams.length }}
                   </span>
-                  <div class="d-flex flex-column position-absolute streamer-detail"
-                       [ngClass]="streamer.info.bgColor"
-                      [class.invisible]="!streamer.showDetail">
-                    <div>
-                      {{ streamer.info.name }}
-                    </div>
-                    <div class="streamer-detail-info" *ngFor="let stream of streamer.streams">
-                      {{ stream.title }}:{{ stream.displayTime }}
-                    </div>
+                  <div class="d-flex flex-column position-absolute streamer-detail tooltiptext"
+                       [ngClass]="streamer.info.bgColor">
+                    <ng-container *ngFor="let stream of streamer.streams">
+                      <div *ngIf="stream.link; else textRef"
+                         class="streamer-detail-info with-link"
+                         target="_blank"
+                         (click)="openUrl(stream.link)">
+                        <i class="bi bi-youtube"></i>
+                        {{ stream.title }}:{{ stream.displayTime }}
+                      </div>
+                      <ng-template #textRef>
+                        <div class="streamer-detail-info">
+                          {{ stream.title }}:{{ stream.displayTime }}
+                        </div>
+                      </ng-template>
+                    </ng-container>
                   </div>
                 </div>
               </ng-container>

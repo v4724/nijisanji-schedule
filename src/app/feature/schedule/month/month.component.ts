@@ -4,11 +4,12 @@ import { headers } from './data'
 import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
 import { Stream, StreamViewItem } from '../type'
-import { setDisplayValue, streams } from '../data'
+import { setDisplayValue } from '../data'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { combineLatest } from 'rxjs'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { openUrl } from '@app/feature/schedule/utils'
 
 
 @Component({
@@ -27,6 +28,8 @@ export class MonthComponent implements OnInit {
   month: number = -1
 
   timezone: string = ''
+
+  openUrl = openUrl
 
   lastStreamerDetail: Streamer | null = null
   constructor(private scheduleService: ScheduleService,

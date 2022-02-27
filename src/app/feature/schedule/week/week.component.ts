@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Stream, StreamViewItem } from '../type'
-import { setDisplayValue, streams } from '../data'
+import { setDisplayValue } from '../data'
 import { streamerList } from '../types/Streamer'
 import * as moment from 'moment-timezone'
 import { WeekType, WeekHeader } from './types'
@@ -10,8 +10,7 @@ import { StreamType } from '@app/feature/schedule/toolbar/stream-type/stream-typ
 import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { combineLatest, forkJoin } from 'rxjs'
-
-declare var bootstrap: any
+import { openUrl } from '@app/feature/schedule/utils'
 
 @Component({
   selector: 'app-week',
@@ -55,18 +54,13 @@ export class WeekComponent implements OnInit {
         }
       })
 
-    // Bootstrap tooltip initialization
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
   }
 
   linkToYoutube (streamer: string): void {
     const info = findStreamerInfo(streamer)
     if (info) {
       const ytLink = info.youtubeLink
-      window.open(ytLink, '_blank')
+      openUrl(ytLink)
     }
   }
 

@@ -82,3 +82,17 @@ th {
 .tooltip-div:hover .tooltiptext {
   visibility: visible;
 }
+
+.button {
+  text-decoration: underline;
+  color: #d20000;
+}
+
+.button.cursor-pointer{
+  color: #000;
+  text-decoration: none;
+  &:hover {
+    background-color: rgba(32, 33, 36, 0.039);
+    border-radius: 25%;
+  }
+}

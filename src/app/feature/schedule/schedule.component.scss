@@ -1,9 +1,13 @@
-.schedule-lick.cursor-pointer:hover {
-  background-color: rgba(32,33,36,0.039);
-  border-radius: 25%;
-}
-
-.schedule-lick.active {
-  color: #123;
+.schedule-lick {
+  color: var(--is-streamer);
   text-decoration: underline;
+
+  &.cursor-pointer{
+    color: #000;
+    text-decoration: none;
+    &:hover {
+      background-color: rgba(32, 33, 36, 0.039);
+      border-radius: 25%;
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { Stream } from '@app/feature/schedule/type'
-import { streams } from '@app/feature/schedule/data'
+import { streams } from '@app/feature/schedule/data/Stream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'

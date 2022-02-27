@@ -3,12 +3,10 @@
   <div class="d-flex justify-content-center align-items-center m-2">
     <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Week"
          [class.cursor-pointer]="current !== Schedule.Week"
-         [class.active]="current === Schedule.Week"
          (click)="current = Schedule.Week">Week</div>
     <div class="mx-1">|</div>
     <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Month"
          [class.cursor-pointer]="current !== Schedule.Month"
-         [class.active]="current === Schedule.Month"
          (click)="current = Schedule.Month">Month</div>
   </div>
 

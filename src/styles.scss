@@ -3,16 +3,21 @@
 
 :root{
   --undefine-primary-color: rgba(194, 194, 194, 0.67);
-  --ike-primary-color: rgba(129, 191, 245, 0.8);
-  --vox-primary-color: rgba(245, 129, 129, 0.8);
-  --luca-primary-color: rgba(241, 245, 129, 0.8);
+  --ike-primary-color: rgba(100, 176, 240, 0.8);
+  --vox-primary-color: rgba(223, 56, 78, 0.8);
+  --luca-primary-color: rgb(239, 228, 182, 0.8);
   --mysta-primary-color: rgba(245, 179, 129, 0.8);
-  --shu-primary-color: rgba(177, 129, 245, 0.8);
+  --shu-primary-color: rgba(112, 81, 187, 0.8);
+  --yugo-primary-color: rgba(13, 22, 109, 0.8);
+  --fulgur-primary-color: rgba(142, 2, 0, 0.8);
+  --sonny-primary-color: rgba(245, 243, 104, 0.8);
+  --alban-primary-color: rgba(189, 101, 51, 0.8);
+  --uki-primary-color: rgba(152, 60, 127, 0.8);
 
   --column-title-color: #ffb8b8;
 
-  --is-today: #fefeeab8;
-  --is-streamer: #e37f7f;
+  --is-today: #ffdedecf;
+  --is-streamer: #d20000;
   --is-guest: #7480be;
 }
 
@@ -37,24 +42,75 @@
 .ike-primary-color {
   color: var(--ike-primary-color)
 }
+.fulgur-primary-color {
+  color: var(--vox-primary-color)
+}
+.sonny-primary-color {
+  color: var(--luca-primary-color)
+}
+.alban-primary-color {
+  color: var(--mysta-primary-color)
+}
+.uki-primary-color {
+  color: var(--shu-primary-color)
+}
+.yugo-primary-color {
+  color: var(--ike-primary-color)
+}
 
 .undefine-primary-bg-color {
   background-color: var(--undefine-primary-color)
 }
 .ike-primary-bg-color {
-  background-color: var(--ike-primary-color)
+  background-color: var(--ike-primary-color);
+  color: #897e6d;
+  text-shadow: #ffffff 0em 0em 0.5em, #ffffff 0em 0em 0.8em, #ffffff 0em 0em 0.8em;
 }
 .vox-primary-bg-color {
-  background-color: var(--vox-primary-color)
+  background-color: var(--vox-primary-color);
+  //color: #82362f;
+  color: #000000;
+  text-shadow: #ffffff 0em 0em 1em, #ffffff 0em 0em 1em, #ffffff 0em 0em 1em;
 }
 .luca-primary-bg-color {
-  background-color: var(--luca-primary-color)
+  background-color: var(--luca-primary-color);
+  color: #614c38;
+  text-shadow: #c1c3b1 0.1em 0.1em 0.2em;
 }
 .mysta-primary-bg-color {
-  background-color: var(--mysta-primary-color)
+  background-color: var(--mysta-primary-color);
+  color: #ff4d27;
+  text-shadow: white 0.1em 0.1em 0.3em, white 0em 0em 0.8em, white 0em 0em 0.8em;
 }
 .shu-primary-bg-color {
-  background-color: var(--shu-primary-color)
+  background-color: var(--shu-primary-color);
+  color: #e5eaa3;
+  text-shadow: #dcaf82 0.1em 0.1em 0.2em;
+}
+.yugo-primary-bg-color {
+  background-color: var(--yugo-primary-color);
+  color: #00cdf7;
+  text-shadow: #4c5e73 0em 0em 0.8em, #ffffff 0em 0em 0.8em, #ffffff 0em 0em 0.8em;
+}
+.fulgur-primary-bg-color {
+  background-color: var(--fulgur-primary-color);
+  color: #c9ced5;
+  text-shadow: #c2c5ca 0em 0em 1em, #ffffff 0em 0em 1em;
+}
+.sonny-primary-bg-color {
+  background-color: var(--sonny-primary-color);
+  color: #867486;
+  text-shadow: #d6baaa 0.1em 0.1em 0.2em;
+}
+.alban-primary-bg-color {
+  background-color: var(--alban-primary-color);
+  color: #333333;
+  text-shadow: white 0.1em 0.1em 0.3em, white 0em 0em 0.8em, white 0em 0em 0.8em;
+}
+.uki-primary-bg-color {
+  background-color: var(--uki-primary-color);
+  color: #e9d9d5;
+  text-shadow: #e0ceca 0em 0em 0.8em;
 }
 
 body {
