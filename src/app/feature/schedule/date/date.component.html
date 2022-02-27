@@ -1,0 +1,51 @@
+<div class="d-flex flex-column justify-content-center h-100">
+  <div class="d-flex">
+    <div class="d-flex align-items-center title my-2">
+    {{ displayDateText }}
+    </div>
+    <div class="d-flex align-items-center">
+      <div class="change-date-icon cursor-pointer m-2" (click)="changeDate(-1)"><</div>
+      <div class="change-date-icon cursor-pointer m-2" (click)="resetDate()">
+        <i class="bi bi-calendar-x"></i>
+      </div>
+      <div class="change-date-icon cursor-pointer m-2" (click)="changeDate(+1)">></div>
+    </div>
+  </div>
+
+  <div class="h-1 flex-grow-1 table-block">
+    <table class="table table-bordered table-hover h-100">
+      <thead>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let row of data">
+          <tr>
+            <td>
+              <div class="d-flex h-100 align-items-center justify-content-center">
+                {{ row.hour }}
+              </div>
+            </td>
+            <td>
+              <div *ngFor="let stream of row.streams"
+                   class="d-flex d-inline-flex time-stream-block py-1 px-2"
+                   [ngClass]="stream.streamerInfo.bgColor">
+                <div *ngIf="stream.link; else textRef"
+                     class="streamer-detail-info with-link cursor-pointer align-self-center"
+                     target="_blank"
+                     (click)="openUrl(stream.link)">
+                      <i class="bi bi-youtube"></i>
+                  【{{ stream.streamer }}】{{ stream.title }}:{{ stream.displayTime }}
+                </div>
+                <ng-template #textRef>
+                  <div class="streamer-detail-info">
+                    【{{ stream.streamer }}】{{ stream.title }}:{{ stream.displayTime }}
+                  </div>
+                </ng-template>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+  </div>
+</div>

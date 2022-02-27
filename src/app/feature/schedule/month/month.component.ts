@@ -59,6 +59,13 @@ export class MonthComponent implements OnInit {
     this.lastStreamerDetail = streamer
   }
 
+  resetMonth(): void {
+    const date = moment().tz(this.timezone)
+    this.year = date.year()
+    this.month = date.month()
+    this.updateSchedule(this.year, this.month)
+  }
+
   changeMonth(month: number): void {
     if (month < 0) {
       this.year -= 1

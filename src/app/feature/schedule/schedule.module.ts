@@ -9,6 +9,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { TimezoneComponent } from './toolbar/timezone/timezone.component';
 import { StreamTypeComponent } from './toolbar/stream-type/stream-type.component';
 import { StreamGroupComponent } from './toolbar/stream-group/stream-group.component'
+import { DateComponent } from './date/date.component'
 
 const routes: Routes = [
   {
@@ -20,6 +21,9 @@ const routes: Routes = [
     }, {
       path: 'month',
       component: MonthComponent
+    }, {
+      path: 'date',
+      component: DateComponent
     }]
   }
 ]
@@ -32,7 +36,8 @@ const routes: Routes = [
     ToolbarComponent,
     TimezoneComponent,
     StreamTypeComponent,
-    StreamGroupComponent
+    StreamGroupComponent,
+    DateComponent
   ],
   imports: [
     CommonModule,

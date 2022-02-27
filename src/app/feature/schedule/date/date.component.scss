@@ -1,0 +1,30 @@
+.title {
+  font-size: 1.5rem;
+}
+
+.time-stream-block {
+  border-radius: 5px;
+  &:not(:first-child) {
+    margin-left: 0.5rem;
+  }
+}
+
+.streamer-detail-info.with-link:hover {
+  text-decoration: underline;
+}
+
+.table-block {
+  overflow-y: scroll;
+}
+
+.change-date-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.change-date-icon:hover {
+  border-radius: 50%;
+  background-color: rgba(32,33,36,0.039);
+}

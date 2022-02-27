@@ -18,6 +18,8 @@ import { openUrl } from '@app/feature/schedule/utils'
   styleUrls: ['./week.component.scss']
 })
 export class WeekComponent implements OnInit {
+  displayWeekText: string = ''
+  date: Moment = moment()
 
   streams: Array<Stream> = []
   timezone = ''
@@ -64,31 +66,17 @@ export class WeekComponent implements OnInit {
     }
   }
 
-  getDateByWeek(type: WeekType): Moment{
-    const date = moment().tz(this.timezone)
-    switch (type) {
-      case WeekType.Last:
-        date.subtract(7, 'd')
-        break;
-      case WeekType.This:
-        break;
-      case WeekType.Next:
-        date.add(7, 'd')
-        break;
-    }
-    return date
-  }
-
   changeTimezone(): void {
-    const date = this.getDateByWeek(this.currWeek)
-    this.updateWeek(date)
+    this.date = moment(this.date).tz(this.timezone)
+
+    this.updateWeek(this.date)
     this.updateSchedule()
   }
 
-  changeWeek(type: WeekType): void {
-    this.currWeek = type
-    const date = this.getDateByWeek(type)
-    this.updateWeek(date)
+  changeWeek(dateNumber: number): void {
+    this.date.add(dateNumber, 'd')
+
+    this.updateWeek(this.date)
     this.updateSchedule()
   }
 
@@ -98,6 +86,12 @@ export class WeekComponent implements OnInit {
 
   changeCategory(type: StreamType): void {
     this.categoryType = type
+    this.updateSchedule()
+  }
+
+  resetWeek(): void {
+    this.date = moment().tz(this.timezone)
+    this.updateWeek(this.date)
     this.updateSchedule()
   }
 
@@ -124,6 +118,7 @@ export class WeekComponent implements OnInit {
 
     const newMap = new Map([...headerMap.entries()].sort())
     this.headers = Array.from(newMap.values())
+    this.displayWeekText = `${this.headers[1].key} ~ ${this.headers[this.headers.length - 1].key}`
   }
 
   updateSchedule(): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 enum Schedule {
+  Date='date',
   Month='month',
   Week=''
 }

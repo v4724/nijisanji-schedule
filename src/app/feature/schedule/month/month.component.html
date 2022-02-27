@@ -1,15 +1,19 @@
 
-<div class="d-flex flex-column justify-content-center">
+<div class="d-flex flex-column justify-content-center h-100">
   <div class="d-flex align-items-center my-2">
     <div class="month-title">
-      {{ year }}/{{ month+1 }}
+      {{ year }}-{{ month+1 }}
     </div>
     <div class="d-flex">
       <div class="change-month-icon cursor-pointer m-2" (click)="changeMonth(month-1)"><</div>
+      <div class="change-month-icon cursor-pointer m-2" (click)="resetMonth()">
+        <i class="bi bi-calendar-x"></i>
+      </div>
       <div class="change-month-icon cursor-pointer m-2" (click)="changeMonth(month+1)">></div>
     </div>
   </div>
-  <table class="table table-bordered" >
+  <div class="h-1 flex-grow-1 table-block">
+    <table class="table table-bordered">
     <thead>
       <tr>
         <th *ngFor="let header of headers"
@@ -30,8 +34,8 @@
             <div class="d-flex flex-wrap mb-auto">
               <ng-container *ngIf="date.streamers.length">
                 <div *ngFor="let streamer of date.streamers"
-                  class="streamer-icon position-relative mx-1 tooltip-div"
-                  (click)="showStreamerDetail(streamer)">
+                     class="streamer-icon position-relative mx-1 tooltip-div"
+                     (click)="showStreamerDetail(streamer)">
                   <img
                     class="m-1 profile-icon"
                     [src]="streamer.info.img"/>
@@ -43,9 +47,9 @@
                        [ngClass]="streamer.info.bgColor">
                     <ng-container *ngFor="let stream of streamer.streams">
                       <div *ngIf="stream.link; else textRef"
-                         class="streamer-detail-info with-link"
-                         target="_blank"
-                         (click)="openUrl(stream.link)">
+                           class="streamer-detail-info with-link"
+                           target="_blank"
+                           (click)="openUrl(stream.link)">
                         <i class="bi bi-youtube"></i>
                         {{ stream.title }}:{{ stream.displayTime }}
                       </div>
@@ -64,4 +68,5 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </div>

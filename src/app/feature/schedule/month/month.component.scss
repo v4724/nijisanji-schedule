@@ -5,6 +5,10 @@ tbody tr td {
   }
 }
 
+.table-block {
+  overflow-y: scroll;
+}
+
 .month-title {
   font-size: 1.5rem;
 }
@@ -52,14 +56,13 @@ tbody tr td {
 .streamer-detail {
   z-index: 1;
   top: 30px;
-  left: 5px;
   border-radius: 10%;
-  min-height: 80px;
   padding: 10px 15px;
+  min-width: 200px;
 
   .streamer-detail-info {
     font-size: 0.8rem;
-    white-space: nowrap;
+    //white-space: nowrap;
   }
 }
 
@@ -79,6 +82,9 @@ tbody tr td {
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
+}
+.col-week:last-child .tooltip-div .tooltiptext{
+  right: 5%
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */

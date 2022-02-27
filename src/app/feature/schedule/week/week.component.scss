@@ -1,4 +1,20 @@
 
+.week-title {
+  font-size: 1.5rem;
+}
+
+.change-week-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.change-week-icon:hover {
+  border-radius: 50%;
+  background-color: rgba(32,33,36,0.039);
+}
+
 tbody tr td {
   &.is-today {
     background-color: var(--is-today);

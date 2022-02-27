@@ -1,6 +1,10 @@
 
 <div class="container h-100 d-flex flex-column">
   <div class="d-flex justify-content-center align-items-center m-2">
+    <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Date"
+         [class.cursor-pointer]="current !== Schedule.Date"
+         (click)="current = Schedule.Date">Date</div>
+    <div class="mx-1">|</div>
     <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Week"
          [class.cursor-pointer]="current !== Schedule.Week"
          (click)="current = Schedule.Week">Week</div>
