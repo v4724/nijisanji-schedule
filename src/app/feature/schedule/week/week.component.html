@@ -1,4 +1,4 @@
-<div class="d-flex flex-column justify-content-center">
+<div class="d-flex flex-column justify-content-center h-100">
   <div class="d-flex align-items-center week-selection-block p-1">
     <button type="button" class="btn btn-link " (click)="changeWeek(WeekType.Last)"
             [class.disabled]="currWeek===WeekType.Last">
@@ -31,70 +31,79 @@
 
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <ng-container *ngFor="let header of headers">
-          <ng-container *ngIf="header.key === 'streamer'; else streamDateRef">
-            <th class="stream-streamer-header">
-<!--              {{ header.key }}-->
-            </th>
-          </ng-container>
-          <ng-template #streamDateRef>
-            <th class="stream-date-header">
-              {{ header.key }}
-              <br>
-              {{ header.value }}
-            </th>
-          </ng-template>
-        </ng-container>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let item of data">
+  <div class="h-1 flex-grow-1 table-block">
+    <table class="table table-bordered table-hover h-100">
+      <thead>
         <tr>
           <ng-container *ngFor="let header of headers">
-            <ng-container *ngIf="header.key === 'streamer'; else streamRef">
-              <td class="data-streamer">
-                <div class="d-flex flex-column align-items-center m-2" >
-                  <img
-                    class="m-1 profile-icon"
-                    [src]="findStreamerInfo(item[header.key]).img"/>
-                  <div class="streamer-name">
-                    {{ item[header.key] }}
-                  </div>
-                </div>
-              </td>
+            <ng-container *ngIf="header.key === 'streamer'; else streamDateRef">
+              <th class="stream-streamer-header">
+  <!--              {{ header.key }}-->
+              </th>
             </ng-container>
-            <ng-template #streamRef>
-              <ng-container *ngIf="!item[header.key]; else hasStreamRef">
-                <td class="data-empty-stream" [class.is-today]="header.isToday"></td>
-              </ng-container>
-              <ng-template #hasStreamRef>
-                <td class="h-1">
-                  <div class="h-100 d-flex flex-column justify-content-center" [class.is-today]="header.isToday">
-                    <ng-container *ngFor="let stream of item[header.key]; let index=index">
-                      <div class="td-stream"
-                           [class.is-guest]="!stream.isStreamer">
-                        <a class="data-stream-link"
-                           *ngIf="stream.link; else textOnly" [href]="stream.link">
-                          <i class="bi bi-youtube"></i>
-                          {{ stream.text }}
-                        </a>
-                        <ng-template #textOnly>
-                          <div class="data-stream-text">
-                            {{ stream.text }}
-                          </div>
-                        </ng-template>
-                      </div>
-                    </ng-container>
-                  </div>
-                </td>
-              </ng-template>
+            <ng-template #streamDateRef>
+              <th class="stream-date-header">
+                {{ header.key }}
+                <br>
+                {{ header.value }}
+              </th>
             </ng-template>
           </ng-container>
         </tr>
-      </ng-container>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of data">
+          <tr>
+            <ng-container *ngFor="let header of headers">
+              <ng-container *ngIf="header.key === 'streamer'; else streamRef">
+                <td class="data-streamer">
+                  <div class="d-flex flex-column align-items-center m-2">
+                    <div class="tooltip-div">
+                      <img
+                        class="m-1 profile-icon cursor-pointer "
+                        [src]="findStreamerInfo(item[header.key])?.img"
+                        (click)="linkToYoutube(item[header.key])"/>
+                      <span class="tooltiptext tooltip-right">youtube</span>
+                    </div>
+                    <div class="streamer-name">
+                      {{ item[header.key] }}
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-template #streamRef>
+                <ng-container *ngIf="!item[header.key]; else hasStreamRef">
+                  <td class="data-empty-stream" [class.is-today]="header.isToday"></td>
+                </ng-container>
+                <ng-template #hasStreamRef>
+                  <td class="h-1" [class.is-today]="header.isToday">
+                    <div class="h-100 d-flex flex-column justify-content-center">
+                      <ng-container *ngFor="let stream of item[header.key]; let index=index">
+                        <div class="td-stream"
+                             [class.is-guest]="!stream.isStreamer">
+                          <a class="data-stream-link"
+                             *ngIf="stream.link; else textOnly"
+                             [href]="stream.link"
+                              target="_blank">
+                            <i class="bi bi-youtube"></i>
+                            {{ stream.text }}
+                          </a>
+                          <ng-template #textOnly>
+                            <div class="data-stream-text">
+                              {{ stream.text }}
+                            </div>
+                          </ng-template>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </td>
+                </ng-template>
+              </ng-template>
+            </ng-container>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+  </div>
 </div>

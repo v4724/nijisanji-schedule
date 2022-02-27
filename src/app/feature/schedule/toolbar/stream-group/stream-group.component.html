@@ -1,0 +1,11 @@
+<div>
+  Group:
+  <select
+    [(ngModel)]="group"
+    (change)="changeGroup()">
+    <option *ngFor="let group of groups"
+            [value]="group">
+      {{ group }}
+    </option>
+  </select>
+</div>

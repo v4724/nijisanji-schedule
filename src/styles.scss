@@ -60,9 +60,6 @@
 body {
   font-family: auto;
 }
-.is-today {
-  background-color: var(--is-today);
-}
 
 .cursor-pointer {
   cursor: pointer;
@@ -70,4 +67,22 @@ body {
 
 .h-1 {
   height: 1px;
+}
+
+.is-today {
+  background-color: var(--is-today);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0px 0 16px 0;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  background: rgb(219,219,219);
 }

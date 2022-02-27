@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Stream, StreamViewItem } from '../type'
-import { setDisplayValue, findStreamerInfo, streams } from '../data'
+import { setDisplayValue, streams } from '../data'
 import { streamerList } from '../types/Streamer'
 import * as moment from 'moment-timezone'
-import * as lodash from 'lodash'
 import { WeekType, WeekHeader } from './types'
 import { Moment } from 'moment'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { StreamType } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
 import { ScheduleService } from '@app/feature/schedule/schedule.service'
+import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { combineLatest, forkJoin } from 'rxjs'
-import { combineAll } from 'rxjs/operators'
+
+declare var bootstrap: any
 
 @Component({
   selector: 'app-week',
@@ -53,6 +54,20 @@ export class WeekComponent implements OnInit {
           this.updateSchedule()
         }
       })
+
+    // Bootstrap tooltip initialization
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+  }
+
+  linkToYoutube (streamer: string): void {
+    const info = findStreamerInfo(streamer)
+    if (info) {
+      const ytLink = info.youtubeLink
+      window.open(ytLink, '_blank')
+    }
   }
 
   getDateByWeek(type: WeekType): Moment{

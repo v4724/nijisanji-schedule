@@ -8,6 +8,11 @@ export enum Streamer {
   Shu='Shu',
   NijisanjiOfficial='Nijisanji Official',
   Ironmouse='Ironmouse',
+  Fulgur='Fulgur',
+  Alban='Alban',
+  Sonny='Sonny',
+  Uki='Uki',
+  Yugo='Yugo',
 }
 
 export function streamerList (): Array<string> {

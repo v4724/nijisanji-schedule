@@ -1,10 +1,14 @@
-table {
-  border-collapse:collapse
+
+tbody tr td {
+  &.is-today {
+    background-color: var(--is-today);
+  }
 }
 
-th, td {
-  border:1px solid #aaa;
-  padding: 0px 3px;
+th {
+  position: sticky;
+  top: -1px;
+  z-index: 1;
 }
 
 .profile-icon {
@@ -29,6 +33,10 @@ th, td {
   font-family: fantasy;
 }
 
+.table-block {
+  overflow-y: scroll;
+}
+
 .data-stream-link {
   color: var(--is-streamer);
   cursor: pointer;
@@ -48,3 +56,29 @@ th, td {
   }
 }
 
+/* Tooltip container */
+.tooltip-div {
+  position: relative;
+  display: inline-block;
+  //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip-div .tooltiptext {
+  visibility: hidden;
+  font-size: 0.6rem;
+  width: 70px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip-div:hover .tooltiptext {
+  visibility: visible;
+}

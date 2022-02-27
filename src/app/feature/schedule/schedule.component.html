@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container h-100 d-flex flex-column">
   <div class="d-flex justify-content-center align-items-center m-2">
     <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Week"
          [class.cursor-pointer]="current !== Schedule.Week"
@@ -14,5 +14,7 @@
 
   <app-toolbar></app-toolbar>
 
-  <router-outlet></router-outlet>
+  <div class="h-100 flex-grow-1 mb-3">
+    <router-outlet></router-outlet>
+  </div>
 </div>

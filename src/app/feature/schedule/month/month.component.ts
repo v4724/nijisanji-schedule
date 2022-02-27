@@ -4,10 +4,11 @@ import { headers } from './data'
 import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
 import { Stream, StreamViewItem } from '../type'
-import { findStreamerInfo, setDisplayValue, streams } from '../data'
+import { setDisplayValue, streams } from '../data'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { combineLatest } from 'rxjs'
+import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 
 
 @Component({
@@ -132,7 +133,8 @@ export class MonthComponent implements OnInit {
       const streamers: Array<Streamer> = []
       if (streamersMap) {
         streamersMap.forEach((value, key) => {
-          const info = findStreamerInfo(key)
+          const streamer = key
+          const info = findStreamerInfo(streamer)
           if (info) {
             const streamer: Streamer = {
               info: info,
@@ -154,6 +156,16 @@ export class MonthComponent implements OnInit {
       })
 
       tmpDate.add(1, 'd')
+    }
+
+    let lastWeekDay = tmpDate.day()
+    while(lastWeekDay < 7) {
+      weekItem.push({
+        isToday: false,
+        moment: null,
+        streamers: []
+      })
+      lastWeekDay += 1
     }
 
     this.data = data

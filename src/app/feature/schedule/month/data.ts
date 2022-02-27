@@ -10,8 +10,8 @@ export const headers: Array<MonthHeader> = [{
   key: Day.TUE,
   value: 'Tue'
 }, {
-  key: Day.WEN,
-  value: 'Wen'
+  key: Day.WED,
+  value: 'Wed'
 }, {
   key: Day.THU,
   value: 'Thu'

@@ -9,7 +9,7 @@
       <div class="change-month-icon cursor-pointer m-2" (click)="changeMonth(month+1)">></div>
     </div>
   </div>
-  <table class="" border='1'>
+  <table class="table table-bordered" >
     <thead>
       <tr>
         <th *ngFor="let header of headers"
@@ -20,11 +20,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let week of data">
-
         <td *ngFor="let date of week"
-            class="col-week h-1">
-          <div class="d-flex flex-column h-100 col-week-div"
+            class="col-week h-1"
             [class.is-today]="date.isToday">
+          <div class="d-flex flex-column h-100 col-week-div">
             <div class="">
               {{ date.moment?.format('DD') }}
             </div>

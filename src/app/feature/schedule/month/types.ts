@@ -1,11 +1,12 @@
-import { Stream, StreamerInfo, StreamViewItem } from '../type'
+import { StreamViewItem } from '../type'
 import { Moment } from 'moment-timezone'
+import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 
 export enum Day {
   SUN='0',
   MON='1',
   TUE='2',
-  WEN='3',
+  WED='3',
   THU='4',
   FRI='5',
   SAT='6'

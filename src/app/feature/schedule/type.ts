@@ -14,11 +14,4 @@ export interface StreamViewItem extends Stream {
   displayTime: string
 }
 
-export interface StreamerInfo {
-  img: string,
-  name: string,
-  color: string,
-  bgColor: string
-}
-
 

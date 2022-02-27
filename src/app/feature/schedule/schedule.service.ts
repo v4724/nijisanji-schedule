@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs'
+import { Injectable } from '@angular/core'
+import { BehaviorSubject, combineLatest } from 'rxjs'
 import { Stream } from '@app/feature/schedule/type'
-import { findLuxiemInfo, streams } from '@app/feature/schedule/data'
+import { streams } from '@app/feature/schedule/data'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
+import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
+import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
+import { find } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +20,12 @@ export class ScheduleService {
 
   streams$ = new BehaviorSubject<Array<Stream>>([])
 
-  constructor(private streamTypeService: StreamTypeService) {
+  constructor(private streamTypeService: StreamTypeService,
+              private streamGroupService: StreamGroupService) {
 
-    this.streamerStreams = this.origData.filter((stream) => {
-      return stream.isStreamer && this.isLuxiemMember(stream)
+    this.streamerStreams = this.origData.filter((stream: Stream) => {
+      const info = findStreamerInfo(stream.streamer)
+      return stream.isStreamer && info
     })
 
     const clone = lodash.cloneDeep(this.origData)
@@ -34,19 +40,18 @@ export class ScheduleService {
             stream.timestamp = mainStream.timestamp
           }
         }
-        return !stream.isStreamer && this.isLuxiemMember(stream)
+        return !stream.isStreamer && findStreamerInfo(stream.streamer)
       })
 
-    this.streamTypeService.type$.subscribe((type) => {
-      this.updateStreams(type)
-    })
+    combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
+      .subscribe((results) => {
+        const group = results[0]
+        const type = results[1]
+        this.updateStreams(group, type)
+      })
   }
 
-  isLuxiemMember(s: Stream): boolean {
-    return !!findLuxiemInfo(s.streamer)
-  }
-
-  updateStreams(type: StreamType): void {
+  updateStreams(group: StreamerGroup, type: StreamType): void {
     let list = []
     switch (type) {
       case StreamType.Streamer:
@@ -61,6 +66,15 @@ export class ScheduleService {
         list = streamer.concat(guest)
         break;
     }
+
+    list = list.filter((s) => {
+      if (group !== StreamerGroup.All) {
+        const streamer = findStreamerInfo(s.streamer)
+        console.log('s', streamer, streamer?.group, group, streamer?.group === group)
+        return streamer?.group === group
+      }
+      return true
+    })
 
     this.streams$.next(list)
   }
