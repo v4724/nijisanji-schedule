@@ -37,6 +37,7 @@ export class WeekComponent implements OnInit {
   streamers = streamerList()
 
   findStreamerInfo = findStreamerInfo
+  openUrl = openUrl
 
   constructor(private scheduleService: ScheduleService,
               private tzService: TimezoneService) {

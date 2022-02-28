@@ -36,7 +36,8 @@
                   【{{ stream.streamer }}】{{ stream.title }}:{{ stream.displayTime }}
                 </div>
                 <ng-template #textRef>
-                  <div class="streamer-detail-info">
+                  <div class="streamer-detail-info with-link cursor-pointer"
+                       (click)="openUrl(stream.streamerInfo.youtubeLink)">
                     【{{ stream.streamer }}】{{ stream.title }}:{{ stream.displayTime }}
                   </div>
                 </ng-template>
