@@ -169,7 +169,7 @@ export class MonthComponent implements OnInit {
     }
 
     let lastWeekDay = tmpDate.day()
-    while(lastWeekDay < 7) {
+    while(lastWeekDay < 7 && lastWeekDay !== 0) {
       weekItem.push({
         isToday: false,
         moment: null,
