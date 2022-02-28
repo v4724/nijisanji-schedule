@@ -185,7 +185,8 @@ export const lazuLight: Array<StreamerInfo> = [{
 }]
 
 export let streamers: Array<StreamerInfo> = []
-streamers = streamers.concat(luxiem, noctyx, ethyria, obsydia, lazuLight)
+streamers = streamers.concat(luxiem, noctyx)
+// streamers = streamers.concat(luxiem, noctyx, ethyria, obsydia, lazuLight)
 
 export function findStreamersInfoByGroup(group: StreamerGroup | string): StreamerInfo | undefined {
   return streamers.find(s => s.group === group)

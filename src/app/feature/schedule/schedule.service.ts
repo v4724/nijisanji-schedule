@@ -45,13 +45,13 @@ export class ScheduleService {
 
     combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
       .subscribe((results) => {
-        const group = results[0]
+        const groups = results[0]
         const type = results[1]
-        this.updateStreams(group, type)
+        this.updateStreams(groups, type)
       })
   }
 
-  updateStreams(group: StreamerGroup, type: StreamType): void {
+  updateStreams(groups: Array<StreamerGroup>, type: StreamType): void {
     let list = []
     switch (type) {
       case StreamType.Streamer:
@@ -68,11 +68,14 @@ export class ScheduleService {
     }
 
     list = list.filter((s) => {
-      if (group !== StreamerGroup.All) {
-        const streamer = findStreamerInfo(s.streamer)
-        return streamer?.group === group
+
+      const streamer = findStreamerInfo(s.streamer)
+      if (streamer) {
+        if (groups.indexOf(streamer.group) > -1) {
+          return true
+        }
       }
-      return true
+      return false
     })
 
     this.streams$.next(list)
