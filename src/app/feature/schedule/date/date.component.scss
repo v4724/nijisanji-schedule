@@ -4,7 +4,7 @@
 
 .time-stream-block {
   border-radius: 5px;
-  &:first-child {
+  &:not(:last-child) {
     margin-right: 0.5rem;
   }
 }

@@ -96,8 +96,96 @@ export const noctyx: Array<StreamerInfo> = [{
   bgColor: 'yugo-primary-bg-color',
 }]
 
+export const ethyria: Array<StreamerInfo> = [{
+  img: 'assets/imgs/enna_profile.jpg',
+  name: Streamer.Enna,
+  group: StreamerGroup.Ethyria,
+  youtubeLink: 'https://www.youtube.com/channel/UCR6qhsLpn62WVxCBK1dkLow',
+  twitterLink: '',
+  color: 'enna-primary-color',
+  bgColor: 'enna-primary-bg-color',
+}, {
+  img: 'assets/imgs/nina_profile.jpg',
+  name: Streamer.Nina,
+  group: StreamerGroup.Ethyria,
+  youtubeLink: 'https://www.youtube.com/channel/UCkieJGn3pgJikVW8gmMXE2w',
+  twitterLink: '',
+  color: 'nina-primary-color',
+  bgColor: 'nina-primary-bg-color',
+}, {
+  img: 'assets/imgs/millie_profile.jpg',
+  name: Streamer.Millie,
+  group: StreamerGroup.Ethyria,
+  youtubeLink: 'https://www.youtube.com/channel/UC47rNmkDcNgbOcM-2BwzJTQ',
+  twitterLink: '',
+  color: 'millie-primary-color',
+  bgColor: 'millie-primary-bg-color',
+}, {
+  img: 'assets/imgs/reimu_profile.jpg',
+  name: Streamer.Reimu,
+  group: StreamerGroup.Ethyria,
+  youtubeLink: 'https://www.youtube.com/channel/UCBURM8S4LH7cRZ0Clea9RDA',
+  twitterLink: '',
+  color: 'reimu-primary-color',
+  bgColor: 'reimu-primary-bg-color',
+}]
+
+
+export const obsydia: Array<StreamerInfo> = [{
+  img: 'assets/imgs/selen_profile.jpg',
+  name: Streamer.Selen,
+  group: StreamerGroup.OBSYDIA,
+  youtubeLink: 'https://www.youtube.com/channel/UCV1xUwfM2v2oBtT3JNvic3w',
+  twitterLink: '',
+  color: 'selen-primary-color',
+  bgColor: 'selen-primary-bg-color',
+}, {
+  img: 'assets/imgs/rosemi_profile.jpg',
+  name: Streamer.Rosemi,
+  group: StreamerGroup.OBSYDIA,
+  youtubeLink: 'https://www.youtube.com/channel/UC4WvIIAo89_AzGUh1AZ6Dkg',
+  twitterLink: '',
+  color: 'rosemi-primary-color',
+  bgColor: 'rosemi-primary-bg-color',
+}, {
+  img: 'assets/imgs/petra_profile.jpg',
+  name: Streamer.Petra,
+  group: StreamerGroup.OBSYDIA,
+  youtubeLink: 'https://www.youtube.com/channel/UCgA2jKRkqpY_8eysPUs8sjw',
+  twitterLink: '',
+  color: 'petra-primary-color',
+  bgColor: 'petra-primary-bg-color',
+}]
+
+
+export const lazuLight: Array<StreamerInfo> = [{
+  img: 'assets/imgs/elira_profile.jpg',
+  name: Streamer.Elira,
+  group: StreamerGroup.LazuLight,
+  youtubeLink: 'https://www.youtube.com/channel/UCIeSUTOTkF9Hs7q3SGcO-Ow',
+  twitterLink: '',
+  color: 'elira-primary-color',
+  bgColor: 'elira-primary-bg-color',
+}, {
+  img: 'assets/imgs/pomu_profile.jpg',
+  name: Streamer.Pomu,
+  group: StreamerGroup.LazuLight,
+  youtubeLink: 'https://www.youtube.com/channel/UCP4nMSTdwU1KqYWu3UH5DHQ',
+  twitterLink: '',
+  color: 'pomu-primary-color',
+  bgColor: 'pomu-primary-bg-color',
+}, {
+  img: 'assets/imgs/finana_profile.jpg',
+  name: Streamer.Finana,
+  group: StreamerGroup.LazuLight,
+  youtubeLink: 'https://www.youtube.com/channel/UCu-J8uIXuLZh16gG-cT1naw',
+  twitterLink: '',
+  color: 'finana-primary-color',
+  bgColor: 'finana-primary-bg-color',
+}]
+
 export let streamers: Array<StreamerInfo> = []
-streamers = streamers.concat(luxiem, noctyx)
+streamers = streamers.concat(luxiem, noctyx, ethyria, obsydia, lazuLight)
 
 export function findStreamersInfoByGroup(group: StreamerGroup | string): StreamerInfo | undefined {
   return streamers.find(s => s.group === group)

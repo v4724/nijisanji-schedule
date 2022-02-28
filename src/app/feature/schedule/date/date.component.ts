@@ -62,7 +62,7 @@ export class DateComponent implements OnInit {
     this.hours = new Map<string, Array<StreamViewItem>>()
     for (let hour = 0; hour < 24; hour++) {
       const tmpHour = hour.toString().padStart(2, '0')
-      this.hours.set(`${tmpHour}:00`,[])
+      this.hours.set(`${tmpHour}`,[])
     }
   }
 
@@ -81,7 +81,7 @@ export class DateComponent implements OnInit {
         return
       }
 
-      const timeKey = viewItem.displayTime
+      const timeKey = viewItem.displayTime.split(':')[0].padStart(2, '0')
       const streamsValue = this.hours.get(timeKey)
       if (streamsValue) {
         streamsValue.push(viewItem)

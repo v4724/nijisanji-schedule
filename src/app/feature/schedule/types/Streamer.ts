@@ -13,6 +13,16 @@ export enum Streamer {
   Sonny='Sonny',
   Uki='Uki',
   Yugo='Yugo',
+  Elira='Elira',
+  Pomu='Pomu',
+  Finana='Finana',
+  Selen='Selen',
+  Rosemi='Rosemi',
+  Petra='Petra',
+  Enna='Enna',
+  Nina='Nina',
+  Millie='Millie',
+  Reimu='Reimu',
 }
 
 export function streamerList (): Array<string> {
