@@ -21,14 +21,22 @@ export class ScheduleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const url = this.router.url
+    this.updateCurrentByUrl(url)
+
     // 上下頁不會觸發狀態改變
     this.router.events
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
-          const url = e.url.substr(1, e.url.length)
-          this.current = url as Schedule
+          this.updateCurrentByUrl(e.url)
         }
       })
   }
 
+  updateCurrentByUrl(url: string): void {
+    if (url.startsWith('/')) {
+      url = url.substr(1, url.length)
+    }
+    this.current = url as Schedule
+  }
 }
