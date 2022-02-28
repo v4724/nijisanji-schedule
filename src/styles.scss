@@ -8,11 +8,23 @@
   --luca-primary-color: rgb(239, 228, 182, 0.8);
   --mysta-primary-color: rgba(245, 179, 129, 0.8);
   --shu-primary-color: rgba(112, 81, 187, 0.8);
+
   --yugo-primary-color: rgba(13, 22, 109, 0.8);
   --fulgur-primary-color: rgba(142, 2, 0, 0.8);
   --sonny-primary-color: rgba(245, 243, 104, 0.8);
   --alban-primary-color: rgba(189, 101, 51, 0.8);
   --uki-primary-color: rgba(152, 60, 127, 0.8);
+
+  --nina-primary-color: rgba(131, 128, 163, 0.8);
+  --reimu-primary-color: rgba(137, 123, 122, 0.8);
+  --selen-primary-color: rgba(163, 147, 233, 0.8);
+  --pomu-primary-color: rgba(248, 220, 185, 0.8);
+  --elira-primary-color: rgba(159, 191, 207, 0.8);
+  --petra-primary-color: rgba(222, 172, 124, 0.79);
+  --millie-primary-color: rgba(240, 201, 186, 0.8);
+  --rosemi-primary-color: rgba(237, 188, 198, 0.8);
+  --enna-primary-color: rgba(217, 191, 184, 0.8);
+  --finana-primary-color: rgba(131, 201, 179, 0.8);
 
   --column-title-color: #ffb8b8;
 
@@ -21,15 +33,6 @@
   --is-guest: #7480be;
 }
 
-.pomu-primary-color,
-.elira-primary-color,
-.nina-primary-color,
-.millie-primary-color,
-.finana-primary-color,
-.enna-primary-color,
-.reimu-primary-color,
-.petra-primary-color,
-.selen-primary-color,
 .undefine-primary-color {
   color: var(--undefine-primary-color)
 }
@@ -52,30 +55,52 @@
   color: var(--ike-primary-color)
 }
 .fulgur-primary-color {
-  color: var(--vox-primary-color)
+  color: var(--fulgur-primary-color)
 }
 .sonny-primary-color {
-  color: var(--luca-primary-color)
+  color: var(--sonny-primary-color)
 }
 .alban-primary-color {
-  color: var(--mysta-primary-color)
+  color: var(--alban-primary-color)
 }
 .uki-primary-color {
-  color: var(--shu-primary-color)
+  color: var(--uki-primary-color)
 }
 .yugo-primary-color {
-  color: var(--ike-primary-color)
+  color: var(--yugo-primary-color)
 }
 
-.pomu-primary-bg-color,
-.elira-primary-bg-color,
-.nina-primary-bg-color,
-.millie-primary-bg-color,
-.finana-primary-bg-color,
-.enna-primary-bg-color,
-.reimu-primary-bg-color,
-.petra-primary-bg-color,
-.selen-primary-bg-color,
+.nina-primary-color {
+  color: var(--nina-primary-color)
+}
+.reimu-primary-color {
+  color: var(--reimu-primary-color)
+}
+.petra-primary-color {
+  color: var(--petra-primary-color)
+}
+.elira-primary-color {
+  color: var(--elira-primary-color)
+}
+.millie-primary-color {
+  color: var(--millie-primary-color)
+}
+.enna-primary-color {
+  color: var(--enna-primary-color)
+}
+.selen-primary-color {
+  color: var(--selen-primary-color)
+}
+.pomu-primary-color {
+  color: var(--pomu-primary-color)
+}
+.finana-primary-color {
+  color: var(--finana-primary-color)
+}
+.rosemi-primary-color {
+  color: var(--rosemi-primary-color)
+}
+
 .undefine-primary-bg-color {
   background-color: var(--undefine-primary-color)
 }
@@ -129,6 +154,57 @@
   background-color: var(--uki-primary-color);
   color: #e9d9d5;
   text-shadow: #e0ceca 0em 0em 0.8em;
+}
+
+.nina-primary-bg-color {
+  background-color: var(--nina-primary-color);
+  color: #924c49;
+  text-shadow: #ffffff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.reimu-primary-bg-color {
+  background-color: var(--reimu-primary-color);
+  color: #6b314b;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.pomu-primary-bg-color {
+  background-color: var(--pomu-primary-color);
+  color: #823035;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.elira-primary-bg-color {
+  background-color: var(--elira-primary-color);
+  color: #835bbb;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.millie-primary-bg-color {
+  background-color: var(--millie-primary-color);
+  color: #52abbf;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.finana-primary-bg-color {
+  background-color: var(--finana-primary-color);
+  color: #926470;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.enna-primary-bg-color {
+  background-color: var(--enna-primary-color);
+  color: #82685c;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.rosemi-primary-bg-color {
+  background-color: var(--rosemi-primary-color);
+  color: #a4344e;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.petra-primary-bg-color {
+  background-color: var(--petra-primary-color);
+  color: #7f7081;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+.selen-primary-bg-color {
+  background-color: var(--selen-primary-color);
+  color: #7d387a;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
 }
 
 body {

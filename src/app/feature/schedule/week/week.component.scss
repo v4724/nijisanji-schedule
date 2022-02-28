@@ -57,6 +57,9 @@ th {
   color: var(--is-streamer);
   cursor: pointer;
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 .data-stream-text {
   color: var(--is-streamer);
