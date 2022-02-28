@@ -92,18 +92,19 @@
                   <td class="h-1" [class.is-today]="header.isToday">
                     <div class="h-100 d-flex flex-column justify-content-center">
                       <ng-container *ngFor="let stream of item[header.key]; let index=index">
-                        <div class="td-stream"
-                             [class.is-guest]="!stream.isStreamer">
+                        <div class="td-stream">
                           <a class="data-stream-link"
                              *ngIf="stream.link; else textOnly"
                              [href]="stream.link"
                               target="_blank">
                             <i class="bi bi-youtube"></i>
+                            <i *ngIf="stream.isStreamer" class="bi bi-journal-text"></i>
                             {{ stream.text }}
                           </a>
                           <ng-template #textOnly>
                             <div class="data-stream-link"
                                 (click)="openUrl(stream.streamerInfo.youtubeLink)">
+                              <i *ngIf="stream.isStreamer" class="bi bi-journal-text"></i>
                               {{ stream.text }}
                             </div>
                           </ng-template>
@@ -118,6 +119,15 @@
         </ng-container>
       </tbody>
     </table>
-
+    <div class="d-flex">
+      <div>
+        <i class="bi bi-youtube"></i>
+        stream's link (link to their youtube without it)
+      </div>
+      <div class="ms-3">
+        <i class="bi bi-journal-text"></i>
+        on their schedule (on other's schedule without it)
+      </div>
+    </div>
   </div>
 </div>

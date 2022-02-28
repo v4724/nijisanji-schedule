@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, combineLatest } from 'rxjs'
-import { Stream } from '@app/feature/schedule/type'
+import { Stream, StreamViewItem } from '@app/feature/schedule/type'
 import { streams } from '@app/feature/schedule/data/Stream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
@@ -15,32 +15,44 @@ import { find } from 'rxjs/operators'
 export class ScheduleService {
 
   origData: Array<Stream> = streams
-  streamerStreams: Array<Stream> = [];
-  guestStreams: Array<Stream> = [];
+  allStreams: Array<StreamViewItem> = [];
+  streamerStreams: Array<StreamViewItem> = [];
+  guestStreams: Array<StreamViewItem> = [];
 
   streams$ = new BehaviorSubject<Array<Stream>>([])
 
   constructor(private streamTypeService: StreamTypeService,
               private streamGroupService: StreamGroupService) {
 
-    this.streamerStreams = this.origData.filter((stream: Stream) => {
+    this.allStreams = lodash.cloneDeep(this.origData) as Array<StreamViewItem>
+    this.allStreams.forEach((stream) => {
+      const s = stream as StreamViewItem
       const info = findStreamerInfo(stream.streamer)
-      return stream.isStreamer && info
+      if (info) {
+        s.streamerInfo = info
+      }
+
+      if (!s.isStreamer) {
+        const guestId = s.guestId
+        const mainStream = this.origData.find((i) => i.id === guestId)
+        if (mainStream) {
+          s.title = mainStream.title
+          s.link = mainStream.link
+          s.timestamp = mainStream.timestamp
+        }
+      }
+    })
+    this.allStreams.sort((s1, s2) => {
+      return Number(s1.timestamp) - Number(s2.timestamp)
     })
 
-    const clone = lodash.cloneDeep(this.origData)
-    this.guestStreams = clone
+    this.streamerStreams = this.allStreams.filter((stream: StreamViewItem) => {
+      return stream.isStreamer && stream.streamerInfo
+    })
+
+    this.guestStreams = this.allStreams
       .filter((stream) => {
-        if (!stream.isStreamer) {
-          const guestId = stream.guestId
-          const mainStream = this.origData.find((i) => i.id === guestId)
-          if (mainStream) {
-            stream.title = mainStream.title
-            stream.link = mainStream.link
-            stream.timestamp = mainStream.timestamp
-          }
-        }
-        return !stream.isStreamer && findStreamerInfo(stream.streamer)
+        return !stream.isStreamer && stream.streamerInfo
       })
 
     combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
@@ -61,9 +73,7 @@ export class ScheduleService {
         list = this.guestStreams
         break;
       case StreamType.All:
-        const streamer = this.streamerStreams
-        const guest = this.guestStreams
-        list = streamer.concat(guest)
+        list = this.allStreams
         break;
     }
 

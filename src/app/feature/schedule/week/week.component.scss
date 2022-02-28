@@ -54,24 +54,11 @@ th {
 }
 
 .data-stream-link {
-  color: var(--is-streamer);
+  color: #3a3c3d;
   cursor: pointer;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
-  }
-}
-.data-stream-text {
-  color: var(--is-streamer);
-}
-
-.is-guest {
-  .data-stream-link {
-    color: var(--is-guest);
-    cursor: pointer;
-  }
-  .data-stream-text {
-    color: var(--is-guest);
   }
 }
 
