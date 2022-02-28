@@ -70,7 +70,6 @@ export class ScheduleService {
     list = list.filter((s) => {
       if (group !== StreamerGroup.All) {
         const streamer = findStreamerInfo(s.streamer)
-        console.log('s', streamer, streamer?.group, group, streamer?.group === group)
         return streamer?.group === group
       }
       return true

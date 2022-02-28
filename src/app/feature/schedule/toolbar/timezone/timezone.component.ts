@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, isDevMode, OnInit } from '@angular/core'
 import * as moment from 'moment-timezone'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 
@@ -10,13 +10,16 @@ import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone
 export class TimezoneComponent implements OnInit {
 
   @Input() selectable: boolean = false;
+  testTimezone: boolean = false
 
   countries = moment.tz.names()
 
   timezone: string = '';
 
   constructor(private tzService: TimezoneService) {
-
+    if (isDevMode()) {
+      this.testTimezone = true
+    }
   }
 
   ngOnInit(): void {

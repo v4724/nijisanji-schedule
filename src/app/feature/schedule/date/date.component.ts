@@ -71,7 +71,7 @@ export class DateComponent implements OnInit {
 
     const currDate = moment(this.date).tz(tz)
     this.displayDateText = currDate.format("YYYY-MM-DD")
-    console.log('update', this.displayDateText)
+
     streams.forEach((stream) => {
       const viewItem = stream as StreamViewItem
       setDisplayValue(viewItem, tz)

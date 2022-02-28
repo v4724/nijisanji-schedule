@@ -5,6 +5,12 @@ tbody tr td {
   }
 }
 
+th {
+  position: sticky;
+  top: -1px;
+  z-index: 1;
+}
+
 .table-block {
   overflow-y: scroll;
 }

@@ -26,7 +26,7 @@
             </td>
             <td>
               <div *ngFor="let stream of row.streams"
-                   class="d-flex d-inline-flex time-stream-block py-1 px-2"
+                   class="d-flex d-inline-flex time-stream-block my-1 py-1 px-2"
                    [ngClass]="stream.streamerInfo.bgColor">
                 <div *ngIf="stream.link; else textRef"
                      class="streamer-detail-info with-link cursor-pointer align-self-center"

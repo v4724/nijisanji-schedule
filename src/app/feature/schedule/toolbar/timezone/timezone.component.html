@@ -1,7 +1,7 @@
 <div>
   Timezone:
   <select
-    *ngIf="selectable; else textRef"
+    *ngIf="selectable || testTimezone; else textRef"
     [(ngModel)]="timezone"
     (change)="changeTimezone()">
     <option *ngFor="let country of countries"
