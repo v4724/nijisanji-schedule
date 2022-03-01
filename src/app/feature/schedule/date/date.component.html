@@ -48,13 +48,13 @@
                      (click)="openUrl(stream.link)">
                       <i class="bi bi-youtube"></i>
                       <i *ngIf="stream.isStreamer" class="bi bi-journal-text ms-1"></i>
-                  【{{ stream.streamer }}】{{ stream.title }}:{{ stream.displayTime }}
+                  【{{ stream.streamer }}】{{ stream.title }} {{ stream.displayTime }}
                 </div>
                 <ng-template #textRef>
                   <div class="streamer-detail-info with-link cursor-pointer"
                        (click)="openUrl(stream.streamerInfo.youtubeLink)">
                     <i *ngIf="stream.isStreamer" class="bi bi-journal-text"></i>
-                    【{{ stream.streamer }}】{{ stream.title }}:{{ stream.displayTime }}
+                    【{{ stream.streamer }}】{{ stream.title }} {{ stream.displayTime }}
                   </div>
                 </ng-template>
               </div>
