@@ -1,0 +1,59 @@
+
+.week-checked-schedule {
+  top: 0.3rem;
+  right: 0px;
+  z-index: 2;
+}
+
+.checked-list-block {
+  display: none;
+  right: 0px;
+  top: 1rem;
+  z-index: 1;
+  width: auto;
+  border: 1px rgba(0, 0, 0, 0.53) solid;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px #6a69695c;
+  background-color: #ffffff;
+
+  min-width: 290px;
+  max-width: 300px;
+}
+
+.streamer-icon-block {
+  margin-bottom: 0.25rem;
+  &:not(:last-child){
+    margin-right: 0.5rem;
+  }
+}
+
+
+.week-checked-schedule:hover {
+  .checked-list-block {
+    display: flex;
+  }
+}
+
+.streamer-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+
+.change-week-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.disabled {
+    display: none;
+  }
+}
+
+.change-week-icon:hover {
+  border-radius: 50%;
+  background-color: rgba(32,33,36,0.039);
+}

@@ -1,6 +1,6 @@
 
 import { StreamerGroup } from './StreamerGroups'
-import { Streamer } from '@app/feature/schedule/types/Streamer'
+import { Streamer } from '@app/feature/schedule/data/Streamer'
 
 export interface StreamerInfo {
   img: string,

@@ -1,4 +1,4 @@
-import { Streamer } from '@app/feature/schedule/types/Streamer'
+import { Streamer } from '@app/feature/schedule/data/Streamer'
 import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 
 export interface Stream {

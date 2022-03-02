@@ -9,7 +9,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { TimezoneComponent } from './toolbar/timezone/timezone.component';
 import { StreamTypeComponent } from './toolbar/stream-type/stream-type.component';
 import { StreamGroupComponent } from './toolbar/stream-group/stream-group.component'
-import { DateComponent } from './date/date.component'
+import { DateComponent } from './date/date.component';
+import { ScheduleCheckedListComponent } from './schedule-checked-list/schedule-checked-list.component'
 
 const routes: Routes = [
   {
@@ -37,7 +38,8 @@ const routes: Routes = [
     TimezoneComponent,
     StreamTypeComponent,
     StreamGroupComponent,
-    DateComponent
+    DateComponent,
+    ScheduleCheckedListComponent
   ],
   imports: [
     CommonModule,

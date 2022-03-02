@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Stream, StreamViewItem } from '../type'
 import { setDisplayValue } from '../data'
-import { streamerList } from '../types/Streamer'
+import { streamerList } from '../data/Streamer'
 import * as moment from 'moment-timezone'
 import { WeekType, WeekHeader } from './types'
 import { Moment } from 'moment'

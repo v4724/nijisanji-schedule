@@ -14,11 +14,10 @@ enum Schedule {
 })
 export class ScheduleComponent implements OnInit {
 
+
   Schedule = Schedule
   current: Schedule = Schedule.Week
-
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     const url = this.router.url
