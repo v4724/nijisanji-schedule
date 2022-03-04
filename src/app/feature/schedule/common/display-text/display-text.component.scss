@@ -1,4 +1,8 @@
 
+.streamer-detail-info .bi:not(:last-child) {
+  margin-right: 0.1rem;
+}
+
 .streamer-detail-info:hover {
   text-decoration: underline;
 }

@@ -168,6 +168,10 @@ export class WeekComponent implements OnInit {
           link: viewItem.link,
           isStreamer: viewItem.isStreamer,
           streamerInfo: viewItem.streamerInfo,
+          isCanceled: viewItem.isCanceled,
+          isModified: viewItem.isModified,
+          isNew: viewItem.isNew,
+          isUncertain: viewItem.isUncertain,
         }
         if (week[date]) {
           week[date].push(stream)
