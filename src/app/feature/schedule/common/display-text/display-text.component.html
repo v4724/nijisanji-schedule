@@ -2,8 +2,8 @@
 <div class="streamer-detail-info d-flex cursor-pointer align-self-center"
      (click)="openStreamLink()">
   <i *ngIf="stream?.link"class="bi bi-youtube"></i>
-  <i *ngIf="stream?.isStreamer" class="bi bi-journal-text"></i>
   <i *ngIf="stream?.isUncertain" class="bi bi-exclamation-circle-fill"></i>
+  <i *ngIf="stream?.isStreamer && !stream?.isNew" class="bi bi-journal-text"></i>
   <i *ngIf="stream?.isModified" class="bi bi-wrench-adjustable"></i>
   <i *ngIf="stream?.isNew" class="bi bi-plus-circle-fill"></i>
   <div class="ms-1" [class.canceled]="stream?.isCanceled">
