@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import * as moment from 'moment-timezone'
-import { Stream, StreamViewItem } from '@app/feature/schedule/type'
+import { StreamViewItem } from '@app/feature/schedule/type'
 import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { combineLatest } from 'rxjs'
 import * as lodash from 'lodash'
 import { setDisplayValue } from '@app/feature/schedule/data'
 import { openUrl } from '@app/feature/schedule/utils'
 import { Moment } from 'moment-timezone'
+import { Stream } from '@app/feature/schedule/data/Stream'
 
 @Component({
   selector: 'app-date',

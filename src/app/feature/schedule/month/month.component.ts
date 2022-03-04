@@ -3,13 +3,14 @@ import { Day, MonthHeader, Streamer, WeekItem } from './types'
 import { headers } from './data'
 import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
-import { Stream, StreamViewItem } from '../type'
+import { StreamViewItem } from '../type'
 import { setDisplayValue } from '../data'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { combineLatest } from 'rxjs'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { openUrl } from '@app/feature/schedule/utils'
+import { Stream } from '@app/feature/schedule/data/Stream'
 
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Stream, StreamViewItem } from '../type'
+import { StreamViewItem } from '../type'
 import { setDisplayValue } from '../data'
 import { streamerList } from '../data/Streamer'
 import * as moment from 'moment-timezone'
@@ -11,6 +11,7 @@ import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { combineLatest, forkJoin } from 'rxjs'
 import { openUrl } from '@app/feature/schedule/utils'
+import { Stream } from '@app/feature/schedule/data/Stream'
 
 @Component({
   selector: 'app-week',

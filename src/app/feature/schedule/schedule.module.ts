@@ -10,7 +10,10 @@ import { TimezoneComponent } from './toolbar/timezone/timezone.component';
 import { StreamTypeComponent } from './toolbar/stream-type/stream-type.component';
 import { StreamGroupComponent } from './toolbar/stream-group/stream-group.component'
 import { DateComponent } from './date/date.component';
-import { ScheduleCheckedListComponent } from './schedule-checked-list/schedule-checked-list.component'
+import { ScheduleCheckedListComponent } from './schedule-checked-list/schedule-checked-list.component';
+import { StreamGroupButtonComponent } from './toolbar/stream-group-button/stream-group-button.component';
+import { DisplayTextComponent } from './common/display-text/display-text.component';
+import { IconDefComponent } from './common/icon-def/icon-def.component'
 
 const routes: Routes = [
   {
@@ -39,7 +42,10 @@ const routes: Routes = [
     StreamTypeComponent,
     StreamGroupComponent,
     DateComponent,
-    ScheduleCheckedListComponent
+    ScheduleCheckedListComponent,
+    StreamGroupButtonComponent,
+    DisplayTextComponent,
+    IconDefComponent
   ],
   imports: [
     CommonModule,

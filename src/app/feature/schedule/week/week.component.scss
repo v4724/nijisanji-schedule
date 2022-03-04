@@ -53,15 +53,6 @@ th {
   overflow-y: scroll;
 }
 
-.data-stream-link {
-  color: #3a3c3d;
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 /* Tooltip container */
 .tooltip-div {
   position: relative;

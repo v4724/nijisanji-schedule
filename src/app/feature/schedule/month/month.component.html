@@ -46,20 +46,9 @@
                   <div class="d-flex flex-column position-absolute streamer-detail tooltiptext"
                        [ngClass]="streamer.info.bgColor">
                     <ng-container *ngFor="let stream of streamer.streams">
-                      <div *ngIf="stream.link; else textRef"
-                           class="streamer-detail-info with-link"
-                           (click)="openUrl(stream.link)">
-                        <i class="bi bi-youtube"></i>
-                        <i *ngIf="stream.isStreamer" class="bi bi-journal-text"></i>
+                      <app-display-text [stream]="stream">
                         {{ stream.title }} {{ stream.displayTime }}
-                      </div>
-                      <ng-template #textRef>
-                        <div class="streamer-detail-info with-link"
-                             (click)="openUrl(stream.streamerInfo.youtubeLink)">
-                          <i *ngIf="stream.isStreamer" class="bi bi-journal-text"></i>
-                          {{ stream.title }} {{ stream.displayTime }}
-                        </div>
-                      </ng-template>
+                      </app-display-text>
                     </ng-container>
                   </div>
                 </div>

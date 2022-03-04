@@ -1,4 +1,4 @@
-import { Stream, StreamViewItem } from './type'
+import { StreamViewItem } from './type'
 import * as moment from 'moment-timezone'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 

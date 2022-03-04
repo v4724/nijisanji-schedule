@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core'
-import { BehaviorSubject, combineLatest } from 'rxjs'
-import { Stream, StreamViewItem } from '@app/feature/schedule/type'
-import { streams } from '@app/feature/schedule/data/Stream'
+import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
+import { StreamViewItem } from '@app/feature/schedule/type'
+import { Stream } from '@app/feature/schedule/data/Stream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
-import { find } from 'rxjs/operators'
+import * as XLSX from 'xlsx'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduleService {
 
-  origData: Array<Stream> = streams
+  origData$ = new Subject<Array<Stream>>();
   allStreams: Array<StreamViewItem> = [];
   streamerStreams: Array<StreamViewItem> = [];
   guestStreams: Array<StreamViewItem> = [];
@@ -24,7 +24,14 @@ export class ScheduleService {
   constructor(private streamTypeService: StreamTypeService,
               private streamGroupService: StreamGroupService) {
 
-    this.allStreams = lodash.cloneDeep(this.origData) as Array<StreamViewItem>
+    this.readFromExcel()
+    this.origData$.subscribe((data) => {
+      this.initData(data)
+    })
+  }
+
+  initData(origData: Array<Stream>): void {
+    this.allStreams = lodash.cloneDeep(origData) as Array<StreamViewItem>
     this.allStreams.forEach((stream) => {
       const s = stream as StreamViewItem
       const info = findStreamerInfo(stream.streamer)
@@ -34,11 +41,15 @@ export class ScheduleService {
 
       if (!s.isStreamer) {
         const guestId = s.guestId
-        const mainStream = this.origData.find((i) => i.id === guestId)
+        const mainStream = origData.find((i) => i.id === guestId)
         if (mainStream) {
           s.title = mainStream.title
           s.link = mainStream.link
           s.timestamp = mainStream.timestamp
+          s.isCanceled = mainStream.isCanceled
+          s.isUncertain = mainStream.isUncertain
+          s.isNew = mainStream.isNew
+          s.isModified = mainStream.isModified
         }
       }
     })
@@ -51,9 +62,9 @@ export class ScheduleService {
     })
 
     this.guestStreams = this.allStreams
-      .filter((stream) => {
-        return !stream.isStreamer && stream.streamerInfo
-      })
+                            .filter((stream) => {
+                              return !stream.isStreamer && stream.streamerInfo
+                            })
 
     combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
       .subscribe((results) => {
@@ -61,6 +72,21 @@ export class ScheduleService {
         const type = results[1]
         this.updateStreams(groups, type)
       })
+  }
+
+  readFromExcel (): void {
+    const url = 'assets/docs/Schedule.xlsx';
+    fetch(url).then((result) => {
+      result.arrayBuffer()
+        .then((data) => {
+
+          /* data is an ArrayBuffer */
+          const workbook = XLSX.read(data);
+          workbook.SheetNames.forEach((sheetName: string) => {
+            this.origData$.next(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]))
+          })
+        })
+    });
   }
 
   updateStreams(groups: Array<StreamerGroup>, type: StreamType): void {
