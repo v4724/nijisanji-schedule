@@ -1,15 +1,17 @@
 <div class="d-flex flex-column justify-content-center h-100">
-  <div class="d-flex align-items-center my-2">
+  <div class="d-flex align-items-center py-2">
     <div class="week-title">
       {{ displayWeekText }}
     </div>
-    <div class="d-flex">
+    <div class="d-flex change-week-block">
       <div class="change-week-icon cursor-pointer m-2" (click)="changeWeek(-7)"><</div>
       <div class="change-week-icon cursor-pointer m-2" (click)="resetWeek()">
         <i class="bi bi-calendar-x"></i>
       </div>
       <div class="change-week-icon cursor-pointer m-2" (click)="changeWeek(+7)">></div>
     </div>
+
+    <app-mascot-img src="assets/imgs/ike/anyway.jpg"></app-mascot-img>
 
   </div>
 <!--  <div class="d-flex align-items-center week-selection-block p-1">-->
@@ -28,21 +30,6 @@
 <!--      Next week-->
 <!--    </div>-->
 <!--  </div>-->
-  <div class="d-flex toolbar">
-<!--    <div class="d-flex align-items-center streamer-selection-block">-->
-<!--      Streamer:-->
-<!--      <select-->
-<!--        [(ngModel)]="currStreamer"-->
-<!--        (change)="changeStreamer()">-->
-<!--        <option [value]="''">All</option>-->
-<!--        <option *ngFor="let streamer of streamers"-->
-<!--                [value]="streamer">-->
-<!--          {{ streamer }}-->
-<!--        </option>-->
-<!--      </select>-->
-<!--    </div>-->
-
-  </div>
 
   <div class="h-1 flex-grow-1 table-block">
     <table class="table table-bordered table-hover h-100">

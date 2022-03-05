@@ -14,7 +14,8 @@ import { ScheduleCheckedListComponent } from './schedule-checked-list/schedule-c
 import { DisplayTextComponent } from './common/display-text/display-text.component';
 import { IconDefComponent } from './common/icon-def/icon-def.component';
 import { SelectionComponent } from './toolbar/stream-group/selection/selection.component';
-import { ButtonComponent } from './toolbar/stream-group/button/button.component'
+import { ButtonComponent } from './toolbar/stream-group/button/button.component';
+import { MascotImgComponent } from './common/mascot-img/mascot-img.component'
 
 const routes: Routes = [
   {
@@ -47,7 +48,8 @@ const routes: Routes = [
     DisplayTextComponent,
     IconDefComponent,
     SelectionComponent,
-    ButtonComponent
+    ButtonComponent,
+    MascotImgComponent
   ],
   imports: [
     CommonModule,
