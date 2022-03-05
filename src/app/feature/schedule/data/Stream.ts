@@ -3,7 +3,7 @@ export interface Stream {
   id: number,
   streamer: string,
   title: string,
-  isStreamer: boolean,
+  onSchedule: boolean,
   link: string,
   isCollab: boolean | null,
   timestamp: number | null,

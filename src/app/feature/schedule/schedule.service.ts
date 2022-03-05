@@ -39,7 +39,7 @@ export class ScheduleService {
         s.streamerInfo = info
       }
 
-      if (!s.isStreamer) {
+      if (!s.onSchedule) {
         const guestId = s.guestId
         const mainStream = origData.find((i) => i.id === guestId)
         if (mainStream) {
@@ -56,15 +56,6 @@ export class ScheduleService {
     this.allStreams.sort((s1, s2) => {
       return Number(s1.timestamp) - Number(s2.timestamp)
     })
-
-    this.streamerStreams = this.allStreams.filter((stream: StreamViewItem) => {
-      return stream.isStreamer && stream.streamerInfo
-    })
-
-    this.guestStreams = this.allStreams
-                            .filter((stream) => {
-                              return !stream.isStreamer && stream.streamerInfo
-                            })
 
     combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
       .subscribe((results) => {

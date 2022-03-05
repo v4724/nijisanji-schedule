@@ -166,7 +166,7 @@ export class WeekComponent implements OnInit {
         const stream = {
           text: `${viewItem.title} ${viewItem.displayTime}`,
           link: viewItem.link,
-          isStreamer: viewItem.isStreamer,
+          onSchedule: viewItem.onSchedule,
           streamerInfo: viewItem.streamerInfo,
           isCanceled: viewItem.isCanceled,
           isModified: viewItem.isModified,

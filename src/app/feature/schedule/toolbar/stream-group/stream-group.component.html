@@ -1,34 +1,7 @@
 <div class="d-flex flex-wrap align-items-center">
   Group:
-<!--  <select-->
-<!--    [(ngModel)]="group"-->
-<!--    multiple="multiple"-->
-<!--    (change)="changeGroup()">-->
-<!--    <option *ngFor="let group of groups"-->
-<!--            [value]="group">-->
-<!--      <div (click)="toggleSelection(group)">-->
-<!--      </div>-->
-<!--    </option>-->
-<!--  </select>-->
-
-  <div class="multiselect d-flex align-items-center"
-       [class.active]="expanded"
-       (click)="showCheckboxes($event)">
-    <div class="selectBox w-100 d-flex align-items-center" >
-      <div class="multiselect-feature position-relative"
-           #multiSelectRef>
-        {{ selectedGroups.join(',') }}
-        <i class="position-absolute bi bi-chevron-down"></i>
-      </div>
-      <div id="checkboxes" class="overSelect p-2" #overSelectRef>
-        <div *ngFor="let group of groups"
-             class="cursor-pointer"
-             (click)="toggleSelection(group)" >
-          <input class="over-select-checkbox" type="checkbox" [checked]="group.checked"/>
-          {{ group.text }}
-        </div>
-      </div>
-    </div>
-
-  </div>
+  <app-button
+    [groups]="groups"
+    (toggleSelection)="toggleSelection($event)"
+  ></app-button>
 </div>

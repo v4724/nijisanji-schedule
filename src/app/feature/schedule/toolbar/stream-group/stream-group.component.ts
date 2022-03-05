@@ -1,48 +1,23 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { groups, StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
+import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
+
+export interface Group {
+  text: string,
+  checked: boolean
+}
 
 @Component({
   selector: 'app-stream-group',
   templateUrl: './stream-group.component.html',
   styleUrls: ['./stream-group.component.scss']
 })
-export class StreamGroupComponent implements OnInit, AfterViewInit {
-  @ViewChild('multiSelectRef') multiSelectRef!: ElementRef
-  @ViewChild('overSelectRef') overSelectRef!: ElementRef
+export class StreamGroupComponent implements OnInit {
 
-  groups: Array<{ text: string, checked: boolean}> = []
+  groups: Array<Group> = []
   selectedGroups: Array<StreamerGroup> = []
 
-  expanded: boolean = false;
-
-  constructor(private streamGroupService: StreamGroupService) {
-    document.addEventListener('click', (event) => {
-      const target = event.target as HTMLElement
-      if (!this.targetIsMultiSelect(target) && !this.targetIsMultiSelectDiv(target)) {
-        this.expanded = false
-      }
-    });
-  }
-
-  targetIsMultiSelectDiv(target: HTMLElement): boolean {
-    return target === this.multiSelectRef.nativeElement
-  }
-
-  targetIsMultiSelect(target: HTMLElement): boolean {
-    const children = this.overSelectRef.nativeElement.children
-
-    for (let child of children) {
-      if (child === target) {
-        return true
-      }
-    }
-    if (target.classList.contains('over-select-checkbox')) {
-      return true
-    }
-
-    return false
-  }
+  constructor(private streamGroupService: StreamGroupService) { }
 
   ngOnInit(): void {
     this.selectedGroups = this.streamGroupService.group$.getValue()
@@ -55,20 +30,7 @@ export class StreamGroupComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit(): void {
-  }
-
-  showCheckboxes($e: Event): void {
-
-    const target = $e.target as HTMLElement
-    if (this.targetIsMultiSelect(target)) {
-      return
-    }
-
-    this.expanded = !this.expanded
-  }
-
-  toggleSelection(group: { text: string, checked: boolean }): void {
+  toggleSelection(group: Group): void {
     group.checked = !group.checked
     const index = this.selectedGroups.indexOf(group.text as StreamerGroup)
 

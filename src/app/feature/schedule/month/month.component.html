@@ -14,60 +14,51 @@
   </div>
   <div class="h-1 flex-grow-1 table-block">
     <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th *ngFor="let header of headers"
-            class="header-week">
-          {{ header.value }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let week of data">
-        <td *ngFor="let date of week"
-            class="col-week h-1"
-            [class.is-today]="date.isToday">
-          <div class="d-flex flex-column h-100 col-week-div">
-            <div class="">
-              {{ date.moment?.format('DD') }}
-            </div>
-            <div class="d-flex flex-wrap mb-auto">
-              <ng-container *ngIf="date.streamers.length">
-                <div *ngFor="let streamer of date.streamers"
-                     class="streamer-icon position-relative mx-1 tooltip-div"
-                     (click)="showStreamerDetail(streamer)">
-                  <img
-                    class="m-1 profile-icon"
-                    [src]="streamer.info.img"/>
-                  <span class="position-absolute start-100 translate-middle badge rounded-pill"
-                        [ngClass]="streamer.info.color">
-                    {{ streamer.streams.length }}
-                  </span>
-                  <div class="d-flex flex-column position-absolute streamer-detail tooltiptext"
-                       [ngClass]="streamer.info.bgColor">
-                    <ng-container *ngFor="let stream of streamer.streams">
-                      <app-display-text [stream]="stream">
-                        {{ stream.title }} {{ stream.displayTime }}
-                      </app-display-text>
-                    </ng-container>
+      <thead>
+        <tr>
+          <th *ngFor="let header of headers"
+              class="header-week">
+            {{ header.value }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of data">
+          <td *ngFor="let date of week"
+              class="col-week h-1"
+              [class.is-today]="date.isToday">
+            <div class="d-flex flex-column h-100 col-week-div">
+              <div class="">
+                {{ date.moment?.format('DD') }}
+              </div>
+              <div class="d-flex flex-wrap mb-auto">
+                <ng-container *ngIf="date.streamers.length">
+                  <div *ngFor="let streamer of date.streamers"
+                       class="streamer-icon position-relative mx-1 tooltip-div"
+                       (click)="showStreamerDetail(streamer)">
+                    <img
+                      class="m-1 profile-icon"
+                      [src]="streamer.info.img"/>
+                    <span class="position-absolute start-100 translate-middle badge rounded-pill"
+                          [ngClass]="streamer.info.color">
+                      {{ streamer.streams.length }}
+                    </span>
+                    <div class="d-flex flex-column position-absolute streamer-detail tooltiptext"
+                         [ngClass]="streamer.info.bgColor">
+                      <ng-container *ngFor="let stream of streamer.streams">
+                        <app-display-text [stream]="stream">
+                          {{ stream.title }} {{ stream.displayTime }}
+                        </app-display-text>
+                      </ng-container>
+                    </div>
                   </div>
-                </div>
-              </ng-container>
+                </ng-container>
+              </div>
             </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-    <div class="d-flex">
-      <div>
-        <i class="bi bi-youtube"></i>
-        stream's link (link to their youtube without it)
-      </div>
-      <div class="ms-3">
-        <i class="bi bi-journal-text"></i>
-        on their schedule (on other's schedule without it)
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <app-icon-def></app-icon-def>
   </div>
 </div>

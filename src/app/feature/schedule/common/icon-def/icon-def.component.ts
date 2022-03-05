@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 
 @Component({
   selector: 'app-icon-def',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IconDefComponent implements OnInit {
 
+  @Input() canCollapse: boolean = false
+
+  expand: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {
+    if (this.canCollapse) {
+      this.expand = false
+    }
   }
 
 }

@@ -1,3 +1,6 @@
-.toolbar-block .item:not(last-child) {
-  padding-right: 1rem;
+.toolbar-block .item{
+  padding-bottom: 0.25rem;
+  &:not(last-child) {
+    padding-right: 1rem;
+  }
 }

@@ -1,0 +1,48 @@
+.multiselect {
+  width: auto;
+  min-width: 120px;
+  border: 1px #6a6969 solid;
+  height: 1.25rem;
+
+  .overSelect {
+    display: none;
+  }
+  &:hover {
+    border: 1px #232323 solid;
+  }
+  &.active {
+    .overSelect {
+      display: block;
+    }
+  }
+}
+
+.multiselect-feature {
+  border: #000;
+  height: 2rem;
+  padding: 0.25rem 1rem 0.25rem 0.25rem;
+  width: 100%;
+
+  i {
+    right: 0px;
+  }
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
+
+.overSelect {
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+  border: 1px #dadada solid;
+  z-index: 2;
+  top: 1.75rem;
+}
+

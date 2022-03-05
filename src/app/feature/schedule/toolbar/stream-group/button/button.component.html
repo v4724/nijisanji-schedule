@@ -1,0 +1,6 @@
+<button *ngFor="let group of groups"
+        class="stream-group-button"
+        [class.active]="group.checked"
+        (click)="toggleSelection.emit(group)" >
+  {{ group.text }}
+</button>

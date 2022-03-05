@@ -1,4 +1,28 @@
 
-.icon-def-block .icon-def:not(:last-child){
-  margin-right: 0.75rem;
+.icon-def-block {
+
+  .expand-icon {
+    right: 0px;
+    display: none;
+  }
+
+  .icon-def:not(:last-child){
+    margin-right: 0.75rem;
+  }
+
+}
+
+@media (max-width: 769px) {
+  .icon-def-block {
+
+    .expand-icon {
+      display: flex;
+    }
+
+    .collapse {
+      height: 1.25rem;
+      overflow: hidden;
+    }
+  }
+
 }
