@@ -3,7 +3,7 @@ import { StreamViewItem } from '../type'
 import { setDisplayValue } from '../data'
 import { streamerList } from '../data/Streamer'
 import * as moment from 'moment-timezone'
-import { WeekType, WeekHeader } from './types'
+import { WeekHeader } from './types'
 import { Moment } from 'moment'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { StreamType } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
@@ -30,9 +30,6 @@ export class WeekComponent implements OnInit {
 
   StreamType = StreamType
   categoryType: StreamType = StreamType.Streamer
-
-  WeekType = WeekType
-  currWeek: WeekType = WeekType.This
 
   currStreamer: string = ''
   streamers = streamerList()

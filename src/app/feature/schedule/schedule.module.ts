@@ -15,7 +15,8 @@ import { DisplayTextComponent } from './common/display-text/display-text.compone
 import { IconDefComponent } from './common/icon-def/icon-def.component';
 import { SelectionComponent } from './toolbar/stream-group/selection/selection.component';
 import { ButtonComponent } from './toolbar/stream-group/button/button.component';
-import { MascotImgComponent } from './common/mascot-img/mascot-img.component'
+import { MascotImgComponent } from './common/mascot-img/mascot-img.component';
+import { DateWeekComponent } from './date-week/date-week.component'
 
 const routes: Routes = [
   {
@@ -30,6 +31,9 @@ const routes: Routes = [
     }, {
       path: 'date',
       component: DateComponent
+    }, {
+      path: 'date-week',
+      component: DateWeekComponent
     }]
   }
 ]
@@ -49,7 +53,8 @@ const routes: Routes = [
     IconDefComponent,
     SelectionComponent,
     ButtonComponent,
-    MascotImgComponent
+    MascotImgComponent,
+    DateWeekComponent
   ],
   imports: [
     CommonModule,

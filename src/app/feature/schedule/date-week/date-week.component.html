@@ -1,1 +1,82 @@
-<p>date-week works!</p>
+<!--<div class="d-flex flex-column justify-content-center h-100">-->
+<!--  <div class="d-flex align-items-center py-2">-->
+<!--    <div class="week-title">-->
+<!--      {{ displayWeekText }}-->
+<!--    </div>-->
+<!--    <div class="d-flex change-week-block">-->
+<!--      <div class="change-week-icon cursor-pointer m-2" (click)="changeWeek(-7)"><</div>-->
+<!--      <div class="change-week-icon cursor-pointer m-2" (click)="resetWeek()">-->
+<!--        <i class="bi bi-calendar-x"></i>-->
+<!--      </div>-->
+<!--      <div class="change-week-icon cursor-pointer m-2" (click)="changeWeek(+7)">></div>-->
+<!--    </div>-->
+
+<!--    <app-mascot-img src="assets/imgs/ike/anyway.jpg"></app-mascot-img>-->
+
+<!--  </div>-->
+
+<!--  <div class="h-1 flex-grow-1 table-block">-->
+<!--    <table class="table table-bordered table-hover h-100">-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <ng-container *ngFor="let header of headers">-->
+<!--            <ng-container *ngIf="header.key === 'timeKey'; else streamDateRef">-->
+<!--              <th class="stream-streamer-header">-->
+<!--  &lt;!&ndash;              {{ header.key }}&ndash;&gt;-->
+<!--              </th>-->
+<!--            </ng-container>-->
+<!--            <ng-template #streamDateRef>-->
+<!--              <th class="stream-date-header">-->
+<!--                {{ header.key }}-->
+<!--                <br>-->
+<!--                {{ header.value }}-->
+<!--              </th>-->
+<!--            </ng-template>-->
+<!--          </ng-container>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        <ng-container *ngFor="let item of data">-->
+<!--          <tr>-->
+<!--            <ng-container *ngFor="let header of headers">-->
+<!--              <ng-container *ngIf="header.key === 'streamer'; else streamRef">-->
+<!--                <td class="data-streamer">-->
+<!--                  <div class="d-flex flex-column align-items-center h-100 justify-content-center m-2">-->
+<!--                    <div class="tooltip-div">-->
+<!--                      <img-->
+<!--                        class="m-1 profile-icon cursor-pointer "-->
+<!--                        [src]="findStreamerInfo(item[header.key])?.img"-->
+<!--                        (click)="linkToYoutube(item[header.key])"/>-->
+<!--                      <span class="tooltiptext tooltip-right">youtube</span>-->
+<!--                    </div>-->
+<!--                    <div class="streamer-name">-->
+<!--                      {{ item[header.key] }}-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--              </ng-container>-->
+<!--              <ng-template #streamRef>-->
+<!--                <ng-container *ngIf="!item[header.key]; else hasStreamRef">-->
+<!--                  <td class="data-empty-stream" [class.is-today]="header.isToday"></td>-->
+<!--                </ng-container>-->
+<!--                <ng-template #hasStreamRef>-->
+<!--                  <td class="h-1" [class.is-today]="header.isToday">-->
+<!--                    <div class="h-100 d-flex flex-column justify-content-center">-->
+<!--                      <ng-container *ngFor="let stream of item[header.key]; let index=index">-->
+<!--                        <app-display-text class="td-stream"-->
+<!--                                          [stream]="stream">-->
+<!--                            {{ stream.text }}-->
+<!--                        </app-display-text>-->
+<!--                      </ng-container>-->
+<!--                    </div>-->
+<!--                  </td>-->
+<!--                </ng-template>-->
+<!--              </ng-template>-->
+<!--            </ng-container>-->
+<!--          </tr>-->
+<!--        </ng-container>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--    <app-icon-def></app-icon-def>-->
+<!--  </div>-->
+<!--</div>-->
