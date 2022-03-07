@@ -8,6 +8,7 @@ import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 import * as XLSX from 'xlsx'
+import * as moment from 'moment-timezone'
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +67,7 @@ export class ScheduleService {
   }
 
   readFromExcel (): void {
-    const url = 'assets/docs/Schedule.xlsx';
+    const url = `assets/docs/Schedule.xlsx?${moment()}`;
     fetch(url).then((result) => {
       result.arrayBuffer()
         .then((data) => {
