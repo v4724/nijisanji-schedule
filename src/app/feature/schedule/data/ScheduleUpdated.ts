@@ -2,7 +2,7 @@ import { Streamer } from '@app/feature/schedule/data/Streamer'
 
 export const scheduleUpdatedMap = new Map<Streamer, boolean>()
 
-scheduleUpdatedMap.set(Streamer.Shu, false)
+scheduleUpdatedMap.set(Streamer.Shu, true)
 scheduleUpdatedMap.set(Streamer.Vox, true)
 scheduleUpdatedMap.set(Streamer.Mysta, true)
 scheduleUpdatedMap.set(Streamer.Ike, true)
@@ -19,11 +19,11 @@ scheduleUpdatedMap.set(Streamer.Enna, false)
 scheduleUpdatedMap.set(Streamer.Nina, false)
 scheduleUpdatedMap.set(Streamer.Finana, true)
 scheduleUpdatedMap.set(Streamer.Selen, true)
-scheduleUpdatedMap.set(Streamer.Petra, false)
+scheduleUpdatedMap.set(Streamer.Petra, true)
 scheduleUpdatedMap.set(Streamer.Pomu, true)
 scheduleUpdatedMap.set(Streamer.Reimu, true)
 scheduleUpdatedMap.set(Streamer.Millie, true)
-scheduleUpdatedMap.set(Streamer.Rosemi, false)
+scheduleUpdatedMap.set(Streamer.Rosemi, true)
 
 export const nextScheduleUpdatedMap = new Map<Streamer, boolean>()
 nextScheduleUpdatedMap.set(Streamer.Shu, false)
