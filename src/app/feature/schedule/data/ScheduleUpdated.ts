@@ -15,7 +15,7 @@ scheduleUpdatedMap.set(Streamer.Yugo, true)
 scheduleUpdatedMap.set(Streamer.Sonny, true)
 
 scheduleUpdatedMap.set(Streamer.Elira, true)
-scheduleUpdatedMap.set(Streamer.Enna, false)
+scheduleUpdatedMap.set(Streamer.Enna, true)
 scheduleUpdatedMap.set(Streamer.Nina, false)
 scheduleUpdatedMap.set(Streamer.Finana, true)
 scheduleUpdatedMap.set(Streamer.Selen, true)
