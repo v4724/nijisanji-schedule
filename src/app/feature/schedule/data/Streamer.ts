@@ -6,8 +6,6 @@ export enum Streamer {
   Luca='Luca',
   Mysta='Mysta',
   Shu='Shu',
-  NijisanjiOfficial='Nijisanji Official',
-  Ironmouse='Ironmouse',
   Fulgur='Fulgur',
   Alban='Alban',
   Sonny='Sonny',
@@ -23,6 +21,9 @@ export enum Streamer {
   Nina='Nina',
   Millie='Millie',
   Reimu='Reimu',
+  NijisanjiOfficial='Nijisanji Official',
+  Ironmouse='Ironmouse',
+  Mika='Mika',
 }
 
 export function streamerList (): Array<string> {

@@ -40,17 +40,18 @@ export class ScheduleService {
         s.streamerInfo = info
       }
 
-      if (!s.onSchedule) {
+      if (!s.onSchedule && s.guestId) {
         const guestId = s.guestId
         const mainStream = origData.find((i) => i.id === guestId)
         if (mainStream) {
-          s.title = mainStream.title
+          s.title = `(ref:${mainStream.streamer}) ${mainStream.title}`
           s.link = mainStream.link
           s.timestamp = mainStream.timestamp
           s.isCanceled = mainStream.isCanceled
           s.isUncertain = mainStream.isUncertain
           s.isNew = mainStream.isNew
           s.isModified = mainStream.isModified
+          s.mainStreamer = mainStream.streamer
         }
       }
     })

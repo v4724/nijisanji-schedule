@@ -3,10 +3,13 @@ import { StreamerInfo, streamers } from '@app/feature/schedule/data/StreamerInfo
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
-import { nextScheduleUpdatedMap, scheduleUpdatedMap } from '@app/feature/schedule/data/ScheduleUpdated'
 import { Streamer } from '@app/feature/schedule/data/Streamer'
 import { Moment } from 'moment-timezone'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
+import { ScheduleService } from '@app/feature/schedule/schedule.service'
+import { combineLatest } from 'rxjs'
+import { Stream } from '@app/feature/schedule/data/Stream'
+import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 
 interface ScheduleUpdatedInfo extends StreamerInfo {
   scheduleUpdated: boolean
@@ -23,33 +26,61 @@ export class ScheduleCheckedListComponent implements OnInit {
   date: Moment = moment()
   displayWeekText: string = ''
 
-  currWeek: boolean = true
+  newScheduleId: number = 355
+  newScheduleDay: number = 13
 
-  updateInfo: Map<Streamer, boolean> = scheduleUpdatedMap
+  updateInfo: Map<Streamer, boolean> = new Map<Streamer, boolean>()
 
-  constructor(private groupService: StreamGroupService) {
-    this.updateWeekText(this.date)
+  constructor(private groupService: StreamGroupService,
+              private scheduleService: ScheduleService,
+              private tzService: TimezoneService ) {
+
+    streamers.forEach((info) => {
+      this.updateInfo.set(info.name, false)
+    })
+
   }
 
   ngOnInit(): void {
-    this.groupService.group$.subscribe((groups) => {
-      this.selectedGroups = groups
-      this.updateSchedule(groups)
+    this.tzService.timezone$.subscribe((tz) => {
+      const tzMoment = moment().tz(tz).set('D', this.newScheduleDay)
+      this.updateWeekText(tzMoment)
     })
+
+    combineLatest([this.scheduleService.streams$, this.groupService.group$])
+      .subscribe((results) => {
+        const streams = results[0]
+        const groups = results[1]
+
+        this.updateInfoScheduled(streams)
+
+        this.selectedGroups = groups
+        this.updateSchedule(groups)
+      })
   }
 
-  changeWeek(number: number): void {
-    if (number > 0) {
-      this.currWeek = false
-      this.updateInfo = nextScheduleUpdatedMap
-    } else {
-      this.currWeek = true
-      this.updateInfo = scheduleUpdatedMap
-    }
-    this.updateSchedule(this.selectedGroups)
+  isNewSchedule(id: number | null): boolean {
+    return !!id && id >= this.newScheduleId
+  }
 
-    this.date = moment(this.date).add(number, 'd')
-    this.updateWeekText(this.date)
+  updateInfoScheduled(streams: Array<Stream>): void {
+    this.updateInfo.forEach((v, k) => {
+      this.updateInfo.set(k, false)
+    })
+
+    streams.forEach((stream: Stream) => {
+      const id = stream.id
+      const guestId = stream.guestId
+      const name = stream.streamer as Streamer
+      const onSchedule = stream.onSchedule
+
+      if ((this.isNewSchedule(id) || this.isNewSchedule(guestId) )
+          && onSchedule
+          && this.updateInfo.has(name)) {
+        this.updateInfo.set(name, true)
+      }
+
+    })
   }
 
   updateSchedule(groups: Array<StreamerGroup>): void {

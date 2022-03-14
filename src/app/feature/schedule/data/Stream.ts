@@ -12,5 +12,6 @@ export interface Stream {
   isModified: boolean | null,
   isCanceled: boolean | null,
   isNew: boolean | null,
+  mainStreamer: string | null
 }
 
