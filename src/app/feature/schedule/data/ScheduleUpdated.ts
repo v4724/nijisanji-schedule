@@ -3,7 +3,7 @@ import { Streamer } from '@app/feature/schedule/data/Streamer'
 export const scheduleUpdatedMap = new Map<Streamer, boolean>()
 
 scheduleUpdatedMap.set(Streamer.Shu, false)
-scheduleUpdatedMap.set(Streamer.Vox, false)
+scheduleUpdatedMap.set(Streamer.Vox, true)
 scheduleUpdatedMap.set(Streamer.Mysta, false)
 scheduleUpdatedMap.set(Streamer.Ike, true)
 scheduleUpdatedMap.set(Streamer.Luca, false)
@@ -11,7 +11,7 @@ scheduleUpdatedMap.set(Streamer.Luca, false)
 scheduleUpdatedMap.set(Streamer.Uki, true)
 scheduleUpdatedMap.set(Streamer.Alban, true)
 scheduleUpdatedMap.set(Streamer.Fulgur, true)
-scheduleUpdatedMap.set(Streamer.Yugo, false)
+scheduleUpdatedMap.set(Streamer.Yugo, true)
 scheduleUpdatedMap.set(Streamer.Sonny, true)
 
 scheduleUpdatedMap.set(Streamer.Elira, true)
