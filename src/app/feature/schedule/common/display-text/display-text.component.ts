@@ -18,7 +18,7 @@ export class DisplayTextComponent implements OnInit {
   }
 
   openStreamLink(): void {
-    if (!this.stream) {
+    if (!this.stream || this.stream?.isCanceled) {
       return
     }
 

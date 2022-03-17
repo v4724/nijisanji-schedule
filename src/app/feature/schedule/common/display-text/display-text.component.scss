@@ -3,10 +3,14 @@
   margin-right: 0.1rem;
 }
 
-.streamer-detail-info:hover {
-  text-decoration: underline;
+.streamer-detail-info.cursor-pointer {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.streamer-detail-info {
+  .canceled {
+    text-decoration: line-through	;
+  }
 }
 
-.canceled {
-  text-decoration: line-through	;
-}

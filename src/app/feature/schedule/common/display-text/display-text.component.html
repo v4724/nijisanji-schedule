@@ -1,5 +1,6 @@
 
-<div class="streamer-detail-info d-flex cursor-pointer align-self-center"
+<div class="streamer-detail-info d-flex align-self-center"
+     [class.cursor-pointer]="!stream?.isCanceled"
      (click)="openStreamLink()">
   <i *ngIf="stream?.link" class="bi bi-youtube"></i>
   <i *ngIf="stream?.isUncertain" class="bi bi-exclamation-circle-fill"></i>
