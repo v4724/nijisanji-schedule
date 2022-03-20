@@ -10,6 +10,7 @@ import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { combineLatest } from 'rxjs'
 import { Stream } from '@app/feature/schedule/data/Stream'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { openUrl } from '@app/feature/schedule/utils'
 
 interface ScheduleUpdatedInfo extends StreamerInfo {
   scheduleUpdated: boolean
@@ -26,8 +27,8 @@ export class ScheduleCheckedListComponent implements OnInit {
   date: Moment = moment()
   displayWeekText: string = ''
 
-  newScheduleId: number = 355
-  newScheduleDay: number = 13
+  newScheduleId: number = 505
+  newScheduleDay: number = 20
 
   updateInfo: Map<Streamer, boolean> = new Map<Streamer, boolean>()
 
@@ -98,4 +99,8 @@ export class ScheduleCheckedListComponent implements OnInit {
     this.displayWeekText = `${startMoment.format('YYYY-MM-DD')}~${weekendMoment.format('YYYY-MM-DD')}`
   }
 
+  linkToTwitter(streamer: StreamerInfo): void {
+    const ytLink = streamer.twitterLink
+    openUrl(ytLink)
+  }
 }

@@ -112,7 +112,7 @@ export const ethyria: Array<StreamerInfo> = [{
   group: StreamerGroup.Ethyria,
   channelId: 'UCR6qhsLpn62WVxCBK1dkLow',
   youtubeLink: 'https://www.youtube.com/channel/UCR6qhsLpn62WVxCBK1dkLow',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/EnnaAlouette',
   color: 'enna-primary-color',
   bgColor: 'enna-primary-bg-color',
 }, {
@@ -121,7 +121,7 @@ export const ethyria: Array<StreamerInfo> = [{
   group: StreamerGroup.Ethyria,
   channelId: 'UCkieJGn3pgJikVW8gmMXE2w',
   youtubeLink: 'https://www.youtube.com/channel/UCkieJGn3pgJikVW8gmMXE2w',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/NinaKosaka',
   color: 'nina-primary-color',
   bgColor: 'nina-primary-bg-color',
 }, {
@@ -130,7 +130,7 @@ export const ethyria: Array<StreamerInfo> = [{
   group: StreamerGroup.Ethyria,
   channelId: 'UC47rNmkDcNgbOcM-2BwzJTQ',
   youtubeLink: 'https://www.youtube.com/channel/UC47rNmkDcNgbOcM-2BwzJTQ',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/MillieParfait',
   color: 'millie-primary-color',
   bgColor: 'millie-primary-bg-color',
 }, {
@@ -139,7 +139,7 @@ export const ethyria: Array<StreamerInfo> = [{
   group: StreamerGroup.Ethyria,
   channelId: 'UCBURM8S4LH7cRZ0Clea9RDA',
   youtubeLink: 'https://www.youtube.com/channel/UCBURM8S4LH7cRZ0Clea9RDA',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/ReimuEndou',
   color: 'reimu-primary-color',
   bgColor: 'reimu-primary-bg-color',
 }]
@@ -151,7 +151,7 @@ export const obsydia: Array<StreamerInfo> = [{
   group: StreamerGroup.OBSYDIA,
   channelId: 'UCV1xUwfM2v2oBtT3JNvic3w',
   youtubeLink: 'https://www.youtube.com/channel/UCV1xUwfM2v2oBtT3JNvic3w',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/Selen_Tatsuki',
   color: 'selen-primary-color',
   bgColor: 'selen-primary-bg-color',
 }, {
@@ -160,7 +160,7 @@ export const obsydia: Array<StreamerInfo> = [{
   group: StreamerGroup.OBSYDIA,
   channelId: 'UC4WvIIAo89_AzGUh1AZ6Dkg',
   youtubeLink: 'https://www.youtube.com/channel/UC4WvIIAo89_AzGUh1AZ6Dkg',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/Rosemi_Lovelock',
   color: 'rosemi-primary-color',
   bgColor: 'rosemi-primary-bg-color',
 }, {
@@ -169,7 +169,7 @@ export const obsydia: Array<StreamerInfo> = [{
   group: StreamerGroup.OBSYDIA,
   channelId: 'UCgA2jKRkqpY_8eysPUs8sjw',
   youtubeLink: 'https://www.youtube.com/channel/UCgA2jKRkqpY_8eysPUs8sjw',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/Petra_Gurin',
   color: 'petra-primary-color',
   bgColor: 'petra-primary-bg-color',
 }]
@@ -181,7 +181,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   group: StreamerGroup.LazuLight,
   channelId: 'UCIeSUTOTkF9Hs7q3SGcO-Ow',
   youtubeLink: 'https://www.youtube.com/channel/UCIeSUTOTkF9Hs7q3SGcO-Ow',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/EliraPendora',
   color: 'elira-primary-color',
   bgColor: 'elira-primary-bg-color',
 }, {
@@ -190,7 +190,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   group: StreamerGroup.LazuLight,
   channelId: 'UCP4nMSTdwU1KqYWu3UH5DHQ',
   youtubeLink: 'https://www.youtube.com/channel/UCP4nMSTdwU1KqYWu3UH5DHQ',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/PomuRainpuff',
   color: 'pomu-primary-color',
   bgColor: 'pomu-primary-bg-color',
 }, {
@@ -199,7 +199,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   group: StreamerGroup.LazuLight,
   channelId: 'UCu-J8uIXuLZh16gG-cT1naw',
   youtubeLink: 'https://www.youtube.com/channel/UCu-J8uIXuLZh16gG-cT1naw',
-  twitterLink: '',
+  twitterLink: 'https://twitter.com/FinanaRyugu',
   color: 'finana-primary-color',
   bgColor: 'finana-primary-bg-color',
 }]

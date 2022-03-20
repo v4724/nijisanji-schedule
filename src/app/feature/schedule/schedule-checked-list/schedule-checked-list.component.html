@@ -12,9 +12,11 @@
         </div>
       </div>
       <div class="d-flex flex-wrap">
-        <div class="streamer-icon-block d-flex align-items-center" *ngFor="let streamer of streamers">
-          <img class=" streamer-icon me-1" [src]="streamer.img"/>
+        <div class="streamer-icon-block d-flex align-items-center tooltip-div" *ngFor="let streamer of streamers"
+            (click)="linkToTwitter(streamer)">
+          <img class="streamer-icon me-1" [src]="streamer.img"/>
           <input class="form-check-input" type="checkbox" [checked]="streamer.scheduleUpdated" disabled/>
+          <span class="tooltiptext tooltip-right">twitter</span>
         </div>
       </div>
 
