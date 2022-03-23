@@ -1,0 +1,7 @@
+
+<ng-container *ngIf="item['TBD'] && item['TBD'][key]">
+  <div class="d-inline-flex tbd-tag"
+       [ngClass]="colorClass">
+    {{ item['TBD'][key]['title'] }}
+  </div>
+</ng-container>

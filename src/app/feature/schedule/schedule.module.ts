@@ -16,7 +16,8 @@ import { IconDefComponent } from './common/icon-def/icon-def.component';
 import { SelectionComponent } from './toolbar/stream-group/selection/selection.component';
 import { ButtonComponent } from './toolbar/stream-group/button/button.component';
 import { MascotImgComponent } from './common/mascot-img/mascot-img.component';
-import { DateWeekComponent } from './date-week/date-week.component'
+import { DateWeekComponent } from './date-week/date-week.component';
+import { TBDTagComponent } from './common/tbd-tag/tbd-tag.component'
 
 const routes: Routes = [
   {
@@ -54,7 +55,8 @@ const routes: Routes = [
     SelectionComponent,
     ButtonComponent,
     MascotImgComponent,
-    DateWeekComponent
+    DateWeekComponent,
+    TBDTagComponent
   ],
   imports: [
     CommonModule,
