@@ -11,7 +11,7 @@ import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { combineLatest, forkJoin } from 'rxjs'
 import { openUrl } from '@app/feature/schedule/utils'
-import { Stream } from '@app/feature/schedule/data/Stream'
+import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
 
 @Component({
   selector: 'app-week',
@@ -24,6 +24,7 @@ export class WeekComponent implements OnInit {
 
   streams: Array<Stream> = []
   timezone = ''
+  TBDStreams: Array<TBDStream> = []
 
   headers: Array<WeekHeader> = []
   data: Array<any> = []
@@ -42,10 +43,11 @@ export class WeekComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    combineLatest([this.scheduleService.streams$, this.tzService.timezone$])
+    combineLatest([this.scheduleService.streams$, this.tzService.timezone$, this.scheduleService.TBDStreams$])
       .subscribe((result) => {
         this.streams = result[0]
         const timezone = result[1]
+        this.TBDStreams = result[2]
 
         if (timezone !== this.timezone) {
           this.timezone = timezone
@@ -146,9 +148,8 @@ export class WeekComponent implements OnInit {
         })
       }
 
-      const dateText = moment(viewItem.timestamp)
-        .tz(tz)
-        .format('YYYY-MM-DD')
+      const momentTz = moment(viewItem.timestamp).tz(tz)
+      const dateText = momentTz.format('YYYY-MM-DD')
 
       const findDate = this.headers.find((h) => {
         return h.key === dateText
@@ -160,7 +161,7 @@ export class WeekComponent implements OnInit {
       const date = viewItem.displayDate
       const week = streamerMap.get(streamer)
       if (week) {
-        const stream = {
+        const stream: any = {
           text: `${viewItem.title} ${viewItem.displayTime}`,
           link: viewItem.link,
           onSchedule: viewItem.onSchedule,
@@ -178,6 +179,28 @@ export class WeekComponent implements OnInit {
       }
 
     })
+
+    this.TBDStreams.forEach((s) => {
+      const streamer = s.streamer
+      const year = s.year
+      const month = s.month.toString().padStart(2, '0')
+      const date = s.date.toString().padStart(2, '0')
+      const dateText = `${year}-${month}-${date}`
+      const findDate = this.headers.find((h) => {
+        return h.key === dateText
+      })
+      if (!findDate) {
+        return
+      }
+      const week = streamerMap.get(streamer)
+      if (week) {
+        if (!week['TBD']) {
+          week['TBD'] = {}
+        }
+        week['TBD'][dateText] = s
+      }
+    })
+
     this.data = Array.from(streamerMap.values())
   }
 }

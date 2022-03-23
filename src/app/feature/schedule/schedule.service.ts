@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
-import { StreamViewItem } from '@app/feature/schedule/type'
-import { Stream } from '@app/feature/schedule/data/Stream'
+import { StreamViewItem, TBDStreamViewItem } from '@app/feature/schedule/type'
+import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
@@ -22,12 +22,20 @@ export class ScheduleService {
 
   streams$ = new BehaviorSubject<Array<Stream>>([])
 
+  origTBDData$ = new Subject<Array<TBDStream>>();
+  TBDStreams: Array<TBDStreamViewItem> = [];
+  TBDStreams$ = new BehaviorSubject<Array<TBDStream>>([])
+
   constructor(private streamTypeService: StreamTypeService,
               private streamGroupService: StreamGroupService) {
 
     this.readFromExcel()
     this.origData$.subscribe((data) => {
       this.initData(data)
+    })
+
+    this.origTBDData$.subscribe((data) => {
+      this.initTBDData(data)
     })
   }
 
@@ -67,6 +75,25 @@ export class ScheduleService {
       })
   }
 
+  initTBDData(origData: Array<TBDStream>): void {
+
+    this.TBDStreams = lodash.cloneDeep(origData) as Array<TBDStreamViewItem>
+    this.TBDStreams.forEach((stream) => {
+      const info = findStreamerInfo(stream.streamer)
+      if (info) {
+        stream.streamerInfo = info
+      }
+
+    })
+
+    combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
+      .subscribe((results) => {
+        const groups = results[0]
+        const type = results[1]
+        this.updateTBDStreams(groups, type)
+      })
+  }
+
   readFromExcel (): void {
     const url = `assets/docs/Schedule.xlsx?${moment()}`;
     fetch(url).then((result) => {
@@ -76,7 +103,12 @@ export class ScheduleService {
           /* data is an ArrayBuffer */
           const workbook = XLSX.read(data);
           workbook.SheetNames.forEach((sheetName: string) => {
-            this.origData$.next(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]))
+            if (sheetName === 'ALL') {
+              this.origData$.next(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]))
+            } else if (sheetName === 'TBD') {
+              this.origTBDData$.next(XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]))
+            }
+
           })
         })
     });
@@ -108,5 +140,22 @@ export class ScheduleService {
     })
 
     this.streams$.next(list)
+  }
+
+  updateTBDStreams(groups: Array<StreamerGroup>, type: StreamType): void {
+    let list = this.TBDStreams
+
+    list = list.filter((s) => {
+
+      const streamer = findStreamerInfo(s.streamer)
+      if (streamer) {
+        if (groups.indexOf(streamer.group) > -1) {
+          return true
+        }
+      }
+      return false
+    })
+
+    this.TBDStreams$.next(list)
   }
 }

@@ -57,7 +57,14 @@
               </ng-container>
               <ng-template #streamRef>
                 <ng-container *ngIf="!item[header.key]; else hasStreamRef">
-                  <td class="data-empty-stream" [class.is-today]="header.isToday"></td>
+                  <td class="data-empty-stream" [class.is-today]="header.isToday">
+
+<!--                      <ng-container *ngIf="item['TBD'] && item['TBD'][header.key]">-->
+<!--                        <div>-->
+<!--                          TBD: {{item['TBD'][header.key]['title']}}-->
+<!--                        </div>-->
+<!--                      </ng-container>-->
+                  </td>
                 </ng-container>
                 <ng-template #hasStreamRef>
                   <td class="h-1" [class.is-today]="header.isToday">
@@ -68,6 +75,12 @@
                             {{ stream.text }}
                         </app-display-text>
                       </ng-container>
+
+<!--                      <ng-container *ngIf="item['TBD'] && item['TBD'][header.key]">-->
+<!--                        <div>-->
+<!--                          TBD: {{item['TBD'][header.key]['title']}}-->
+<!--                        </div>-->
+<!--                      </ng-container>-->
                     </div>
                   </td>
                 </ng-template>
@@ -80,3 +93,4 @@
     <app-icon-def></app-icon-def>
   </div>
 </div>
+

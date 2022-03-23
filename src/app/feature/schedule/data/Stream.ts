@@ -15,3 +15,11 @@ export interface Stream {
   mainStreamer: string | null
 }
 
+export interface TBDStream {
+  id: number,
+  streamer: string,
+  title: string,
+  year: number,
+  month: number,
+  date: number,
+}
