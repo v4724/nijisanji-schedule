@@ -11,7 +11,7 @@ export class ToolbarComponent implements OnInit {
   scheduleUpdatedTime: string = ''
 
   constructor() {
-    this.scheduleUpdatedTime = moment(1648944708336).format('YYYY-MM-DD HH:mm')
+    this.scheduleUpdatedTime = moment(1649024182696).format('YYYY-MM-DD HH:mm')
   }
 
   ngOnInit(): void {
