@@ -48,9 +48,10 @@ export class ScheduleService {
         s.streamerInfo = info
       }
 
-      if (!s.onSchedule && s.guestId) {
+      if (s.guestId) {
         const guestId = s.guestId
         const mainStream = origData.find((i) => i.id === guestId)
+
         if (mainStream) {
           s.title = `(ref:${mainStream.streamer}) ${mainStream.title}`
           s.link = mainStream.link
