@@ -204,9 +204,20 @@ export const lazuLight: Array<StreamerInfo> = [{
   bgColor: 'finana-primary-bg-color',
 }]
 
+export const ID: Array<StreamerInfo> = [{
+  img: 'assets/imgs/mika_profile.jpg',
+  name: Streamer.Mika,
+  group: StreamerGroup.ID,
+  channelId: 'UCahgMxSIQ2zIRrPKhM6Mjvg',
+  youtubeLink: 'https://www.youtube.com/channel/UCahgMxSIQ2zIRrPKhM6Mjvg',
+  twitterLink: 'https://twitter.com/MikaMelatika',
+  bgColor: 'mika-primary-bg-color',
+  color: 'mika-primary-color',
+}]
+
 export let streamers: Array<StreamerInfo> = []
 // streamers = streamers.concat(luxiem, noctyx)
-streamers = streamers.concat(luxiem, noctyx, ethyria, obsydia, lazuLight)
+streamers = streamers.concat(luxiem, noctyx, ethyria, obsydia, lazuLight, ID)
 
 export function findStreamersInfoByGroup(group: StreamerGroup | string): StreamerInfo | undefined {
   return streamers.find(s => s.group === group)

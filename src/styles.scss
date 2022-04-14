@@ -26,6 +26,8 @@
   --enna-primary-color: rgba(217, 191, 184, 0.8);
   --finana-primary-color: rgba(131, 201, 179, 0.8);
 
+  --mika-primary-color: rgba(68, 68, 68, 0.8);
+
   --column-title-color: #ffb8b8;
 
   --is-today: #ffdedecf;
@@ -99,6 +101,9 @@
 }
 .rosemi-primary-color {
   color: var(--rosemi-primary-color)
+}
+.mika-primary-color {
+  color: var(--mika-primary-color)
 }
 
 .undefine-primary-bg-color {
@@ -203,6 +208,12 @@
 }
 .selen-primary-bg-color {
   background-color: var(--selen-primary-color);
+  color: #7d387a;
+  text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
+}
+
+.mika-primary-bg-color {
+  background-color: var(--mika-primary-color);
   color: #7d387a;
   text-shadow: #fff 0em 0em 0.8em, #fff 0em 0em 0.8em;
 }
