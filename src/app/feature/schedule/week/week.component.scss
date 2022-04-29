@@ -102,3 +102,9 @@ tbody .data-streamer {
   background-color: #ffffffad;
   border-radius: 30px;
 }
+
+@media (max-width: 769px) {
+  table tr:hover {
+    --bs-table-accent-bg: rgba(255, 255, 255, 0);
+  }
+}
