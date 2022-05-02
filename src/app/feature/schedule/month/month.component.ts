@@ -86,7 +86,7 @@ export class MonthComponent implements OnInit {
       const date = moment(s.timestamp).tz(this.timezone)
       const tmpYear = date.year()
       const tmpMonth = date.month()
-      return tmpYear === year && tmpMonth === month
+      return s.timestamp && tmpYear === year && tmpMonth === month
     })
 
     const dateMap = new Map<number, Map<string, Array<StreamViewItem>>>()

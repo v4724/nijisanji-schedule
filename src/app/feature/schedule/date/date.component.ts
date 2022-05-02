@@ -78,7 +78,7 @@ export class DateComponent implements OnInit {
       setDisplayValue(viewItem, tz)
 
       const dateText = viewItem.displayDate
-      if (dateText !== this.displayDateText) {
+      if (!viewItem.timestamp || dateText !== this.displayDateText) {
         return
       }
 
