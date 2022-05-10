@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StreamViewItem } from '../type'
 import { setDisplayValue } from '../data'
-import { streamerList } from '../data/Streamer'
+import { Streamer, streamerList } from '../data/Streamer'
 import * as moment from 'moment-timezone'
 import { WeekHeader } from './types'
 import { Moment } from 'moment'
@@ -162,7 +162,7 @@ export class WeekComponent implements OnInit {
       const week = streamerMap.get(streamer)
       if (week) {
         const stream: any = {
-          text: `${viewItem.title} ${viewItem.displayTime}`,
+          text: `${ viewItem.title } ${ viewItem.displayTime }`,
           link: viewItem.link,
           onSchedule: viewItem.onSchedule,
           streamerInfo: viewItem.streamerInfo,
@@ -185,7 +185,7 @@ export class WeekComponent implements OnInit {
       const year = s.year
       const month = s.month.toString().padStart(2, '0')
       const date = s.date.toString().padStart(2, '0')
-      const dateText = `${year}-${month}-${date}`
+      const dateText = `${ year }-${ month }-${ date }`
       const findDate = this.headers.find((h) => {
         return h.key === dateText
       })
@@ -201,6 +201,37 @@ export class WeekComponent implements OnInit {
       }
     })
 
-    this.data = Array.from(streamerMap.values())
+    const orders = new Array<Streamer>()
+    orders.push(Streamer.Ike)
+    orders.push(Streamer.Vox)
+    orders.push(Streamer.Mysta)
+    orders.push(Streamer.Shu)
+    orders.push(Streamer.Luca)
+    orders.push(Streamer.Yugo)
+    orders.push(Streamer.Fulgur)
+    orders.push(Streamer.Alban)
+    orders.push(Streamer.Uki)
+    orders.push(Streamer.Sonny)
+    orders.push(Streamer.Nina)
+    orders.push(Streamer.Enna)
+    orders.push(Streamer.Reimu)
+    orders.push(Streamer.Elira)
+    orders.push(Streamer.Finana)
+    orders.push(Streamer.Selen)
+    orders.push(Streamer.Pomu)
+    orders.push(Streamer.Rosemi)
+    orders.push(Streamer.Petra)
+    orders.push(Streamer.Millie)
+    orders.push(Streamer.Mika)
+
+    this.data = []
+    orders.forEach((streamer: Streamer) => {
+      if (!streamerMap.has(streamer)) {
+        return
+      }
+
+      const o = streamerMap.get(streamer)
+      this.data.push(o)
+    })
   }
 }
