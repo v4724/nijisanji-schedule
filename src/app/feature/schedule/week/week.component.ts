@@ -109,7 +109,7 @@ export class WeekComponent implements OnInit {
         const timestamp = tmpDate.valueOf()
         const dateText = tmpDate.format('YYYY-MM-DD')
         const dayText = tmpDate.format('ddd')
-        const isToday = tmpDate.date() === moment().date()
+        const isToday = tmpDate.date() === moment().tz(this.timezone).date()
 
         headerMap.set(timestamp, { key: dateText, value: dayText, isToday: isToday })
       }

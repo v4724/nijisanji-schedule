@@ -19,6 +19,16 @@ export class TimezoneComponent implements OnInit {
   constructor(private tzService: TimezoneService) {
     if (isDevMode()) {
       this.testTimezone = true
+      this.countries = [
+        'Australia/Sydney',
+        'Japan',
+        'Asia/Taipei',
+        'Asia/Jakarta',
+        'Europe/London',
+        'GMT+0',
+        'EST5EDT',
+        'PST8PDT'
+      ]
     }
   }
 

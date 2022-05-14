@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { FormsModule } from '@angular/forms';
 import { WeekComponent } from './week/week.component';
 import { MonthComponent } from './month/month.component';
+import { MonthComponent as MonthComponent2 } from './month-2/month.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { TimezoneComponent } from './toolbar/timezone/timezone.component';
 import { StreamTypeComponent } from './toolbar/stream-type/stream-type.component';
@@ -28,7 +29,7 @@ const routes: Routes = [
       component: WeekComponent
     }, {
       path: 'month',
-      component: MonthComponent
+      component: MonthComponent2
     }, {
       path: 'date',
       component: DateComponent
@@ -44,6 +45,7 @@ const routes: Routes = [
     ScheduleComponent,
     WeekComponent,
     MonthComponent,
+    MonthComponent2,
     ToolbarComponent,
     TimezoneComponent,
     StreamTypeComponent,

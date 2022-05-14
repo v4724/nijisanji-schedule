@@ -6,7 +6,7 @@ export enum StreamerGroup {
   Ethyria='Ethyria',
   Luxiem='Luxiem',
   Noctyx='Noctyx',
-  ID='ID',
+  NIJISANJI='NIJISANJI',
 }
 
 export const groups: Array<string> = enumList(StreamerGroup)

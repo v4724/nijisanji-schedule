@@ -1,0 +1,66 @@
+
+<div class="d-flex flex-column justify-content-center h-100">
+  <div class="d-flex align-items-center my-2">
+    <div class="month-title">
+      {{ year }}-{{ monthText }}
+    </div>
+    <div class="d-flex">
+      <div class="change-month-icon cursor-pointer m-2" (click)="changeMonth(month-1)"><</div>
+      <div class="change-month-icon cursor-pointer m-2" (click)="resetMonth()">
+        <i class="bi bi-calendar-x"></i>
+      </div>
+      <div class="change-month-icon cursor-pointer m-2" (click)="changeMonth(month+1)">></div>
+    </div>
+    <app-mascot-img src="assets/imgs/ike/araara.png"></app-mascot-img>
+
+  </div>
+  <div class="h-1 flex-grow-1 table-block">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th *ngFor="let header of headers"
+              class="header-week">
+            {{ header.value }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of data">
+          <td *ngFor="let date of week"
+              class="col-week h-1"
+              [class.is-today]="date.isToday">
+            <div class="d-flex flex-column h-100 col-week-div">
+              <div>
+                <span *ngIf="date.moment" class="day">
+                  {{ date.moment?.format('DD') }}
+                </span>
+              </div>
+              <div class="d-flex flex-wrap mb-auto streamers-block">
+                <div *ngIf="date.streams.length">
+                  <div *ngFor="let streams of date.streams"
+                       class="mx-1">
+                    <span class="me-1">{{ streams.hour }}</span>
+                    <div *ngFor="let stream of streams.streamViewItems;let index=index"
+                        class="position-relative tooltip-div me-1">
+                      <span class="streamer-icon" [class.canceled]="stream.isCanceled">
+                        {{ stream.streamerInfo.name }}
+                      </span>
+                      <div class="d-flex flex-column position-absolute streamer-detail tooltiptext"
+                           [ngClass]="stream.streamerInfo.bgColor">
+                        <app-display-text [stream]="stream">
+                          {{ stream.title }} {{ stream.displayTime }}
+                        </app-display-text>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <app-icon-def></app-icon-def>
+  </div>
+</div>
