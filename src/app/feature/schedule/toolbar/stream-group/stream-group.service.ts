@@ -7,7 +7,7 @@ import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 })
 export class StreamGroupService {
 
-  group$ = new BehaviorSubject<Array<StreamerGroup>>([StreamerGroup.Luxiem, StreamerGroup.Ethyria, StreamerGroup.LazuLight, StreamerGroup.Noctyx, StreamerGroup.OBSYDIA, StreamerGroup.NIJISANJI, StreamerGroup.NIJISANJI])
+  group$ = new BehaviorSubject<Array<StreamerGroup>>([StreamerGroup.Luxiem, StreamerGroup.Ethyria, StreamerGroup.LazuLight, StreamerGroup.Noctyx, StreamerGroup.OBSYDIA, StreamerGroup.NIJISANJI])
 
   constructor() { }
 }
