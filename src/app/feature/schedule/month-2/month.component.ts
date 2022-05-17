@@ -143,7 +143,8 @@ export class MonthComponent implements OnInit {
       const streamersMap = this.dateMap.get(days)
       const streams: Array<HourStreams> = []
       if (streamersMap) {
-        const tmp = Array.from(streamersMap)
+        const sortedMap = new Map([...streamersMap.entries()].sort());
+        const tmp = Array.from(sortedMap)
         tmp.forEach((o) => {
           streams.push({
             hour: o[0],
