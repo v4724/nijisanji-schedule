@@ -27,8 +27,8 @@ export class ScheduleCheckedListComponent implements OnInit {
   date: Moment = moment()
   displayWeekText: string = ''
 
-  newScheduleId: number = 1611
-  newScheduleDay: number = 22
+  newScheduleId: number = 1727
+  newScheduleDay: number = 29
 
   updateInfo: Map<Streamer, boolean> = new Map<Streamer, boolean>()
 
