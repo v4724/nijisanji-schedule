@@ -1,0 +1,88 @@
+<p>test works!</p>
+<ul>
+    <li class="text" *ngFor="let item of items | async">
+        {{item}}
+    </li>
+ </ul>
+
+<mdb-form-control>
+  <input mdbInput type="text" id="formControlStreamer" class="form-control" [(ngModel)]="item.streamer"/>
+  <label mdbLabel class="form-label" for="formControlStreamer">Streamer</label>
+</mdb-form-control>
+
+<mdb-form-control>
+  <input mdbInput type="text" id="formControlTitle" class="form-control" [(ngModel)]="item.title"/>
+  <label mdbLabel class="form-label" for="formControlTitle">Title</label>
+
+</mdb-form-control>
+<mdb-form-control>
+  <input mdbInput type="text" id="formControlLink" class="form-control" [(ngModel)]="item.link"/>
+  <label mdbLabel class="form-label" for="formControlLink">Link</label>
+</mdb-form-control>
+<mdb-form-control>
+  <input mdbInput type="text" id="formControlDate" class="form-control" [(ngModel)]="date"/>
+  <label mdbLabel class="form-label" for="formControlDate">Date</label>
+</mdb-form-control>
+<mdb-form-control>
+  <input mdbInput type="text" id="formControlTime" class="form-control" [(ngModel)]="time"/>
+  <label mdbLabel class="form-label" for="formControlTime">Time</label>
+</mdb-form-control>
+<div *ngFor="let tz of timezones" class="form-check form-check-inline">
+  <input
+    mdbRadio
+    class="form-check-input"
+    type="radio"
+    name="inlineRadioOptions"
+    [id]="'inlineRadio-' + tz"
+    [value]="tz"
+    [(ngModel)]="timezone"
+  />
+  <label class="form-check-label" [for]="'inlineRadio-' + tz">{{tz}}</label>
+</div>
+<br>
+{{timezone}}: {{ datetimeFromTz }}
+<br>
+GMT: {{ gmtMoment }}
+
+<div class="form-check">
+  <input
+    mdbCheckbox
+    class="form-check-input"
+    type="checkbox"
+    id="flexCheckUncertain"
+    [(ngModel)]="item.isUncertain"
+  />
+  <label class="form-check-label" for="flexCheckUncertain">
+    Uncertain
+  </label>
+</div>
+<div class="form-check">
+  <input
+    mdbCheckbox
+    class="form-check-input"
+    type="checkbox"
+    id="flexCheckModified"
+    [(ngModel)]="item.isModified"
+  />
+  <label class="form-check-label" for="flexCheckModified">
+    Modified
+  </label>
+</div>
+<div class="form-check">
+  <input
+    mdbCheckbox
+    class="form-check-input"
+    type="checkbox"
+    id="flexCheckCanceled"
+    [(ngModel)]="item.isCanceled"
+  />
+  <label class="form-check-label" for="flexCheckCanceled">
+    Canceled
+  </label>
+</div>
+<div class="d-grid gap-2 d-md-block">
+  <button class="btn btn-primary" type="button" (click)="clear()">Clear</button>
+  <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="submitLoading">
+    Submit
+  </button>
+</div>

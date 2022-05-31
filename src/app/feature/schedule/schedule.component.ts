@@ -4,7 +4,8 @@ import { NavigationEnd, Router } from '@angular/router'
 enum Schedule {
   Date='date',
   Month='month',
-  Week=''
+  Week='',
+  Test='test'
 }
 
 @Component({

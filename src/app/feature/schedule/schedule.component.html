@@ -12,6 +12,10 @@
     <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Month"
          [class.cursor-pointer]="current !== Schedule.Month"
          (click)="current = Schedule.Month">Month</div>
+    <div class="mx-1">|</div>
+    <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Test"
+         [class.cursor-pointer]="current !== Schedule.Test"
+         (click)="current = Schedule.Test">Test</div>
 
     <app-schedule-checked-list></app-schedule-checked-list>
   </div>

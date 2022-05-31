@@ -1,6 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
+// Font Awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+// MDB SCSS
+@import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
 :root{
   --undefine-primary-color: rgba(194, 194, 194, 0.67);
   --ike-primary-color: rgba(100, 176, 240, 0.8);

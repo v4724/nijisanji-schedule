@@ -18,7 +18,10 @@ import { SelectionComponent } from './toolbar/stream-group/selection/selection.c
 import { ButtonComponent } from './toolbar/stream-group/button/button.component';
 import { MascotImgComponent } from './common/mascot-img/mascot-img.component';
 import { DateWeekComponent } from './date-week/date-week.component';
-import { TBDTagComponent } from './common/tbd-tag/tbd-tag.component'
+import { TBDTagComponent } from './common/tbd-tag/tbd-tag.component';
+import { TestComponent } from './test/test.component'
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 const routes: Routes = [
   {
@@ -36,6 +39,9 @@ const routes: Routes = [
     }, {
       path: 'date-week',
       component: DateWeekComponent
+    }, {
+      path: 'test',
+      component: TestComponent
     }]
   }
 ]
@@ -58,12 +64,15 @@ const routes: Routes = [
     ButtonComponent,
     MascotImgComponent,
     DateWeekComponent,
-    TBDTagComponent
+    TBDTagComponent,
+    TestComponent
   ],
   imports: [
     CommonModule,
+    RouterModule.forChild(routes),
+    MdbFormsModule,
     FormsModule,
-    RouterModule.forChild(routes)
+    MatProgressSpinnerModule
   ]
 })
 export class ScheduleModule { }
