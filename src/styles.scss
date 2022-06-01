@@ -238,6 +238,10 @@ body {
   height: 1px;
 }
 
+.col-gap-1 :not(last-child) {
+  margin-right: 1rem;
+}
+
 .is-today {
   background-color: var(--is-today);
 }

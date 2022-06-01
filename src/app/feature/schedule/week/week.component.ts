@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { StreamViewItem } from '../type'
+import { FirebaseStreamViewItem as StreamViewItem } from '../type'
 import { setDisplayValue } from '../data'
 import { Streamer, streamerList } from '../data/Streamer'
 import * as moment from 'moment-timezone'
 import { WeekHeader } from './types'
-import { Moment } from 'moment'
+import { Moment } from 'moment-timezone'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { StreamType } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
 import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { combineLatest, forkJoin } from 'rxjs'
+import { combineLatest, forkJoin, Observable, Subscription } from 'rxjs'
 import { openUrl } from '@app/feature/schedule/utils'
 import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
+import { Stream as FirebaseStream } from '@app/feature/schedule/test/dto/Stream'
+import { FirebaseService } from '@app/service/firebase.service'
+import { tap } from 'rxjs/operators'
+import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
+import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 
 @Component({
   selector: 'app-week',
@@ -22,9 +27,12 @@ export class WeekComponent implements OnInit {
   displayWeekText: string = ''
   date: Moment = moment()
 
-  streams: Array<Stream> = []
+  streams: Array<FirebaseStream> = []
+  filterStreams: Array<FirebaseStream> = []
   timezone = ''
   TBDStreams: Array<TBDStream> = []
+
+  groups: Array<StreamerGroup> = []
 
   headers: Array<WeekHeader> = []
   data: Array<any> = []
@@ -38,16 +46,40 @@ export class WeekComponent implements OnInit {
   findStreamerInfo = findStreamerInfo
   openUrl = openUrl
 
+  startTimestamp: number = moment().valueOf()
+  endTimestamp: number = moment().valueOf()
+
+  streamLoading: boolean = false
+  subscription: Subscription | undefined
+
   constructor(private scheduleService: ScheduleService,
-              private tzService: TimezoneService) {
+              private tzService: TimezoneService,
+              private firebaseService: FirebaseService,
+              private streamGroupService: StreamGroupService) {
   }
 
   ngOnInit(): void {
-    combineLatest([this.scheduleService.streams$, this.tzService.timezone$, this.scheduleService.TBDStreams$])
+    const defaultTimezone = this.tzService.timezone$.getValue()
+    const currentMoment = this.date.tz(defaultTimezone)
+    const currentDay = currentMoment.day()
+    this.startTimestamp = currentMoment.clone().add(-currentDay, 'day')
+                                       .set('hour', 0)
+                                       .set('minute', 0)
+                                       .set('second', 0).valueOf()
+    this.endTimestamp = currentMoment.clone().add(7-currentDay-1, 'day')
+                                     .set('hour', 23)
+                                     .set('minute', 59)
+                                     .set('second', 59).valueOf()
+
+    combineLatest([
+      this.tzService.timezone$,
+      this.scheduleService.TBDStreams$,
+      this.streamGroupService.group$
+    ])
       .subscribe((result) => {
-        this.streams = result[0]
-        const timezone = result[1]
-        this.TBDStreams = result[2]
+        const timezone = result[0]
+        this.TBDStreams = result[1]
+        this.groups = result[2]
 
         if (timezone !== this.timezone) {
           this.timezone = timezone
@@ -69,31 +101,49 @@ export class WeekComponent implements OnInit {
 
   changeTimezone(): void {
     this.date = moment(this.date).tz(this.timezone)
-
-    this.updateWeek(this.date)
-    this.updateSchedule()
+    this.updateStreams()
   }
 
   changeWeek(dateNumber: number): void {
     this.date.add(dateNumber, 'd')
-
-    this.updateWeek(this.date)
-    this.updateSchedule()
-  }
-
-  changeStreamer(): void {
-    this.updateSchedule()
-  }
-
-  changeCategory(type: StreamType): void {
-    this.categoryType = type
-    this.updateSchedule()
+    this.updateStreams()
   }
 
   resetWeek(): void {
     this.date = moment().tz(this.timezone)
-    this.updateWeek(this.date)
-    this.updateSchedule()
+    this.updateStreams()
+  }
+
+  updateStreams(): void {
+    const currentDay = this.date.day()
+    this.startTimestamp = this.date.clone().add(-currentDay, 'day')
+                              .set('hour', 0)
+                              .set('minute', 0)
+                              .set('second', 0).valueOf()
+    this.endTimestamp = this.date.clone().add(7-currentDay-1, 'day')
+                            .set('hour', 23)
+                            .set('minute', 59)
+                            .set('second', 59).valueOf()
+
+    this.streamLoading = true
+
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
+    console.log('update')
+    this.subscription = this.firebaseService.where(this.startTimestamp, this.endTimestamp)
+        .pipe(
+          tap((result) => {
+            this.streams = result
+          })
+        )
+        .subscribe(() => {
+          this.subscription?.unsubscribe()
+
+          this.streamLoading = false
+          this.updateWeek(this.date)
+          this.updateSchedule()
+        })
   }
 
   updateWeek(nowDate: Moment): void {
@@ -123,14 +173,20 @@ export class WeekComponent implements OnInit {
   }
 
   updateSchedule(): void {
-    if (this.currStreamer) {
-      this.streams = this.streams.filter(i => i.streamer === this.currStreamer)
-    }
+    this.filterStreams = this.streams.filter((s) => {
 
-    this._updateScheduleByTZ(this.streams, this.timezone)
+      const streamer = findStreamerInfo(s.streamer)
+      if (streamer) {
+        if (this.groups.indexOf(streamer.group) > -1) {
+          return true
+        }
+      }
+      return false
+    })
+    this._updateScheduleByTZ(this.filterStreams, this.timezone)
   }
 
-  _updateScheduleByTZ(streams: Array<Stream>, tz: string): void {
+  _updateScheduleByTZ(streams: Array<FirebaseStream>, tz: string): void {
 
     const streamerMap = new Map<string, any>()
 
@@ -168,7 +224,6 @@ export class WeekComponent implements OnInit {
           streamerInfo: viewItem.streamerInfo,
           isCanceled: viewItem.isCanceled,
           isModified: viewItem.isModified,
-          isNew: viewItem.isNew,
           isUncertain: viewItem.isUncertain,
         }
         if (week[date]) {

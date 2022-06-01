@@ -58,7 +58,6 @@ export class ScheduleService {
           s.timestamp = mainStream.timestamp
           s.isCanceled = mainStream.isCanceled
           s.isUncertain = mainStream.isUncertain
-          s.isNew = mainStream.isNew
           s.isModified = mainStream.isModified
           s.mainStreamer = mainStream.streamer
         }

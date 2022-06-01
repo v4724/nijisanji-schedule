@@ -30,7 +30,7 @@ export class DateWeekComponent implements OnInit {
   // displayDateWeekText: string = ''
   // date: Moment = moment()
   //
-  // streams: Array<Stream> = []
+  // streams: Array<CreatedStream> = []
   // timezone = ''
   //
   // headers: Array<WeekHeader> = []
@@ -138,7 +138,7 @@ export class DateWeekComponent implements OnInit {
   //   }
   // }
   //
-  // updateDate(tz: string, streams: Array<Stream>): void {
+  // updateDate(tz: string, streams: Array<CreatedStream>): void {
   //   this.resetData()
   //
   //   const currDate = moment(this.date).tz(tz)
@@ -165,7 +165,7 @@ export class DateWeekComponent implements OnInit {
   //     this.data.push({ hour: key, streams: value })
   //   })
   // }
-  // _updateScheduleByTZ(streams: Array<Stream>, tz: string): void {
+  // _updateScheduleByTZ(streams: Array<CreatedStream>, tz: string): void {
   //
   //   const timeKeyMap = new Map<string, any>()
   //
