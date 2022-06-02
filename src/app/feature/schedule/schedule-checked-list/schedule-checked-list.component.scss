@@ -17,15 +17,12 @@
   background-color: #ffffff;
   cursor: default;
 
-  min-width: 290px;
+  min-width: 300px;
   max-width: 300px;
 }
 
 .streamer-icon-block {
   margin-bottom: 0.25rem;
-  &:not(:last-child){
-    margin-right: 0.5rem;
-  }
 }
 
 

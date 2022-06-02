@@ -12,10 +12,11 @@
     <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Month"
          [class.cursor-pointer]="current !== Schedule.Month"
          (click)="current = Schedule.Month">Month</div>
-    <div class="mx-1">|</div>
-    <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.Test"
-         [class.cursor-pointer]="current !== Schedule.Test"
-         (click)="current = Schedule.Test">Test</div>
+
+    <div *ngIf="isDevMode()" class="mx-1">|</div>
+    <div *ngIf="isDevMode()" class="schedule-lick py-1 px-2" [routerLink]="Schedule.New"
+         [class.cursor-pointer]="current !== Schedule.New"
+         (click)="current = Schedule.New">New Schedule</div>
 
     <app-schedule-checked-list></app-schedule-checked-list>
   </div>

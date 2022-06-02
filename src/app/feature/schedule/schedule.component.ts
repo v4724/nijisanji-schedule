@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router'
 
 enum Schedule {
   Date='date',
   Month='month',
   Week='',
-  Test='test'
+  New='new'
 }
 
 @Component({
@@ -14,7 +14,7 @@ enum Schedule {
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
-
+  isDevMode = isDevMode
 
   Schedule = Schedule
   current: Schedule = Schedule.Week

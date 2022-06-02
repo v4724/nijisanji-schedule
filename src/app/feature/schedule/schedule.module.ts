@@ -18,7 +18,7 @@ import { SelectionComponent } from './toolbar/stream-group/selection/selection.c
 import { ButtonComponent } from './toolbar/stream-group/button/button.component';
 import { MascotImgComponent } from './common/mascot-img/mascot-img.component';
 import { TBDTagComponent } from './common/tbd-tag/tbd-tag.component';
-import { TestComponent } from './test/test.component'
+import { NewStreamComponent } from './test/new-stream.component'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
 import { CommonComponentModule } from '@app/common-component/common-component.module'
 
@@ -36,8 +36,8 @@ const routes: Routes = [
       path: 'date',
       component: DateComponent
     }, {
-      path: 'test',
-      component: TestComponent
+      path: 'new',
+      component: NewStreamComponent
     }]
   }
 ]
@@ -60,7 +60,7 @@ const routes: Routes = [
     ButtonComponent,
     MascotImgComponent,
     TBDTagComponent,
-    TestComponent
+    NewStreamComponent
   ],
 	imports: [
 		CommonComponentModule,

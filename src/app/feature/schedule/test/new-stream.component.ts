@@ -3,16 +3,15 @@ import { FirebaseService } from '@app/service/firebase.service'
 import { Observable } from 'rxjs'
 import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
-import { Stream, StreamDto, initStream, toDto } from '@app/feature/schedule/test/dto/Stream'
+import { Stream, initStream, toDto } from '@app/feature/schedule/test/dto/Stream'
 import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { Streamer } from '@app/feature/schedule/data/Streamer'
 
 @Component({
   selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss']
+  templateUrl: './new-stream.component.html',
+  styleUrls: ['./new-stream.component.scss']
 })
-export class TestComponent implements OnInit {
+export class NewStreamComponent implements OnInit {
 
   item: Stream = initStream()
   date: string = moment().format('YYYY-MM-DD')
