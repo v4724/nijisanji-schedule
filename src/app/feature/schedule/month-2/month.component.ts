@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Day, DayItem, HourStreams, MonthHeader, WeekItem } from './types'
+import { Day, HourStreams, MonthHeader, WeekItem } from './types'
 import { headers } from './data'
 import * as moment from 'moment-timezone'
-import * as lodash from 'lodash'
-import { StreamViewItem } from '../type'
-import { setDisplayValue } from '../data'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
-import { ScheduleService } from '@app/feature/schedule/schedule.service'
-import { combineLatest } from 'rxjs'
-import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { FirebaseStreamViewItem as StreamViewItem } from '../type'
 import { openUrl } from '@app/feature/schedule/utils'
-import { Stream } from '@app/feature/schedule/data/Stream'
-import { Streamer } from '@app/feature/schedule/data/Streamer'
+import { MonthService } from '@app/feature/schedule/month-2/month.service'
+import { Moment } from 'moment-timezone'
 
 
 @Component({
@@ -21,99 +15,67 @@ import { Streamer } from '@app/feature/schedule/data/Streamer'
 })
 export class MonthComponent implements OnInit {
 
-  streams: Array<Stream> = []
+  streams: Array<StreamViewItem> = []
 
   headers: Array<MonthHeader> = headers
   data: Array<WeekItem> = []
 
-  monthStreams: Array<Stream> = []
   dateMap: Map<number, Map<String, Array<StreamViewItem>>> = new Map<number, Map<String, Array<StreamViewItem>>>()
 
-  year: number = -1
-  month: number = -1
-
-  timezone: string = ''
-
+  today: Moment = moment()
+  title: string = ''
   openUrl = openUrl
 
-  constructor(private scheduleService: ScheduleService,
-              private tzService: TimezoneService) {
-    this.timezone = moment.tz.guess()
-    const now = moment().tz(this.timezone)
-    this.year = now.year()
-    this.month = now.month()
+  constructor(public monthService: MonthService) {
 
   }
 
   ngOnInit(): void {
-    combineLatest([this.scheduleService.streams$, this.tzService.timezone$])
-      .subscribe((result) => {
-        this.streams = result[0]
-        this.timezone = result[1]
+    this.monthService.filterStreams$.subscribe((streams) => {
+      this.streams = streams
+      this.updateSchedule()
+    })
 
-        this.updateSchedule(this.year, this.month)
-      })
-  }
-
-  get monthText(): string {
-    return (this.month + 1).toString().padStart(2, '0');
+    this.monthService.date$.subscribe((date) => {
+      this.today = date
+      this.title = date.format('YYYY-MM')
+    })
   }
 
   resetMonth(): void {
-    const date = moment().tz(this.timezone)
-    this.year = date.year()
-    this.month = date.month()
-    this.updateSchedule(this.year, this.month)
+    this.monthService.updateDate(moment())
   }
 
   changeMonth(month: number): void {
-    if (month < 0) {
-      this.year -= 1
-      this.month = 11
-    } else if (month > 11) {
-      this.year += 1
-      this.month = 0
-    } else {
-      this.month = month
-    }
-    this.updateSchedule(this.year, this.month)
+    const date = this.monthService.date$.getValue().clone()
+                     .add(month, 'month')
+    this.monthService.updateDate(date)
   }
 
-  updateSchedule(year: number, month: number): void {
+  updateSchedule(): void {
 
-    this.monthStreams = this.streams.filter((s) => {
-      const date = moment(s.timestamp).tz(this.timezone)
-      const tmpYear = date.year()
-      const tmpMonth = date.month()
-      return s.timestamp && tmpYear === year && tmpMonth === month
-    })
     this.dateMap = new Map<number, Map<String, Array<StreamViewItem>>>()
-    this.monthStreams.forEach((s) => {
-      const date = moment(s.timestamp).tz(this.timezone)
-      const days = date.date()
+    this.streams.forEach((s) => {
+      const days = s.displayMoment.date()
       if (!this.dateMap.has(days)) {
         this.dateMap.set(days, new Map<String, Array<StreamViewItem>>())
       }
       const dateStreams = this.dateMap.get(days)
       if (dateStreams) {
-        const streamerHour = date.hour().toString().padStart(2, '0')
-        const streamerMin = date.minute().toString().padStart(2, '0')
-        const key = `${streamerHour}:${streamerMin}`
+        const key = s.displayTime
         if (!dateStreams.has(key)) {
           dateStreams.set(key, [])
         }
 
         const streams = dateStreams.get(key)
         if (streams) {
-          const streamViewItem: StreamViewItem = lodash.cloneDeep(s) as StreamViewItem
-          setDisplayValue(streamViewItem, this.timezone)
-          streams.push(streamViewItem)
+          streams.push(s)
         }
       }
     })
 
     const data: Array<WeekItem>= []
-    const date = moment().tz(this.timezone).set('year', year).set('M', month)
+    const date = this.monthService.date$.getValue().clone()
     const startOfMonth = date.startOf('month')
     const daysInMonth = date.daysInMonth()
 
@@ -154,9 +116,9 @@ export class MonthComponent implements OnInit {
       }
 
       const cloneMoment = moment(tmpDate)
-      const isToday = cloneMoment.year() === moment().year() &&
-        cloneMoment.month() === moment().month() &&
-        cloneMoment.date() === moment().date()
+      const isToday = cloneMoment.year() === this.today.year() &&
+        cloneMoment.month() === this.today.month() &&
+        cloneMoment.date() === this.today.date()
       weekItem.push({
         isToday: isToday,
         moment: cloneMoment,

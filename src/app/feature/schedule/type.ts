@@ -2,6 +2,7 @@ import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
 
 import { Stream as FirebaseStream } from '@app/feature/schedule/test/dto/Stream'
+import { Moment } from 'moment-timezone'
 
 export interface StreamViewItem extends Stream {
   displayDate: string
@@ -10,6 +11,7 @@ export interface StreamViewItem extends Stream {
 }
 
 export interface FirebaseStreamViewItem extends FirebaseStream {
+  displayMoment: Moment
   displayDate: string
   displayTime: string
   streamerInfo: StreamerInfo

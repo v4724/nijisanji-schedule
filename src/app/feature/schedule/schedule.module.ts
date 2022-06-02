@@ -21,7 +21,7 @@ import { DateWeekComponent } from './date-week/date-week.component';
 import { TBDTagComponent } from './common/tbd-tag/tbd-tag.component';
 import { TestComponent } from './test/test.component'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { CommonComponentModule } from '@app/common-component/common-component.module'
 
 const routes: Routes = [
   {
@@ -67,12 +67,12 @@ const routes: Routes = [
     TBDTagComponent,
     TestComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MdbFormsModule,
-    FormsModule,
-    MatProgressSpinnerModule
-  ]
+	imports: [
+		CommonComponentModule,
+		RouterModule.forChild(routes),
+		MdbFormsModule,
+		FormsModule,
+		CommonModule
+	]
 })
 export class ScheduleModule { }

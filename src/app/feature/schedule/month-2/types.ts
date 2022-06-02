@@ -1,4 +1,4 @@
-import { StreamViewItem } from '../type'
+import { FirebaseStreamViewItem, StreamViewItem } from '../type'
 import { Moment } from 'moment-timezone'
 import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 
@@ -19,7 +19,7 @@ export interface MonthHeader {
 
 export interface HourStreams {
   hour: String,
-  streamViewItems: StreamViewItem[]
+  streamViewItems: FirebaseStreamViewItem[]
 }
 
 export interface DayItem {

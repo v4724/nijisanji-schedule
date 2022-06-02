@@ -17,6 +17,7 @@ import { FirebaseService } from '@app/service/firebase.service'
 import { tap } from 'rxjs/operators'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
+import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 
 @Component({
   selector: 'app-week',
@@ -49,13 +50,13 @@ export class WeekComponent implements OnInit {
   startTimestamp: number = moment().valueOf()
   endTimestamp: number = moment().valueOf()
 
-  streamLoading: boolean = false
   subscription: Subscription | undefined
 
   constructor(private scheduleService: ScheduleService,
               private tzService: TimezoneService,
               private firebaseService: FirebaseService,
-              private streamGroupService: StreamGroupService) {
+              private streamGroupService: StreamGroupService,
+              private rainbowLoaderService: RainbowLoaderService) {
   }
 
   ngOnInit(): void {
@@ -113,7 +114,7 @@ export class WeekComponent implements OnInit {
     this.startTimestamp = setMidnightStartMoment(this.date.clone().add(-currentDay, 'day')).valueOf()
     this.endTimestamp = setMidnightEndMoment(this.date.clone().add(7-currentDay-1, 'day')).valueOf()
 
-    this.streamLoading = true
+    this.rainbowLoaderService.set(true)
 
     if (this.subscription) {
       this.subscription.unsubscribe()
@@ -128,7 +129,7 @@ export class WeekComponent implements OnInit {
         .subscribe(() => {
           this.subscription?.unsubscribe()
 
-          this.streamLoading = false
+          this.rainbowLoaderService.set(false)
           this.updateWeek(this.date)
           this.updateSchedule()
         })

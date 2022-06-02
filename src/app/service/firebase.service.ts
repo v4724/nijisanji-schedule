@@ -10,9 +10,10 @@ import {
   Stream,
   StreamDto, toStreamData
 } from '@app/feature/schedule/test/dto/Stream'
-import { flatMap, map } from 'rxjs/internal/operators'
+import { delay, flatMap, map } from 'rxjs/internal/operators'
 import * as lodash from 'lodash'
 import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
+import { debounceTime } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,7 @@ export class FirebaseService {
                })
                .get()
                 .pipe(
+                  delay(500),
                   map((snapshot:QuerySnapshot<any>) => {
                     const origData = snapshot.docs
                     const data: Array<Stream> = toStreamData(origData)
