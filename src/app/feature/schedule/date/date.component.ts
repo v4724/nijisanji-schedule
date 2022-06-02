@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import * as moment from 'moment-timezone'
-import { StreamViewItem } from '@app/feature/schedule/type'
-import { ScheduleService } from '@app/feature/schedule/schedule.service'
-import { combineLatest } from 'rxjs'
-import * as lodash from 'lodash'
-import { setDisplayValue } from '@app/feature/schedule/data'
+import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
 import { openUrl } from '@app/feature/schedule/utils'
-import { Moment } from 'moment-timezone'
-import { Stream } from '@app/feature/schedule/data/Stream'
+import { DateService } from '@app/feature/schedule/date/date.service'
 
 @Component({
   selector: 'app-date',
@@ -17,75 +11,58 @@ import { Stream } from '@app/feature/schedule/data/Stream'
 })
 export class DateComponent implements OnInit {
 
-  timezone: string = ''
-  streams: Array<Stream> = []
+  streams: Array<FirebaseStreamViewItem> = []
 
   displayDateText: string = ''
-  date: Moment = moment()
 
-  hours: Map<string, Array<StreamViewItem>> = new Map()
-  data: Array<{ hour: string, streams: Array<StreamViewItem>}> = []
+  hours: Map<string, Array<FirebaseStreamViewItem>> = new Map()
+  data: Array<{ hour: string, streams: Array<FirebaseStreamViewItem>}> = []
 
   openUrl = openUrl
-  constructor(private tzService: TimezoneService,
-              private scheduleService: ScheduleService) {
+  constructor(public dateService: DateService) {
 
   }
 
   ngOnInit(): void {
+    this.dateService.filterStreams$.subscribe((streams) => {
+      this.streams = streams
 
-    combineLatest([this.tzService.timezone$, this.scheduleService.streams$])
-    .subscribe((results) => {
-      const tz = results[0]
-      const streams = results[1]
-      this.timezone = tz
-      this.streams = lodash.cloneDeep(streams)
+      this.updateData()
+    })
 
-      this.updateData(tz, this.streams)
+    this.dateService.date$.subscribe((currDate) => {
+      this.displayDateText = currDate.format("YYYY-MM-DD")
     })
   }
 
   resetDate(): void {
-    this.date = moment().tz(this.timezone)
-    this.displayDateText = this.date.format('YYYY-MM-DD')
-    this.updateData(this.timezone, this.streams)
+    this.dateService.updateDate(moment())
   }
 
   changeDate(date: number): void {
-    this.date = moment(this.date).tz(this.timezone)
-                                 .add(date, 'd')
-    this.displayDateText = this.date.format('YYYY-MM-DD')
-    this.updateData(this.timezone, this.streams)
+    const dateMoment = this.dateService.date$.getValue()
+                           .clone()
+                           .add(date, 'd')
+    this.dateService.updateDate(dateMoment)
   }
 
   resetData(): void {
     this.data = []
-    this.hours = new Map<string, Array<StreamViewItem>>()
+    this.hours = new Map<string, Array<FirebaseStreamViewItem>>()
     for (let hour = 0; hour < 24; hour++) {
       const tmpHour = hour.toString().padStart(2, '0')
       this.hours.set(`${tmpHour}`,[])
     }
   }
 
-  updateData(tz: string, streams: Array<Stream>): void {
+  updateData(): void {
     this.resetData()
 
-    const currDate = moment(this.date).tz(tz)
-    this.displayDateText = currDate.format("YYYY-MM-DD")
-
-    streams.forEach((stream) => {
-      const viewItem = stream as StreamViewItem
-      setDisplayValue(viewItem, tz)
-
-      const dateText = viewItem.displayDate
-      if (!viewItem.timestamp || dateText !== this.displayDateText) {
-        return
-      }
-
-      const timeKey = viewItem.displayTime.split(':')[0].padStart(2, '0')
+    this.streams.forEach((stream) => {
+      const timeKey = stream.displayTime.split(':')[0].padStart(2, '0')
       const streamsValue = this.hours.get(timeKey)
       if (streamsValue) {
-        streamsValue.push(viewItem)
+        streamsValue.push(stream)
       }
     })
 

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { openUrl } from '@app/feature/schedule/utils'
-import { StreamViewItem } from '@app/feature/schedule/type'
+import { FirebaseStreamViewItem, StreamViewItem } from '@app/feature/schedule/type'
 
 @Component({
   selector: 'app-display-text',
@@ -9,7 +9,7 @@ import { StreamViewItem } from '@app/feature/schedule/type'
 })
 export class DisplayTextComponent implements OnInit {
 
-  @Input() stream: StreamViewItem | undefined;
+  @Input() stream: StreamViewItem | FirebaseStreamViewItem | undefined;
 
   openUrl = openUrl
   constructor() { }

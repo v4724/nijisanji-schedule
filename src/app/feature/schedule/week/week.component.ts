@@ -10,7 +10,7 @@ import { StreamType } from '@app/feature/schedule/toolbar/stream-type/stream-typ
 import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { combineLatest, forkJoin, Observable, Subscription } from 'rxjs'
-import { openUrl } from '@app/feature/schedule/utils'
+import { openUrl, setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
 import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
 import { Stream as FirebaseStream } from '@app/feature/schedule/test/dto/Stream'
 import { FirebaseService } from '@app/service/firebase.service'
@@ -62,14 +62,8 @@ export class WeekComponent implements OnInit {
     const defaultTimezone = this.tzService.timezone$.getValue()
     const currentMoment = this.date.tz(defaultTimezone)
     const currentDay = currentMoment.day()
-    this.startTimestamp = currentMoment.clone().add(-currentDay, 'day')
-                                       .set('hour', 0)
-                                       .set('minute', 0)
-                                       .set('second', 0).valueOf()
-    this.endTimestamp = currentMoment.clone().add(7-currentDay-1, 'day')
-                                     .set('hour', 23)
-                                     .set('minute', 59)
-                                     .set('second', 59).valueOf()
+    this.startTimestamp = setMidnightStartMoment(currentMoment.clone().add(-currentDay, 'day')).valueOf()
+    this.endTimestamp = setMidnightEndMoment(currentMoment.clone().add(7-currentDay-1, 'day')).valueOf()
 
     combineLatest([
       this.tzService.timezone$,
@@ -116,14 +110,8 @@ export class WeekComponent implements OnInit {
 
   updateStreams(): void {
     const currentDay = this.date.day()
-    this.startTimestamp = this.date.clone().add(-currentDay, 'day')
-                              .set('hour', 0)
-                              .set('minute', 0)
-                              .set('second', 0).valueOf()
-    this.endTimestamp = this.date.clone().add(7-currentDay-1, 'day')
-                            .set('hour', 23)
-                            .set('minute', 59)
-                            .set('second', 59).valueOf()
+    this.startTimestamp = setMidnightStartMoment(this.date.clone().add(-currentDay, 'day')).valueOf()
+    this.endTimestamp = setMidnightEndMoment(this.date.clone().add(7-currentDay-1, 'day')).valueOf()
 
     this.streamLoading = true
 

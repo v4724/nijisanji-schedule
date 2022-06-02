@@ -6,7 +6,6 @@
   <i *ngIf="stream?.isUncertain" class="bi bi-exclamation-circle-fill"></i>
   <i *ngIf="stream?.onSchedule" class="bi bi-journal-text"></i>
   <i *ngIf="stream?.isModified" class="bi bi-wrench-adjustable"></i>
-  <i *ngIf="stream?.isNew" class="bi bi-plus-circle-fill"></i>
   <div class="ms-1" [class.canceled]="stream?.isCanceled">
     <ng-content></ng-content>
   </div>

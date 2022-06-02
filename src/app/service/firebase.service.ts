@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs'
-import { AngularFirestore, QuerySnapshot } from '@angular/fire/compat/firestore'
+import { AngularFirestore, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore'
 // import { Stream } from '@app/feature/schedule/data/Stream'
-import { fromDto, Stream, StreamDto } from '@app/feature/schedule/test/dto/Stream'
+import {
+  fromDto,
+  getFeatStream,
+  Stream as FirebaseStream,
+  Stream,
+  StreamDto, toStreamData
+} from '@app/feature/schedule/test/dto/Stream'
 import { flatMap, map } from 'rxjs/internal/operators'
 import * as lodash from 'lodash'
+import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
 
 @Injectable({
   providedIn: 'root'
@@ -37,22 +44,7 @@ export class FirebaseService {
                 .pipe(
                   map((snapshot:QuerySnapshot<any>) => {
                     const origData = snapshot.docs
-                    const data: Array<Stream> = []
-                    origData.forEach((doc) => {
-                      const origItem = doc.data()
-                      const item = fromDto(origItem)
-                      data.push(item)
-
-                      if (item.featStreamers.length) {
-                        item.featStreamers.forEach((featStreamer) => {
-                          const feat = lodash.cloneDeep(item)
-                          feat.streamer = featStreamer as string
-                          feat.title = `(ref:${item.streamer}) ${item.title}`
-                          feat.mainStreamer = item.streamer
-                        })
-                      }
-                    })
-
+                    const data: Array<Stream> = toStreamData(origData)
                     return data
                   })
                 )

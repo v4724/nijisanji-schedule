@@ -18,5 +18,3 @@ export interface FirebaseStreamViewItem extends FirebaseStream {
 export interface TBDStreamViewItem extends TBDStream {
   streamerInfo: StreamerInfo
 }
-
-

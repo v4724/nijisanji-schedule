@@ -1,4 +1,6 @@
 import * as moment from 'moment-timezone'
+import * as lodash from 'lodash'
+import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
 
 export interface Stream {
   streamer: string,
@@ -76,4 +78,32 @@ export function fromDto (dto: StreamDto): Stream {
   }
 
   return item
+}
+
+export function toStreamData (origData: Array<QueryDocumentSnapshot<StreamDto>>): Array<Stream> {
+  const data: Array<Stream> = []
+  origData.forEach((doc) => {
+    const origItem = doc.data()
+    const item = fromDto(origItem)
+    data.push(item)
+
+    if (item.featStreamers.length) {
+      item.featStreamers.forEach((featStreamer) => {
+        const feat = getFeatStream(item, featStreamer as string)
+        data.push(feat)
+      })
+    }
+
+  })
+
+  return data
+}
+
+export function getFeatStream (mainStream: Stream, featStreamer: string) :Stream {
+  const feat = lodash.cloneDeep(mainStream)
+  feat.streamer = featStreamer as string
+  feat.title = `(ref:${mainStream.streamer}) ${mainStream.title}`
+  feat.mainStreamer = mainStream.streamer
+
+  return feat
 }
