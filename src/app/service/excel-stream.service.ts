@@ -35,7 +35,7 @@ export class ExcelStreamService {
           firebaseStream.isCanceled = stream.isCanceled ?? false
           firebaseStream.isModified = stream.isModified ?? false
           firebaseStream.isUncertain = stream.isUncertain ?? false
-          firebaseStream.timestamp = stream.timestamp
+          firebaseStream.timestamp = stream.timestamp ? Math.round(stream.timestamp) : stream.timestamp
           firebaseStream.link = stream.link ?? ''
           firebaseStream.onSchedule = stream.onSchedule ?? false
           firebaseStream.title = stream.title
@@ -46,7 +46,6 @@ export class ExcelStreamService {
 
       map.forEach((value, key) => {
         const dto = toDto(value)
-        console.log(dto)
         this.firebaseService.add(dto)
             .then(() => {
         }).catch((err) => {
