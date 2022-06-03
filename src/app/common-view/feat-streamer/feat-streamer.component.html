@@ -1,0 +1,32 @@
+<div class="">
+  <div class=""
+       [class.fs-5]="!smallStyle">
+    Feat.
+  </div>
+  <div class="d-inline-flex align-items-center">
+    <mdb-form-control>
+      <input mdbInput type="text" [id]="'formControlSearchStreamer-'" class="form-control"
+             [class.form-control-sm]="smallStyle"
+             placeholder="ex: Ike"
+             [(ngModel)]="searchFeatStreamer"
+             (ngModelChange)="findFeatStreamerInfoChanged($event)"
+             (keyup.enter)="enterToAddFeatStreamer()" />
+      <label mdbLabel class="form-label" [for]="'formControlSearchStreamer-'">Search</label>
+    </mdb-form-control>
+
+    <button class="btn btn-primary " type="button"
+            [class.btn-sm]="smallStyle"
+            [disabled]="!findFeatStreamerInfo" (click)="addFeatStreamer()">add</button>
+  </div>
+
+  <div class="mt-1 feat-streamers">
+    <button type="button" class="btn btn-outline-primary btn-rounded btn-sm"
+            *ngFor="let streamer of featStreamers"
+            (click)="removeFeatStreamer(streamer)">
+      <div>
+        {{ streamer }}
+        <i class="fas fa-times"></i>
+      </div>
+    </button>
+  </div>
+</div>

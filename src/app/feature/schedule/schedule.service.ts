@@ -1,35 +1,36 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
-import { StreamViewItem, TBDStreamViewItem } from '@app/feature/schedule/type'
-import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
+import { ExcelStream as ExcelStream, ExcelStreamViewItem as ExcelStreamViewItem, TBDStream, TBDStreamViewItem } from '@app/model/dto/ExcelStream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
-import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
-import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
+import { StreamGroupService } from '@app/service/stream-group.service'
 import * as XLSX from 'xlsx'
 import * as moment from 'moment-timezone'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduleService {
 
-  origData$ = new Subject<Array<Stream>>();
-  allStreams: Array<StreamViewItem> = [];
-  streamerStreams: Array<StreamViewItem> = [];
-  guestStreams: Array<StreamViewItem> = [];
+  origData$ = new Subject<Array<ExcelStream>>();
+  allStreams: Array<ExcelStreamViewItem> = [];
+  streamerStreams: Array<ExcelStreamViewItem> = [];
+  guestStreams: Array<ExcelStreamViewItem> = [];
 
-  streams$ = new BehaviorSubject<Array<Stream>>([])
+  streams$ = new BehaviorSubject<Array<ExcelStream>>([])
 
   origTBDData$ = new Subject<Array<TBDStream>>();
   TBDStreams: Array<TBDStreamViewItem> = [];
   TBDStreams$ = new BehaviorSubject<Array<TBDStream>>([])
 
-  constructor(private streamTypeService: StreamTypeService,
-              private streamGroupService: StreamGroupService) {
 
-    this.readFromExcel()
+  constructor(private streamTypeService: StreamTypeService,
+              private streamGroupService: StreamGroupService,
+              private streamerInfoService: StreamerInfoService) {
+
+    // 不從 excel 取得資料
+    // this.readFromExcel()
     this.origData$.subscribe((data) => {
       this.initData(data)
     })
@@ -39,11 +40,11 @@ export class ScheduleService {
     })
   }
 
-  initData(origData: Array<Stream>): void {
-    this.allStreams = lodash.cloneDeep(origData) as Array<StreamViewItem>
+  initData(origData: Array<ExcelStream>): void {
+    this.allStreams = lodash.cloneDeep(origData) as Array<ExcelStreamViewItem>
     this.allStreams.forEach((stream) => {
-      const s = stream as StreamViewItem
-      const info = findStreamerInfo(stream.streamer)
+      const s = stream as ExcelStreamViewItem
+      const info = this.streamerInfoService.findStreamerInfo(stream.streamer)
       if (info) {
         s.streamerInfo = info
       }
@@ -67,7 +68,7 @@ export class ScheduleService {
       return Number(s1.timestamp) - Number(s2.timestamp)
     })
 
-    combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
+    combineLatest([this.streamGroupService.selectedGroup$, this.streamTypeService.type$])
       .subscribe((results) => {
         const groups = results[0]
         const type = results[1]
@@ -79,14 +80,14 @@ export class ScheduleService {
 
     this.TBDStreams = lodash.cloneDeep(origData) as Array<TBDStreamViewItem>
     this.TBDStreams.forEach((stream) => {
-      const info = findStreamerInfo(stream.streamer)
+      const info = this.streamerInfoService.findStreamerInfo(stream.streamer)
       if (info) {
         stream.streamerInfo = info
       }
 
     })
 
-    combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
+    combineLatest([this.streamGroupService.selectedGroup$, this.streamTypeService.type$])
       .subscribe((results) => {
         const groups = results[0]
         const type = results[1]
@@ -114,7 +115,7 @@ export class ScheduleService {
     });
   }
 
-  updateStreams(groups: Array<StreamerGroup>, type: StreamType): void {
+  updateStreams(groups: Array<string>, type: StreamType): void {
     let list = []
     switch (type) {
       case StreamType.Streamer:
@@ -130,7 +131,7 @@ export class ScheduleService {
 
     list = list.filter((s) => {
 
-      const streamer = findStreamerInfo(s.streamer)
+      const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
       if (streamer) {
         if (groups.indexOf(streamer.group) > -1) {
           return true
@@ -142,12 +143,12 @@ export class ScheduleService {
     this.streams$.next(list)
   }
 
-  updateTBDStreams(groups: Array<StreamerGroup>, type: StreamType): void {
+  updateTBDStreams(groups: Array<string>, type: StreamType): void {
     let list = this.TBDStreams
 
     list = list.filter((s) => {
 
-      const streamer = findStreamerInfo(s.streamer)
+      const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
       if (streamer) {
         if (groups.indexOf(streamer.group) > -1) {
           return true

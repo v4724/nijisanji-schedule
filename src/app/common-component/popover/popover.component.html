@@ -1,0 +1,27 @@
+<div class="popover-cmp cursor-pointer"
+     [class.hover]="isHover"
+     [class.active]="active">
+  <div class="position-relative" *ngIf="!hidden">
+
+    <div #icon (click)="iconClicked($event)">
+      <ng-content select="[icon]"></ng-content>
+    </div>
+
+    <div #content id="test" class="content position-absolute p-3 align-items-center justify-content-center flex-column"
+          [style.right]="contentRight">
+      <div class=""
+           [style]="'overflow-y: auto; padding: 0.5rem 0.5rem;'"
+            [style.max-height]="maxHeight">
+        <ng-content select="[content]"></ng-content>
+      </div>
+    </div>
+
+    <div class="pop-view-arrow">
+    </div>
+
+    <div class="pop-view-connect">
+    </div>
+
+  </div>
+
+</div>

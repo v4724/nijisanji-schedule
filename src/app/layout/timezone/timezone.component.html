@@ -1,0 +1,19 @@
+<div class="timezone-cmp d-flex align-items-center">
+
+    <select
+      class="tz-select cursor-pointer"
+      [(ngModel)]="timezone"
+      (change)="changeTimezone()">
+      <a icon class="item d-flex align-items-center justify-content-center"
+         [style.width]="'30px'">
+        <i class="fas fa-globe-asia"></i>
+      </a>
+      <option [class.local-timezone]="index === 0"
+              [class.active]="tz.value === timezone"
+              *ngFor="let tz of tzService.timezones; let index=index"
+              [value]="tz.value">
+        {{ tz.text }}
+      </option>
+    </select>
+
+</div>

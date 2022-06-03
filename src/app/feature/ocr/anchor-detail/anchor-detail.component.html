@@ -1,0 +1,54 @@
+
+<div content class="edit-anchor-detail-cmp d-flex flex-column gap-2"
+     *ngIf="cloneScheduleAnchor">
+<!--       [style.width]="'500px'">-->
+
+  <app-point-boundary [pointBoundary]="cloneScheduleAnchor.pointBoundary" [title]="'Point Boundary'"></app-point-boundary>
+  <app-point-boundary [pointBoundary]="cloneScheduleAnchor.streamCounterBoundary" [title]="'Stream Counter Boundary'"></app-point-boundary>
+  <app-point-boundary [pointBoundary]="cloneScheduleAnchor.titleBoundary" [title]="'Title Boundary'"></app-point-boundary>
+  <app-point-boundary [pointBoundary]="cloneScheduleAnchor.titleMultiBoundary" [title]="'Multi Title Boundary'"></app-point-boundary>
+
+  <div class="daily-stream-content mt-2 d-flex flex-column gap-2 position-relative"
+       *ngFor="let streamAnchors of cloneScheduleAnchor.streamAnchors; let index=index">
+
+    <div class="title d-inline-flex align-items-center gap-3 position-absolute"
+         [attr.aria-expanded]="!basicCollapse.collapsed"
+         [attr.aria-controls]="'collapseExample-daily-'+ this.index"
+         (click)="basicCollapse.toggle()"
+    >
+      <div class="title-text">
+        No. {{ index +1}}
+      </div>
+
+      <ng-container *ngIf="basicCollapse.collapsed; else collapseIconRef">
+        <i class="fas fa-caret-down"></i>
+      </ng-container>
+      <ng-template #collapseIconRef>
+        <i class="fas fa-caret-up"></i>
+      </ng-template>
+    </div>
+
+    <div [id]="'collapseExample-daily-'+ this.index" mdbCollapse #basicCollapse="mdbCollapse">
+        <app-anchor-point [anchorPoint]="streamAnchors.month" [title]="'Month'"></app-anchor-point>
+        <app-anchor-point [anchorPoint]="streamAnchors.day" [title]="'Day'"></app-anchor-point>
+        <app-anchor-point [anchorPoint]="streamAnchors.date" [title]="'Date'"></app-anchor-point>
+        <app-anchor-point [anchorPoint]="streamAnchors.streamCountPoint" [title]="'Stream Counter'"></app-anchor-point>
+
+        <div>
+          <div>
+            Once A Day
+          </div>
+          <app-stream-anchor-point [streamAnchorPoint]="streamAnchors.singleStream" [title]="'First'"> </app-stream-anchor-point>
+        </div>
+
+        <div>
+          <div>
+            Twice A Day
+          </div>
+          <app-stream-anchor-point [streamAnchorPoint]="streamAnchors.multiStream.first" [title]="'First'"> </app-stream-anchor-point>
+          <app-stream-anchor-point [streamAnchorPoint]="streamAnchors.multiStream.second" [title]="'Second'"> </app-stream-anchor-point>
+        </div>
+    </div>
+  </div>
+
+</div>

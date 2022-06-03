@@ -1,0 +1,17 @@
+
+<div class="d-flex align-items-center justify-content-center">
+  <ng-container *ngIf="auth.user | async as user; else showLogin">
+    <a class="item d-flex align-items-center justify-content-center"
+       [style.width]="'30px'"
+       role="button" (click)="logout()">
+      <i class="fab fa-google is-login"></i>
+    </a>
+  </ng-container>
+</div>
+<ng-template #showLogin>
+  <a class="item d-flex align-items-center justify-content-center"
+     [style.width]="'30px'"
+     role="button" (click)="login()">
+    <i class="fab fa-google"></i>
+  </a>
+</ng-template>

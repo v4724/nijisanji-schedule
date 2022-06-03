@@ -1,9 +1,9 @@
 .schedule-lick {
-  color: var(--is-streamer);
+  color: var(--primary-color);
   text-decoration: underline;
 
   &.cursor-pointer{
-    color: #000;
+    color: var(--font-color);
     text-decoration: none;
     &:hover {
       background-color: rgba(32, 33, 36, 0.039);

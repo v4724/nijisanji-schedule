@@ -3,7 +3,9 @@ th {
   position: sticky;
   top: -1px;
   z-index: 1;
-  background-color: var(--column-title-color)
+  background-color: var(--second-color);
+  color: var(--second-color-oppsite);
+  font-weight: 700;
 }
 
 .title {

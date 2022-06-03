@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment-timezone'
 
 @Component({
   selector: 'app-toolbar',
@@ -8,13 +7,13 @@ import * as moment from 'moment-timezone'
 })
 export class ToolbarComponent implements OnInit {
 
-  scheduleUpdatedTime: string = ''
 
   constructor() {
-    this.scheduleUpdatedTime = moment(1654165801357).format('YYYY-MM-DD HH:mm')
+
   }
 
   ngOnInit(): void {
+
   }
 
 }

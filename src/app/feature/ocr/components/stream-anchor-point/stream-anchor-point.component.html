@@ -1,0 +1,28 @@
+
+<div class="stream-anchor-point-cmp d-flex flex-column" *ngIf="streamAnchorPoint">
+
+  <div class="title d-flex align-items-center gap-3"
+       [attr.aria-expanded]="!basicCollapse.collapsed"
+       [attr.aria-controls]="collapseIndex"
+       (click)="basicCollapse.toggle()"
+  >
+    <div class="title-text">
+      {{title}}
+    </div>
+    <ng-container *ngIf="basicCollapse.collapsed; else collapseIconRef">
+      <i class="fas fa-caret-down"></i>
+    </ng-container>
+    <ng-template #collapseIconRef>
+      <i class="fas fa-caret-up"></i>
+    </ng-template>
+  </div>
+
+  <div [id]="collapseIndex" mdbCollapse #basicCollapse="mdbCollapse">
+    <div class="mt-1 mb-2 d-flex flex-column gap-1">
+      <app-anchor-point [anchorPoint]="streamAnchorPoint.time" [title]="'Time'"></app-anchor-point>
+      <app-anchor-point [anchorPoint]="streamAnchorPoint.hourSystem" [title]="'Hour System'"></app-anchor-point>
+      <!--<app-anchor-point [anchorPoint]="streamAnchorPoint.timezone" [title]="'Month'"></app-anchor-point>-->
+      <app-anchor-point [anchorPoint]="streamAnchorPoint.titleCenter" [title]="'Title Center'"></app-anchor-point>
+    </div>
+  </div>
+</div>

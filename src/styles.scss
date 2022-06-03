@@ -7,8 +7,28 @@
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 
+$link-color: #5877ba;
+$primary: #5877ba;
+
 // MDB SCSS
 @import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
+
+@import 'theme/blue.scss';
+@import 'theme/test0.scss';
+@import 'theme/yellow.scss';
+@import 'theme/theme4.scss';
+
+@import 'theme/customize-common-class.scss';
+//@import 'projects/menu/src/theming/theme-light.scss';
+//
+//.theme-dark {
+//  @include angular-material-theme($theme-dark)
+//}
+//
+//.theme-light {
+//  @include angular-material-theme($theme-light)
+//}
+
 :root{
   --undefine-primary-color: rgba(194, 194, 194, 0.67);
   --ike-primary-color: rgba(100, 176, 240, 0.8);
@@ -36,12 +56,8 @@
 
   --mika-primary-color: rgba(68, 68, 68, 0.8);
 
-  --column-title-color: #ffb8b8;
-
-  --is-today: #ffdedecf;
-  --is-streamer: #d20000;
-  --is-guest: #7480be;
 }
+
 
 .undefine-primary-color {
   color: var(--undefine-primary-color)
@@ -227,11 +243,23 @@
 }
 
 body {
-  font-family: auto;
+  color: var(--font-color);
 }
+.table th {
+  padding: 0.5rem;
+}
+.table td {
+  padding: 0.5rem;
+}
+
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.65;
 }
 
 .h-1 {
@@ -243,11 +271,12 @@ body {
 }
 
 .is-today {
-  background-color: var(--is-today);
+  background-color: var(--primary-color-ocpacity-15);
 }
 
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   -webkit-border-radius: 10px;
@@ -257,5 +286,5 @@ body {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 4px;
   border-radius: 4px;
-  background: rgb(219,219,219);
+  background: rgba(219, 219, 219, 0.8);
 }

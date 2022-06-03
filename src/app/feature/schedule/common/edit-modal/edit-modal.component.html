@@ -1,0 +1,23 @@
+
+<div class="modal-header">
+  <h5 class="modal-title">
+    <ng-container *ngIf="!immutable ; else immutableText">Edit</ng-container>
+    <ng-template #immutableText>Immutable</ng-template>
+  </h5>
+  <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"
+          (click)="modalRef.close()"></button>
+</div>
+<div class="modal-body">
+  <div *ngIf="immutable" class="mask" style="background-color: rgba(0, 0, 0, 0.6); z-index: 2;"></div>
+  <app-stream-detail #itemCmpRef [item]="item" [update]="true"></app-stream-detail>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" (click)="edit()"
+            [disabled]="!itemCmpRef.isValid || immutable">
+      update
+    </button>
+    <button class="btn btn-primary" type="button" (click)="delete()"
+            [disabled]="immutable">
+      delete
+    </button>
+</div>

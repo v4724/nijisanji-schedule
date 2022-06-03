@@ -1,7 +1,7 @@
-<div class="d-flex flex-column justify-content-center h-100">
-  <div class="d-flex align-items-center py-2">
+<div class="d-flex flex-column justify-content-center h-100 pb-3">
+  <div class="d-flex flex-wrap align-items-center py-2">
     <div class="week-title">
-      {{ displayWeekText }}
+      {{ title }}
     </div>
     <div class="d-flex change-week-block">
       <div class="change-week-icon cursor-pointer m-2" (click)="changeWeek(-7)"><</div>
@@ -10,7 +10,11 @@
       </div>
       <div class="change-week-icon cursor-pointer m-2" (click)="changeWeek(+7)">></div>
     </div>
-
+    <a class="mx-3"
+       role="button"
+       (click)="weekService.updateStreams()">
+      <i class="fas fa-refresh"></i>
+    </a>
     <app-mascot-img src="assets/imgs/ike/anyway.png"></app-mascot-img>
 
   </div>
@@ -36,8 +40,8 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let item of data">
-          <tr>
+        <ng-container *ngIf="data.length; else emptyDataRef">
+          <tr *ngFor="let item of data">
             <ng-container *ngFor="let header of headers">
               <ng-container *ngIf="header.key === 'streamer'; else streamRef">
                 <td class="data-streamer">
@@ -45,7 +49,7 @@
                     <div class="tooltip-div">
                       <img
                         class="m-1 profile-icon cursor-pointer "
-                        [src]="findStreamerInfo(item[header.key])?.img"
+                        [src]="streamerInfoService.findStreamerInfo(item[header.key])?.img"
                         (click)="linkToYoutube(item[header.key])"/>
                       <span class="tooltiptext tooltip-right">youtube</span>
                     </div>
@@ -78,6 +82,28 @@
             </ng-container>
           </tr>
         </ng-container>
+      <ng-template #emptyDataRef>
+        <tr>
+            <ng-container *ngFor="let header of headers">
+              <ng-container *ngIf="header.key === 'streamer'; else streamRef">
+                <td class="data-streamer">
+                  <div class="d-flex flex-column align-items-center h-100 justify-content-center m-2">
+                    <div class="streamer-name">
+                      -
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-template #streamRef>
+                <td class="h-1" [class.is-today]="header.isToday">
+                  <div class="h-100 d-flex flex-column justify-content-center">
+                    -
+                  </div>
+                </td>
+              </ng-template>
+            </ng-container>
+          </tr>
+      </ng-template>
       </tbody>
     </table>
     <app-icon-def></app-icon-def>

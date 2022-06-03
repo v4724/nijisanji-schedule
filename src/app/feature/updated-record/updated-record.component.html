@@ -1,0 +1,33 @@
+
+<div class="container h-100 d-flex flex-column">
+
+  <div class="fs-4 d-flex align-items-center justify-content-center mt-2">
+    Updated Records
+  </div>
+
+  <div class="h-1 flex-grow-1 table-block">
+    <ul class="list-group list-group-flush h-100">
+      <li *ngFor="let item of list" class="list-group-item">
+
+        <div class="d-flex col-gap-1">
+          <div>
+            {{ item.displayDateTime }}
+          </div>
+          <i *ngIf="item.type === UpdatedRecordType.updateSchedule" class="bi bi-journal-text"></i>
+          <i *ngIf="item.type === UpdatedRecordType.updateStream" class="bi bi-wrench-adjustable"></i>
+          <i *ngIf="item.type === UpdatedRecordType.addMember" class="bi bi-person-plus"></i>
+          <div>
+            {{ item.message }}
+          </div>
+          <a *ngIf="adminService.editable$ | async"
+             class="ms-1"
+             role="button"
+             (click)="removeRecord(item)">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+</div>

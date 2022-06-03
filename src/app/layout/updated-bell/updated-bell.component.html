@@ -1,0 +1,38 @@
+<a class="updated-bell-cmp item d-flex align-items-center justify-content-center"
+   [style.width]="'30px'">
+  <app-popover>
+
+    <div icon (click)="clickIcon()">
+      <i class="fas fa-bell"></i>
+      <span *ngIf="update"
+            class="badge bg-danger badge-dot">
+      </span>
+
+    </div>
+
+    <div content class="content">
+      <div class="record d-flex"
+           *ngFor="let record of recordVos">
+
+        <img class="rounded-circle m-2" [src]="record.streamerInfo?.img"
+             [style.width]="'35px'"
+             [style.height]="'35px'">
+        <div class="d-flex flex-column w-100">
+          <div class="type">
+            {{ record.type }}
+          </div>
+          <div class="message">
+            {{ record.message }}
+          </div>
+          <div class="updated-time d-flex justify-content-end">
+            {{ record.displayDateTime }}
+          </div>
+        </div>
+      </div>
+      <div class="record footer d-flex justify-content-end" (click)="click()">
+          More...
+      </div>
+    </div>
+
+  </app-popover>
+</a>

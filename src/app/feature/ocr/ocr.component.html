@@ -1,0 +1,206 @@
+
+<div class="ocr-cmp container h-100 d-flex flex-column">
+
+  <div class="fs-4 d-flex align-items-center justify-content-center mt-2">
+    Schedule OCR
+  </div>
+
+  <div class=" d-flex justify-content-end gap-2">
+
+    <!-- Checked switch -->
+    <div class="form-check form-switch">
+      <input
+        mdbCheckbox
+        class="form-check-input"
+        type="checkbox"
+        id="flexSwitchCheckChecked"
+        [(ngModel)]="ocrTest"
+      />
+      <label class="form-check-label" for="flexSwitchCheckChecked">Text Annotation</label>
+    </div>
+    <!-- Default disabled switch -->
+
+    <button type="button" class="btn btn-link btn-sm btn-rounded"
+             (click)="createAnchor()">
+      New
+    </button>
+  </div>
+
+  <div class="voice-button-content h-1 flex-grow-1">
+    <div class="row h-100 w-100 overflow-hidden">
+        <div class="yt-iframe col-8 position-relative d-flex flex-column"
+             [style.min-height]="'300px'"
+             [class.overflow-scroll]="true"
+             [class.h-100]="true"
+        >
+            <ng-container *ngIf="scheduleImgSrc; else imageTutorialTmp">
+              <img #image [src]="scheduleImgSrc"
+                   [style.width]="'1296px'"
+                   (load)="load()">
+              <div *ngIf="ocrTest">
+                <app-popover class="position-absolute text d-flex"
+                             *ngFor="let text of textAnnotations"
+                             [isHover]="true"
+                             [style.left]="text.left"
+                             [style.top]="text.top">
+                  <div icon>
+                    <i class="fas fa-dot-circle"></i>
+                  </div>
+                  <div content>
+                    top:{{text.top}}
+                    left:{{text.left}}
+                  </div>
+                </app-popover>
+
+              </div>
+            </ng-container>
+            <ng-template #imageTutorialTmp>
+              <img src="assets/插圖14.png"
+                   [style.width]="'1296px'"
+              >
+            </ng-template>
+        </div>
+        <div appScrollBorder class="voice-container col-4 py-2 h-100">
+            <div class="streamer-figure d-flex flex-wrap align-items-center justify-content-center">
+              <img class="rounded-circle m-2"
+                   [src]="currentStreamerInfo ? currentStreamerInfo.img : 'assets/imgs/OCR_default.png'"
+                   [style.width]="'100px'"
+                   [style.height]="'100px'">
+              <a *ngIf="currentStreamerInfo && adminService.editable$ | async"
+                 class="d-flex align-items-center justify-content-center"
+                 [style.width]="'30px'"
+                 [style.height]="'30px'"
+                 role="button"
+                 (click)="editAnchor()">
+                <i class="fas fa-pen"></i>
+              </a>
+
+              <a *ngIf="currentStreamerInfo"
+                 class="d-flex align-items-center justify-content-center"
+                 [style.width]="'30px'"
+                 [style.height]="'30px'"
+                 role="button"
+                 (click)="checkedSchedule()">
+                <i class="bi bi-clipboard-check icon "></i>
+              </a>
+
+            </div>
+            <div class="voice-block-search d-flex flex-column align-items-center justify-content-center gap-2">
+              <mdb-form-control class="">
+
+                  <input matInput
+                         [formControl]="myControl"
+                         [matAutocomplete]="auto"
+                         [(ngModel)]="streamerKeyword"
+                         (ngModelChange)="streamerKeywordChanged(auto)"
+                         mdbInput
+                         type="text" id="formControlTwitchLink" class="form-control"/>
+                  <label mdbLabel class="form-label" for="formControlTwitchLink">Streamer</label>
+
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="changeCurrStreamer($event.option.value)">
+                    <mat-option class="streamer-autocomplete"
+                                *ngFor="let info of filterStreamers" [value]="info.name">{{ info.name }}</mat-option>
+                  </mat-autocomplete>
+
+              </mdb-form-control>
+
+              <div class="d-flex align-items-center justify-content-center">
+                <mdb-form-control>
+                  <input mdbInput type="text" id="formControlSearch" class="form-control"
+                         [(ngModel)]="scheduleImgSrc"
+                         [disabled]="!currentStreamerInfo"/>
+                  <label mdbLabel class="form-label" for="formControlSearch">Schedule Url</label>
+                </mdb-form-control>
+
+                <a *ngIf="scheduleImgSrc"
+                   class="d-flex align-items-center justify-content-center"
+                   [style.width]="'30px'"
+                   [style.height]="'30px'"
+                   role="button"
+                   (click)="reloadOCRSchedule()">
+                  <i class="fas fa-redo-alt" ></i>
+                </a>
+              </div>
+            </div>
+
+          <div class="voice-list d-flex flex-wrap mt-2 gap-2">
+
+            <div *ngFor="let ocr of ocrSchedule"
+              class="date-content">
+
+              <div class="date-content-title">Date: {{ocr.date}}</div>
+              <div *ngFor="let stream of ocr.streams; let index=index" class="date-stream-content">
+                <div>{{index+1}}.
+                  <div class="d-flex flex-column w-100 gap-2">
+                    <mdb-form-control>
+                      <input mdbInput type="text" [id]="'formControlLg-'+index" class="form-control form-control-sm" [(ngModel)]="stream.title" />
+                      <label mdbLabel class="form-label" [for]="'formControlLg-'+index">title</label>
+                    </mdb-form-control>
+
+                    <mdb-form-control>
+                      <input mdbInput type="text" [id]="'formControlDate-'+index" class="form-control form-control-sm"
+                             placeholder="YYYY-MM-DD"
+                             [(ngModel)]="stream.date"
+                             (ngModelChange)="updateTimestampAndText(stream)"/>
+                      <label mdbLabel class="form-label" [for]="'formControlDate-'+index">Date</label>
+                    </mdb-form-control>
+                    <mdb-form-control>
+                      <input mdbInput type="text" [id]="'formControlTime'+index" class="form-control form-control-sm"
+                             placeholder="HH:mm"
+                             [(ngModel)]="stream.time"
+                             (ngModelChange)="updateTimestampAndText(stream)"/>
+                      <label mdbLabel class="form-label" [for]="'formControlTime'+index">Time</label>
+                    </mdb-form-control>
+
+                    <mdb-form-control class="mb-2">
+                      <input matInput
+                             [formControl]="stream.formControl"
+                             [matAutocomplete]="autoTz"
+                             [(ngModel)]="stream.timezone"
+                             mdbInput
+                             type="text" [id]="'formControlTimezone-'+index" class="form-control form-control-sm"/>
+                      <label mdbLabel class="form-label" [for]="'formControlTimezone-'+index">Timezone</label>
+
+                      <mat-autocomplete #autoTz="matAutocomplete" (optionSelected)="updateTimestampAndText(stream)">
+                        <mat-option class="streamer-autocomplete"
+                                    *ngFor="let tz of tzService.timezones" [value]="tz.value">{{ tz.text }}</mat-option>
+                      </mat-autocomplete>
+                    </mdb-form-control>
+
+                  </div>
+                </div>
+                <div>TZ: {{stream.scheduleOrigDisplayText}}</div>
+                <div>Current TZ: {{stream.scheduleTzDisplayText}}</div>
+
+                <app-feat-streamer class="mt-1"
+                                   [smallStyle]="true"
+                                   [featStreamers]="stream.featStreamers"></app-feat-streamer>
+
+                <div class="d-flex flex-row-reverse">
+                  <ng-container *ngIf="stream.createdStatus === 'SUCCESS'; else isLoadingTmp">
+                    <i class="fas fa-check"></i>
+                  </ng-container>
+                  <ng-template #isLoadingTmp>
+                    <ng-container *ngIf="stream.createdStatus === 'LOADING'; else uncreatedTmp">
+                      <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </ng-container>
+                  </ng-template>
+                  <ng-template #uncreatedTmp >
+                    <button  type="button" class="btn btn-link btn-sm btn-rounded"
+                             (click)="confirmCreate(stream)">
+                      Confirm
+                    </button>
+                  </ng-template>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+</div>

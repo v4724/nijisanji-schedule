@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment-timezone'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import { openUrl } from '@app/feature/schedule/utils'
 import { DateService } from '@app/feature/schedule/date/date.service'
 
@@ -11,12 +11,12 @@ import { DateService } from '@app/feature/schedule/date/date.service'
 })
 export class DateComponent implements OnInit {
 
-  streams: Array<FirebaseStreamViewItem> = []
+  streams: Array<StreamViewItem> = []
 
   displayDateText: string = ''
 
-  hours: Map<string, Array<FirebaseStreamViewItem>> = new Map()
-  data: Array<{ hour: string, streams: Array<FirebaseStreamViewItem>}> = []
+  hours: Map<string, Array<StreamViewItem>> = new Map()
+  data: Array<{ hour: string, streams: Array<StreamViewItem>}> = []
 
   openUrl = openUrl
   constructor(public dateService: DateService) {
@@ -48,7 +48,7 @@ export class DateComponent implements OnInit {
 
   resetData(): void {
     this.data = []
-    this.hours = new Map<string, Array<FirebaseStreamViewItem>>()
+    this.hours = new Map<string, Array<StreamViewItem>>()
     for (let hour = 0; hour < 24; hour++) {
       const tmpHour = hour.toString().padStart(2, '0')
       this.hours.set(`${tmpHour}`,[])

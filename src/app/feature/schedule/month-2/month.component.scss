@@ -1,7 +1,7 @@
 
 tbody tr td {
   &.is-today {
-    background-color: var(--is-today);
+    background-color: var(--primary-color-ocpacity-15);
   }
 }
 
@@ -40,8 +40,10 @@ th {
 
 .header-week {
   min-width: 150px;
-  background-color: var(--column-title-color);
+  background-color: var(--second-color);
+  color: var(--second-color-oppsite);
   font-size: 1rem;
+  font-weight: 700;
 }
 
 .col-week {
@@ -53,7 +55,7 @@ th {
 
 .col-week-div {
   .day {
-    background-color: var(--is-today);
+    background-color: var(--primary-color-ocpacity-15);
     padding: 0.15rem;
     border-radius: 50%;
   }

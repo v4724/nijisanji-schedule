@@ -1,0 +1,29 @@
+
+.stream-group-button {
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #bbbbbb;
+  margin-left: 0.25rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  padding: 0rem 0.75rem;
+
+  &.active {
+    color: var(--third-color-oppsite);
+    background-color: var(--third-color);
+    border-color: var(--third-color);
+    border-right-color: rgb(187, 187, 187);
+    border-right-style: solid;
+    border-right-width: 2px;
+    border-bottom-color: rgb(187, 187, 187);
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+  }
+}
+
+@media (max-width: 425px) {
+  .stream-group-button {
+    padding: 0rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}

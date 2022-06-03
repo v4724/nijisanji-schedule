@@ -1,7 +1,9 @@
 <div class="d-flex flex-wrap align-items-center">
   Group:
-  <app-button
-    [groups]="groups"
-    (toggleSelection)="toggleSelection($event)"
-  ></app-button>
+  <button *ngFor="let group of groups"
+          class="stream-group-button"
+          [class.active]="group.checked"
+          (click)="toggleSelection(group)" >
+    {{ group.text }}
+  </button>
 </div>

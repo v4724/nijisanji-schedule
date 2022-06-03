@@ -11,9 +11,9 @@
   top: 1rem;
   z-index: 1;
   width: auto;
-  border: 1px rgba(0, 0, 0, 0.53) solid;
+  border: 1px rgba(0, 0, 0, 0.05) solid;
   border-radius: 10px;
-  box-shadow: 1px 1px 2px #6a69695c;
+  box-shadow: 5px 5px 5px 5px #6a696926;
   background-color: #ffffff;
   cursor: default;
 
@@ -21,8 +21,18 @@
   max-width: 300px;
 }
 
+.mask {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 .streamer-icon-block {
   margin-bottom: 0.25rem;
+  margin-right: 0.25rem;
+
+  select {
+    font-size: 0.8rem;
+  }
 }
 
 
@@ -84,4 +94,33 @@
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip-div:hover .tooltiptext {
   visibility: visible;
+}
+
+.checked-icon-block {
+  border-radius: 5px;
+  border: solid 1px;
+  height: 1.25rem;
+  width: 1.25rem;
+
+  color: var(--third-color);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.checked {
+    background-color: var(--third-color);
+    i {
+      color: var(--third-color-oppsite);
+    }
+  }
+}
+
+.editable-btn-block {
+  .btn-outline-primary {
+    padding: 0.3rem 1rem 0.175rem 1rem;
+  }
+  .btn-primary {
+    padding: 0.375rem 1rem 0.275rem 1rem;
+  }
 }

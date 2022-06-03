@@ -1,0 +1,32 @@
+
+.theme-content .text {
+  //max-width: 0;
+  max-height: 0;
+  //transition: max-width 0.5s;
+  transition: max-height 0.5s;
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.theme-content:hover .text {
+  //max-width: 7rem;
+  max-height: 9rem;
+  transition-delay: 0.1s;
+}
+
+.theme-content .separator {
+  display: inline-block;
+  //width: 0;
+  height: 0;
+  //transition: width 0.1s;
+  transition: height 0.1s;
+  transition-delay: 0.5s;
+}
+
+.theme-content:hover .separator {
+  //width: 0.3em;
+  //height: 0.3em;
+  transition-delay: unset;
+}

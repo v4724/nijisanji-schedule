@@ -17,7 +17,7 @@
 
 tbody tr td {
   &.is-today {
-    background-color: var(--is-today);
+    background-color: var(--primary-color-ocpacity-15);
   }
 }
 
@@ -39,9 +39,12 @@ th {
 
 .stream-streamer-header,
 .stream-date-header {
-  background-color: var(--column-title-color);
+  background-color: var(--second-color);
+  color: var(--second-color-oppsite);
   min-width: 100px;
   font-size: 1rem;
+  padding: 0.5rem;
+  font-weight: 700;
 }
 tbody .data-streamer {
   position: sticky;
@@ -55,6 +58,8 @@ tbody .data-streamer {
 
 .table-block {
   overflow-y: scroll;
+  border-top-right-radius: 1.2rem;
+  border-top-left-radius: 1.2rem;
 }
 
 /* Tooltip container */

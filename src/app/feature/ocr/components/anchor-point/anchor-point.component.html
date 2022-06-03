@@ -1,0 +1,16 @@
+
+<div class="anchor-point-cmp d-flex gap-2" *ngIf="anchorPoint">
+  <div class="title d-inline-flex">{{title}}</div>
+
+  <mdb-form-control >
+    <input mdbInput type="text" [id]="'formControlMonthX-'+index" class="form-control"
+           [(ngModel)]="anchorPoint.x" (ngModelChange)="change()"/>
+    <label mdbLabel class="form-label" [for]="'formControlMonthX-'+index">X</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" [id]="'formControlMonthY-'+index" class="form-control"
+           [(ngModel)]="anchorPoint.y" (ngModelChange)="change()"/>
+    <label mdbLabel class="form-label" [for]="'formControlMonthY-'+index">Y</label>
+  </mdb-form-control>
+
+</div>

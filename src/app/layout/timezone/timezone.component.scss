@@ -1,0 +1,32 @@
+.mobile-462-size {
+ display: flex;
+}
+
+@media (max-width: 375px) {
+  .mobile-462-size {
+    display: none;
+  }
+}
+
+.timezone-cmp {
+
+  .tz-select {
+    border: 0px solid #bdbdbd;
+    background-color: #ffffff00;
+  }
+
+  select {
+    padding-right: 0.1rem;
+    padding-left: 0.25rem;
+  }
+
+  select option{
+    &.local-timezone {
+      background-color: var(--primary-color-ocpacity-15);
+    }
+    &.active {
+      color: var(--is-active);
+    }
+  }
+
+}

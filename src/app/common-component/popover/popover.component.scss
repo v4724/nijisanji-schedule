@@ -1,0 +1,75 @@
+
+.popover-cmp {
+  top: 0.3rem;
+  right: 0px;
+  z-index: 2;
+
+  .pop-view-arrow {
+    //top: 0.25rem;
+
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    width: 0.8rem;
+    height: 0.8rem;
+    transform: rotateZ(45deg);
+    background: white;
+    border-color: white;
+  }
+
+  .pop-view-connect {
+    position: absolute;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.popover-cmp .content {
+  display: none;
+  //right: -2rem;
+  margin-top: 0.25rem;
+  z-index: 1;
+  width: auto;
+  border: 1px rgba(0, 0, 0, 0.05) solid;
+  border-top-width: 0px;
+  border-radius: 10px;
+  box-shadow: 3px 4px 5px 2px #6a696926;
+  background-color: #ffffff;
+  cursor: default;
+
+  //min-width: 300px;
+  //max-width: 300px;
+}
+
+.mask {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.streamer-icon-block {
+  margin-bottom: 0.25rem;
+  margin-right: 0.25rem;
+
+  select {
+    font-size: 0.8rem;
+  }
+}
+
+
+.popover-cmp.active {
+  .content {
+    display: flex;
+  }
+  .pop-view-arrow {
+    display: flex;
+  }
+}
+
+.popover-cmp.hover :hover {
+  .content {
+    display: flex;
+  }
+  .pop-view-arrow {
+    display: flex;
+  }
+}

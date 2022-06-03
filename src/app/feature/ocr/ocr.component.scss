@@ -1,0 +1,54 @@
+
+.ocr-cmp {
+
+  @media (max-width: 768px) {
+    .voice-container, .streamer-container {
+      max-height: calc(100% - 300px)
+    }
+  }
+
+  .voice-list a:hover {
+    color: gold;
+  }
+
+  .voice-button-content .row{
+    border-top: 1px solid #8a989e;
+    border-bottom: 1px solid #8a989e;
+  }
+
+  .text {
+    color: coral
+  }
+
+  .date-content {
+    background-color: #ffffffb3;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    width: 100%;
+
+    .date-content-title {
+      font-size: 0.5rem;
+      font-weight: 800;
+    }
+  }
+
+  .date-stream-content {
+    font-size: 0.5rem;
+    padding: 0.25rem;
+  }
+}
+
+.cdk-overlay-pane {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: solid 1px;
+}
+
+.streamer-autocomplete {
+  background-color: rgba(243, 243, 243, 0.85);
+  height: 2rem;
+
+  &:hover {
+    background-color: #edecec;
+  }
+}

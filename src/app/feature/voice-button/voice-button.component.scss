@@ -1,0 +1,14 @@
+
+@media (max-width: 767px) {
+  .voice-container, .streamer-container {
+    max-height: calc(100% - 300px)
+  }
+}
+
+.voice-list a:hover {
+  color: gold;
+}
+
+.voice-button-content {
+  padding-left: calc(1.5rem * 0.5);
+}

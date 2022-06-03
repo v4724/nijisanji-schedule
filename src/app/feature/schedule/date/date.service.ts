@@ -1,43 +1,41 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone'
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { Moment } from 'moment-timezone'
 import { setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
-import { Stream } from '@app/feature/schedule/test/dto/Stream'
-import { FirebaseService } from '@app/service/firebase.service'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
-import { filter, tap } from 'rxjs/operators'
-import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
-import { setDisplayValue } from '@app/feature/schedule/data'
+import { StreamVo, setDisplayValue } from '@app/model/vo/StreamVo'
+import { StreamService } from '@app/service/stream.service'
+import { StreamGroupService } from '@app/service/stream-group.service'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class DateService {
-  allStreams: Array<Stream> = []
-  filterStreams$: BehaviorSubject<Array<FirebaseStreamViewItem>> = new BehaviorSubject<Array<FirebaseStreamViewItem>>([])
+  allStreams: Array<StreamVo> = []
+  filterStreams$: BehaviorSubject<Array<StreamViewItem>> = new BehaviorSubject<Array<StreamViewItem>>([])
 
   date$: BehaviorSubject<Moment> = new BehaviorSubject(moment())
   startTimestamp: number = moment().valueOf()
   endTimestamp: number = moment().valueOf()
 
-  groups: Array<StreamerGroup> = []
+  groups: Array<string> = []
   timezone = ''
 
   subscription: Subscription | undefined
 
   constructor(private tzService: TimezoneService,
-              private firebaseService: FirebaseService,
+              private firebaseService: StreamService,
               private streamGroupService: StreamGroupService,
-              private rainbowLoaderService: RainbowLoaderService) {
+              private rainbowLoaderService: RainbowLoaderService,
+              private streamerInfoService: StreamerInfoService) {
 
     combineLatest([
       this.tzService.timezone$,
-      this.streamGroupService.group$
+      this.streamGroupService.selectedGroup$
     ])
       .subscribe((result) => {
         const timezone = result[0]
@@ -59,13 +57,13 @@ export class DateService {
     this.updateStreams()
   }
 
-  changeTimezone(): void {
+  private changeTimezone(): void {
     const date = this.date$.getValue().tz(this.timezone)
     this.date$.next(date)
     this.updateStreams()
   }
 
-  updateStreams(): void {
+  public updateStreams(): void {
     const date = this.date$.getValue()
     this.startTimestamp = setMidnightStartMoment(date.clone()).valueOf()
     this.endTimestamp = setMidnightEndMoment(date.clone()).valueOf()
@@ -90,8 +88,8 @@ export class DateService {
   updateFilterStreams(): void {
     const filterStreams = this.allStreams.filter((s) => {
 
-      const streamer = findStreamerInfo(s.streamer)
-      if (streamer) {
+      const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
+      if (streamer && streamer.group) {
         if (this.groups.indexOf(streamer.group) > -1) {
           return true
         }
@@ -100,11 +98,11 @@ export class DateService {
     })
 
     filterStreams.map((stream) => {
-      const viewItem = stream as FirebaseStreamViewItem
-      setDisplayValue(viewItem, this.timezone)
+      const viewItem = stream as StreamViewItem
+      setDisplayValue(viewItem, this.timezone, this.streamerInfoService)
       return viewItem
     })
 
-    this.filterStreams$.next(filterStreams as Array<FirebaseStreamViewItem>)
+    this.filterStreams$.next(filterStreams as Array<StreamViewItem>)
   }
 }

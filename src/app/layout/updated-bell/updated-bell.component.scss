@@ -1,0 +1,52 @@
+
+.updated-bell-cmp {
+
+  .record {
+    display: block;
+    padding: 0.25rem 0.5rem 0.25rem 0rem;
+    color: #666;
+    border-bottom: #EEE 1px solid;
+    cursor: default;
+    transition: background-color 200ms;
+  }
+
+  .record.footer {
+    border-bottom: 0px solid;
+  }
+
+  .record:hover {
+    background-color: rgba(224, 224, 224, 0.8);
+  }
+
+  .type {
+    font-size: 0.5rem;
+    font-weight: 800;
+  }
+
+  .message {
+    font-size: 0.8rem;
+  }
+
+  .updated-time {
+    font-size: 0.5rem;
+    color: #3e3e3e;
+  }
+
+  .content {
+    width: 400px;
+  }
+}
+
+@media (max-width: 425px) {
+  .updated-bell-cmp .content{
+    width: 300px;
+  }
+}
+
+@media (max-width: 320px) {
+  .updated-bell-cmp .content{
+    width: 250px;
+  }
+}
+
+

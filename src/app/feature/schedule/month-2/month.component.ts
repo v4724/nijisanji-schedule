@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Day, HourStreams, MonthHeader, WeekItem } from './types'
 import { headers } from './data'
 import * as moment from 'moment-timezone'
-import { FirebaseStreamViewItem as StreamViewItem } from '../type'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import { openUrl } from '@app/feature/schedule/utils'
 import { MonthService } from '@app/feature/schedule/month-2/month.service'
 import { Moment } from 'moment-timezone'

@@ -1,10 +1,11 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router'
+import { AdminService } from '@app/service/admin.service'
 
 enum Schedule {
   Date='date',
   Month='month',
-  Week='',
+  Week='week',
   New='new'
 }
 
@@ -14,11 +15,11 @@ enum Schedule {
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
-  isDevMode = isDevMode
 
   Schedule = Schedule
   current: Schedule = Schedule.Week
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              public adminService: AdminService) { }
 
   ngOnInit(): void {
     const url = this.router.url
@@ -35,7 +36,8 @@ export class ScheduleComponent implements OnInit {
 
   updateCurrentByUrl(url: string): void {
     if (url.startsWith('/')) {
-      url = url.substr(1, url.length)
+      const index = url.lastIndexOf('/')
+      url = url.substr(index + 1, url.length)
     }
     this.current = url as Schedule
   }

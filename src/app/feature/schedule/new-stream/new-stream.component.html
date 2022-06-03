@@ -1,0 +1,20 @@
+
+<div class="mt-2 d-flex flex-column h-100">
+
+  <div appScrollBorder class="h-1 flex-grow-1">
+    <app-stream-detail #itemCmpRef [item]="item"></app-stream-detail>
+  </div>
+
+  <div class="d-flex flex-row-reverse col-gap-1 my-2">
+    <button class="btn btn-primary" type="button" (click)="submit()"
+            [disabled]="submitLoading || !itemCmpRef.isValid">
+      Submit
+    </button>
+    <button class="btn btn-outline-primary" type="button" (click)="itemCmpRef.clear()">Clear</button>
+  </div>
+
+</div>
+
+<!--<button class="btn btn-primary" type="button" (click)="batchImport()">-->
+<!--  batch import stream-->
+<!--</button>-->

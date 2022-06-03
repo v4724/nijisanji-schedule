@@ -1,7 +1,7 @@
-<div class="d-flex flex-column justify-content-center h-100">
-  <div class="d-flex">
+<div class="d-flex flex-column justify-content-center h-100 pb-3">
+  <div class="d-flex align-items-center">
     <div class="d-flex align-items-center title my-2">
-    {{ displayDateText }}
+      {{ displayDateText }}
     </div>
     <div class="d-flex align-items-center">
       <div class="change-date-icon cursor-pointer m-2" (click)="changeDate(-1)"><</div>
@@ -10,6 +10,11 @@
       </div>
       <div class="change-date-icon cursor-pointer m-2" (click)="changeDate(+1)">></div>
     </div>
+    <a class="mx-3"
+       role="button"
+       (click)="dateService.updateStreams()">
+      <i class="fas fa-refresh"></i>
+    </a>
 
     <app-mascot-img src="assets/imgs/ike/oh.png"></app-mascot-img>
   </div>
@@ -34,7 +39,7 @@
             <td>
               <div *ngFor="let stream of row.streams"
                    class="d-flex d-inline-flex time-stream-block my-1 py-1 px-2"
-                   [ngClass]="stream.streamerInfo.bgColor">
+                  [style]="stream.streamerInfo.bgColor">
                 <app-display-text [stream]="stream">
                   【{{ stream.streamer }}】{{ stream.title }} {{ stream.displayTime }}
                 </app-display-text>

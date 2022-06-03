@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { groups, StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
+import { Component, OnInit } from '@angular/core'
+import { StreamGroupService } from '@app/service/stream-group.service'
+import { cloneDeep } from 'lodash'
 
 export interface Group {
   text: string,
@@ -15,35 +15,51 @@ export interface Group {
 export class StreamGroupComponent implements OnInit {
 
   groups: Array<Group> = []
-  selectedGroups: Array<StreamerGroup> = []
+  selectedGroups: Array<string> = []
 
   constructor(private streamGroupService: StreamGroupService) { }
 
   ngOnInit(): void {
-    this.selectedGroups = this.streamGroupService.group$.getValue()
 
-    groups.forEach(group => {
-      this.groups.push({
-        text: group,
-        checked: this.selectedGroups.indexOf(group as StreamerGroup) > -1
+    this.streamGroupService.group$.subscribe((groups) => {
+      this.groups = []
+      groups.forEach(group => {
+        this.groups.push({
+          text: group,
+          checked: true
+        })
       })
+
+      this.updateCheckedStatus()
+    })
+
+    this.streamGroupService.selectedGroup$.subscribe((result) => {
+      this.selectedGroups = cloneDeep(result)
+      this.updateCheckedStatus()
+    })
+  }
+
+  updateCheckedStatus(): void {
+    this.groups.forEach((group) => {
+      const isSelected = this.selectedGroups.find((s) => s === group.text)
+      group.checked = !!isSelected
     })
   }
 
   toggleSelection(group: Group): void {
     group.checked = !group.checked
-    const index = this.selectedGroups.indexOf(group.text as StreamerGroup)
+    const index = this.selectedGroups.indexOf(group.text)
 
     if (index > -1) {
       this.selectedGroups.splice(index, 1)
     } else {
-      this.selectedGroups.push(group.text as StreamerGroup)
+      this.selectedGroups.push(group.text)
     }
 
     this.changeGroup()
   }
 
   changeGroup(): void {
-    this.streamGroupService.group$.next(this.selectedGroups)
+    this.streamGroupService.selectedGroup$.next(this.selectedGroups)
   }
 }

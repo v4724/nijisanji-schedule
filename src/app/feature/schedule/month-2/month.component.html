@@ -1,5 +1,5 @@
 
-<div class="d-flex flex-column justify-content-center h-100 position-relative">
+<div class="d-flex flex-column justify-content-center h-100 position-relative pb-3">
   <div class="d-flex align-items-center my-2">
     <div class="month-title">
       {{ title }}
@@ -11,6 +11,13 @@
       </div>
       <div class="change-month-icon cursor-pointer m-2" (click)="changeMonth(+1)">></div>
     </div>
+
+    <a class="mx-3"
+       role="button"
+       (click)="monthService.updateStreams()">
+      <i class="fas fa-refresh"></i>
+    </a>
+
     <app-mascot-img src="assets/imgs/ike/araara.png"></app-mascot-img>
 
   </div>
@@ -47,7 +54,7 @@
                         {{ stream.streamerInfo.name }}
                       </span>
                       <div class="d-flex flex-column position-absolute streamer-detail tooltiptext"
-                           [ngClass]="stream.streamerInfo.bgColor">
+                           [style]="stream.streamerInfo.bgColor">
                         <app-display-text [stream]="stream">
                           {{ stream.title }} {{ stream.displayTime }}
                         </app-display-text>

@@ -1,0 +1,112 @@
+<div class="container h-100 d-flex flex-column">
+
+  <div class="fs-4 d-flex align-items-center justify-content-center mt-2">
+    Voice Button
+  </div>
+
+  <div class="d-flex">
+    <button type="button" class="ms-auto btn btn-link btn-sm btn-rounded"
+            (click)="adminService.openVoiceButtonInfoModal(true, voiceButtonInfoVo)">
+      New
+    </button>
+  </div>
+
+  <div class="voice-button-content h-1 flex-grow-1">
+    <div class="row h-100 w-100"
+         [style.border]="'solid 1px'">
+        <div class="yt-iframe col-12 col-lg-7 col-md-7 position-relative"
+             [style.min-height]="'300px'">
+
+          <ng-container *ngIf="ytIframeSource; else emptySourceTemplate">
+            <iframe id="ytplayer" type="text/html"
+                  class="position-absolute"
+                  [src]="ytIframeSource"
+                  frameborder="0" allow="autoplay"
+                  [style.height]="'100%'"
+                  [style.width]="'calc(100% - 1.5rem * 0.5)'"></iframe>
+          </ng-container>
+          <ng-template #emptySourceTemplate>
+            <div class="d-flex align-items-center justify-content-center h-100 w-100">
+              choose one
+            </div>
+          </ng-template>
+
+
+        </div>
+        <div appScrollBorder class="voice-container col-7 col-lg-3 col-md-3 py-2 h-100">
+            <div class="streamer-figure d-flex flex-wrap align-items-center justify-content-center">
+              <div class="playing-toolbar d-flex">
+                <a class="d-flex align-items-center justify-content-center"
+                   [style.width]="'30px'"
+                   [style.height]="'30px'"
+                   [class.disabled]="!ytIframeSource"
+                   role="button"
+                    (click)="playAgain()">
+                  <i class="fas fa-redo-alt"></i>
+                </a>
+                <a *ngIf="currentVoiceButton && adminService.editable$ | async"
+                   class="d-flex align-items-center justify-content-center"
+                   [style.width]="'30px'"
+                   [style.height]="'30px'"
+                   role="button"
+                   (click)="editVoiceButtonInfo($event, currentVoiceButton)">
+                  <i class="fas fa-pen"></i>
+                </a>
+                <a class="d-flex align-items-center justify-content-center"
+                   [style.width]="'30px'"
+                   [style.height]="'30px'"
+                   [class.disabled]="!ytIframeSource"
+                   role="button"
+                   (click)="ytIframeSource=undefined">
+                  <i class="fas fa-times"></i>
+                </a>
+              </div>
+              <img class="rounded-circle m-2"
+                   [src]="currentStreamerInfo?.img"
+                   [style.width]="'100px'"
+                   [style.height]="'100px'">
+            </div>
+            <div class="voice-block-search d-flex align-items-center justify-content-center">
+              <mdb-form-control>
+                <input mdbInput type="text" id="formControlSearch" class="form-control" [(ngModel)]="keyword" (ngModelChange)="keywordChanged()"/>
+                <label mdbLabel class="form-label" for="formControlSearch">Keyword</label>
+              </mdb-form-control>
+              <a class="ms-1"
+                 role="button"
+                 (click)="forceReloadVoiceButton()">
+                <i class="fas fa-sync-alt"></i>
+              </a>
+            </div>
+
+            <div class="voice-list d-flex flex-wrap">
+              <button type="button" class="btn btn-link btn-sm btn-rounded d-flex align-items-center justify-content-center"
+                      *ngFor="let button of filterVoiceButtons"
+                      (click)="changeVoiceButton(button)">
+
+                  {{ button.text }}
+                  <a *ngIf="adminService.editable$ | async"
+                    class="ms-1"
+                    role="button"
+                    (click)="editVoiceButtonInfo($event, button)">
+                    <i class="fas fa-pen"></i>
+                  </a>
+
+              </button>
+            </div>
+        </div>
+
+        <div appScrollBorder class="streamer-container col-5 col-lg-2 col-md-2 pb-2 h-100">
+          <div class="fs-6 d-flex align-items-center justify-content-center mt-2">
+            Streamer
+          </div>
+           <button type="button" class="ms-auto btn btn-link btn-sm btn-rounded"
+                   *ngFor="let streamer of streamers"
+                   (click)="changeCurrStreamer(streamer)">
+              {{ streamer.name }}
+            </button>
+        </div>
+
+    </div>
+  </div>
+
+</div>

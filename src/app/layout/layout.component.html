@@ -1,3 +1,104 @@
-<div class="h-100">
-  <router-outlet></router-outlet>
-</div>
+
+<header class="h-100 wrapper">
+
+<!--  <div class="wave one"></div>-->
+<!--  <div class="wave two"></div>-->
+<!--  <div class="wave three"></div>-->
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-scroll navbar-light">
+      <div class="container-fluid position-relative">
+        <button
+          class="navbar-toggler"
+          type="button"
+          (click)="backgroundImageExample2.toggle()"
+          aria-controls="backgroundImageExample2"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <div
+          mdbCollapse
+          #backgroundImageExample2="mdbCollapse"
+          class="collapse navbar-collapse"
+          id="backgroundImageExample2"
+        >
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<!--            <li class="nav-item active">-->
+<!--              <a class="nav-link" aria-current="page" href="#" (click)="click()">Home</a>-->
+<!--            </li>-->
+            <li class="nav-item">
+              <a class="nav-link" href="#/streamer" (click)="click()">Streamer</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#/schedule" (click)="click()">Schedule</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#/voiceButton" (click)="click()">Voice Button</a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" href="#/setting" (click)="click()">Setting</a>-->
+<!--            </li>-->
+            <li class="nav-item">
+              <a class="nav-link" href="#/ocr" (click)="click()">OCR</a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" href="#" (click)="backgroundImageExample2.toggle()">About</a>-->
+<!--            </li>-->
+          </ul>
+
+        </div>
+
+        <a class="nav-link nav-link-icon home mobile-425-size position-absolute" href="#/schedule">
+          <i class="fas fa-home"></i>
+        </a>
+
+        <div class="d-flex ms-auto align-items-center">
+          <app-timezone class="item "></app-timezone>
+
+          <app-theme-color class="nav-link-icon"></app-theme-color>
+          <ng-container *ngIf="adminService.isLogin$ | async">
+            <a class="nav-link-icon d-flex align-items-center justify-content-center"
+               [style.width]="'30px'"
+               role="button"
+               (click)="adminService.editToggle()">
+              <i class="fas fa-pen-nib"
+                 [class]="{ 'editable': adminService.editable$ | async }"
+              ></i>
+            </a>
+          </ng-container>
+          <app-updated-bell class="nav-link-icon" (click)="click()"></app-updated-bell>
+          <app-login class="nav-link-icon"></app-login>
+        </div>
+
+      </div>
+  </nav>
+  <!-- Navbar -->
+
+  <div class="h-100 flex-grow-1 content-block pb-5">
+    <router-outlet></router-outlet>
+  </div>
+
+  <footer class="bg-light text-center text-lg-start position-relative">
+    <!-- Copyright -->
+    <div class="text-center p-1 position-absolute footer" >
+      <div class="d-flex justify-content-center col-gap-1">
+        Resource:
+        <a href="https://codepen.io/jackrugile/pen/JddmaX">
+          Rainbow Loader
+        </a>
+        <div>
+          Official Image Copyright By Source.
+        </div>
+      </div>
+    </div>
+    <!-- Copyright -->
+  </footer>
+</header>
+
+
+<app-rainbow-loader>
+</app-rainbow-loader>
+
+<app-toast></app-toast>

@@ -1,0 +1,86 @@
+<div class="d-flex flex-column gap-2">
+
+  <div class="yt-iframe d-flex align-items-center justify-content-center position-relative"
+       [style.min-height]="'300px'">
+    <ng-container *ngIf="ytIframeSource; else emptySourceTemplate">
+      <iframe id="ytplayer" type="text/html"
+              class="position-absolute"
+              [src]="ytIframeSource"
+              frameborder="0" allow="autoplay"
+              [style.height]="'100%'"
+              [style.width]="'100%'"></iframe>
+    </ng-container>
+    <ng-template #emptySourceTemplate>
+      <div class="d-flex align-items-center justify-content-center h-100 w-100">
+        Enter a valid Start, End and Video Id.
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center">
+    <button type="button" class="btn btn-link btn-sm btn-rounded"
+            [disabled]="!isVideoValid"
+            (click)="changeYtInfo(true)">
+          preview
+    </button>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center">
+    <button type="button" class="btn btn-link btn-sm btn-rounded"
+            [disabled]="editItem.start <= 1"
+            (click)="minusStart()">
+          <
+    </button>
+    <mdb-form-control>
+      <input mdbInput type="text" id="formControlTitle" class="form-control" placeholder="00:00:00" [(ngModel)]="start" (ngModelChange)="startChanged()"/>
+      <label mdbLabel class="form-label" for="formControlTitle">Start</label>
+    </mdb-form-control>
+    <button type="button" class="btn btn-link btn-sm btn-rounded"
+            (click)="plusStart()">
+          >
+    </button>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center">
+    <button type="button" class="btn btn-link btn-sm btn-rounded"
+            [disabled]="editItem.end <= 1"
+            (click)="minusEnd()">
+          <
+    </button>
+    <mdb-form-control>
+      <input mdbInput type="text" id="formControlChannelId" class="form-control" placeholder="00:00:00" [(ngModel)]="end" (ngModelChange)="endChanged()"/>
+      <label mdbLabel class="form-label" for="formControlChannelId">End</label>
+    </mdb-form-control>
+    <button type="button" class="btn btn-link btn-sm btn-rounded"
+            (click)="plusEnd()">
+          >
+    </button>
+  </div>
+
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlYoutubeLink" class="form-control" [(ngModel)]="editItem.videoId"/>
+    <label mdbLabel class="form-label" for="formControlYoutubeLink">Video Id</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlTwitterLink" class="form-control" [(ngModel)]="editItem.text"/>
+    <label mdbLabel class="form-label" for="formControlTwitterLink">Text</label>
+  </mdb-form-control>
+  <mdb-form-control class="mb-2">
+
+      <input matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto"
+             [(ngModel)]="editItem.streamer"
+             (ngModelChange)="streamerKeywordChanged(auto)"
+             mdbInput
+             type="text" id="formControlTwitchLink" class="form-control"/>
+      <label mdbLabel class="form-label" for="formControlTwitchLink">Streamer</label>
+      <mdb-error *ngIf="editItem.streamer.length && !isValidStreamer">invalid</mdb-error>
+
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option class="streamer-autocomplete"
+          *ngFor="let info of filterStreamers" [value]="info.name">{{info.name}}</mat-option>
+      </mat-autocomplete>
+
+  </mdb-form-control>
+</div>

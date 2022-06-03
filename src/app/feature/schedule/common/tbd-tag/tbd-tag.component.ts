@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Component({
   selector: 'app-tbd-tag',
@@ -11,14 +11,15 @@ export class TBDTagComponent implements OnInit {
   @Input() item!: any;
   @Input() key: string = '';
 
-  constructor() { }
+  constructor(
+    private streamerInfoService: StreamerInfoService) { }
 
   ngOnInit(): void {
   }
 
   get colorClass(): string {
     if (this.item.streamer) {
-      const info = findStreamerInfo(this.item.streamer)
+      const info = this.streamerInfoService.findStreamerInfo(this.item.streamer)
       return info?.color ?? '';
     }
     return ''

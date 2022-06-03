@@ -1,0 +1,16 @@
+
+<div class="anchor-point-cmp d-flex gap-2" *ngIf="pointBoundary">
+  <div class="title d-inline-flex">{{title}}</div>
+
+  <mdb-form-control >
+    <input mdbInput type="text" [id]="'formControlPointBH-'+index" class="form-control"
+           [(ngModel)]="pointBoundary.horizon" (ngModelChange)="change()"/>
+    <label mdbLabel class="form-label" [for]="'formControlPointBH-'+index">Horizon</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" [id]="'formControlPointBV-'+index" class="form-control"
+           [(ngModel)]="pointBoundary.vertical" (ngModelChange)="change()"/>
+    <label mdbLabel class="form-label" [for]="'formControlPointBV-'+index">Vertical</label>
+  </mdb-form-control>
+
+</div>
