@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs'
-import { AngularFirestore, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/compat/firestore'
-// import { Stream } from '@app/feature/schedule/data/Stream'
+import {
+  AngularFirestore,
+  DocumentSnapshot,
+  QuerySnapshot
+} from '@angular/fire/compat/firestore'
 import {
   fromDto,
-  getFeatStream,
-  Stream as FirebaseStream,
+  initStream,
   Stream,
   StreamDto, toStreamData
 } from '@app/feature/schedule/test/dto/Stream'
 import { delay, flatMap, map } from 'rxjs/internal/operators'
-import * as lodash from 'lodash'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
-import { debounceTime } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +32,42 @@ export class FirebaseService {
       .then(() => {
         return true;
       })
+               .catch((err) => {
+                 console.error(err)
+                 return false;
+               })
+  }
+
+  // public get (id: string): Observable<Stream> {
+  //   return this.db.collection<Array<StreamDto>>('streams')
+  //              .doc<StreamDto>(id)
+  //              .get()
+  //              .pipe(
+  //                map((snapshot: DocumentSnapshot<StreamDto>) => {
+  //                  // if (snapshot.exists) {
+  //                  //   return fromDto(snapshot.id, snapshot.data)
+  //                  // }
+  //                  return snapshot.data
+  //                })
+  //              )
+  // }
+
+  public update (id: string, data: StreamDto): Promise<void> {
+    return this.db.collection<StreamDto>('streams')
+               .doc(id)
+               .update(data)
+               .catch((err) => {
+                 console.error(err)
+               })
+  }
+
+  public delete (id: string): Promise<void> {
+    return this.db.collection<StreamDto>('streams')
+               .doc(id)
+               .delete()
+               .catch((err) => {
+                 console.error(err)
+               })
   }
 
   public where (start: number, end: number): Observable<Array<Stream>> {

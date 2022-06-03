@@ -1,5 +1,6 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router'
+import { AdminService } from '@app/service/admin.service'
 
 enum Schedule {
   Date='date',
@@ -14,11 +15,11 @@ enum Schedule {
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
-  isDevMode = isDevMode
 
   Schedule = Schedule
   current: Schedule = Schedule.Week
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              public adminService: AdminService) { }
 
   ngOnInit(): void {
     const url = this.router.url

@@ -21,7 +21,10 @@ import { TBDTagComponent } from './common/tbd-tag/tbd-tag.component';
 import { NewStreamComponent } from './test/new-stream.component'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
 import { CommonComponentModule } from '@app/common-component/common-component.module'
-import { LoginComponent } from '@app/feature/schedule/common/login/login.component'
+import { LoginComponent } from '@app/feature/schedule/common/login/login.component';
+import { StreamDetailComponent } from './common/stream-detail/stream-detail.component';
+import { EditModalComponent } from './common/edit-modal/edit-modal.component'
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal'
 
 const routes: Routes = [
   {
@@ -62,7 +65,9 @@ const routes: Routes = [
     ButtonComponent,
     MascotImgComponent,
     TBDTagComponent,
-    NewStreamComponent
+    NewStreamComponent,
+    StreamDetailComponent,
+    EditModalComponent
   ],
   imports: [
     CommonComponentModule,

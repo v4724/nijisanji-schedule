@@ -18,6 +18,8 @@ import { tap } from 'rxjs/operators'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
+import { DisplayText } from '@app/feature/schedule/common/display-text/DisplayText'
+import * as lodash from 'lodash'
 
 @Component({
   selector: 'app-week',
@@ -56,7 +58,8 @@ export class WeekComponent implements OnInit {
               private tzService: TimezoneService,
               private firebaseService: FirebaseService,
               private streamGroupService: StreamGroupService,
-              private rainbowLoaderService: RainbowLoaderService) {
+              private rainbowLoaderService: RainbowLoaderService,)
+  {
   }
 
   ngOnInit(): void {
@@ -119,7 +122,7 @@ export class WeekComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe()
     }
-    console.log('update')
+
     this.subscription = this.firebaseService.where(this.startTimestamp, this.endTimestamp)
         .pipe(
           tap((result) => {
@@ -206,15 +209,12 @@ export class WeekComponent implements OnInit {
       const date = viewItem.displayDate
       const week = streamerMap.get(streamer)
       if (week) {
-        const stream: any = {
-          text: `${ viewItem.title } ${ viewItem.displayTime }`,
-          link: viewItem.link,
-          onSchedule: viewItem.onSchedule,
-          streamerInfo: viewItem.streamerInfo,
-          isCanceled: viewItem.isCanceled,
-          isModified: viewItem.isModified,
-          isUncertain: viewItem.isUncertain,
-        }
+        const stream: DisplayText = Object.assign(
+          lodash.cloneDeep(viewItem),
+          {
+            text: `${ viewItem.title } ${ viewItem.displayTime }`}
+        )
+
         if (week[date]) {
           week[date].push(stream)
         } else {

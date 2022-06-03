@@ -47,7 +47,6 @@ export class MonthComponent implements OnInit {
       .subscribe((result) => {
         this.streams = result[0]
         this.timezone = result[1]
-
         this.updateSchedule(this.year, this.month)
       })
   }

@@ -47,11 +47,6 @@
                     </span>
                     <div class="d-flex flex-column position-absolute streamer-detail tooltiptext"
                          [ngClass]="streamer.info.bgColor">
-                      <ng-container *ngFor="let stream of streamer.streams">
-                        <app-display-text [stream]="stream">
-                          {{ stream.title }} {{ stream.displayTime }}
-                        </app-display-text>
-                      </ng-container>
                     </div>
                   </div>
                 </ng-container>

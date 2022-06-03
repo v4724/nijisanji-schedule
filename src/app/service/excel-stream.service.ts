@@ -18,13 +18,12 @@ export class ExcelStreamService {
   constructor(private firebaseService: FirebaseService) {
 
     this.origData$.subscribe((streams) => {
-      console.log('???', streams.length)
       const map = new Map<number, FirebaseStream>()
       streams.forEach((stream) => {
-        const id = stream.id
+        const id = stream.id as number
         const guestId = stream.guestId
         if (guestId) {
-          const firebaseStream = map.get(id)
+          const firebaseStream = map.get(guestId)
           if (firebaseStream) {
             firebaseStream.featStreamers.push(stream.streamer)
           } else {

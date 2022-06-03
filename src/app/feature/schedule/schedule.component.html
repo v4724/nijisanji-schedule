@@ -13,12 +13,21 @@
          [class.cursor-pointer]="current !== Schedule.Month"
          (click)="current = Schedule.Month">Month</div>
 
-    <div *ngIf="isDevMode()" class="mx-1">|</div>
-    <div *ngIf="isDevMode()" class="schedule-lick py-1 px-2" [routerLink]="Schedule.New"
-         [class.cursor-pointer]="current !== Schedule.New"
-         (click)="current = Schedule.New">New Schedule</div>
+    <ng-container *ngIf="adminService.isDevMode$ | async">
+      <div class="mx-1">|</div>
+      <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.New"
+           [class.cursor-pointer]="current !== Schedule.New"
+           (click)="current = Schedule.New">New Schedule</div>
 
-    <app-login *ngIf="isDevMode()" class="mx-3"></app-login>
+      <app-login class="mx-3"></app-login>
+      <a class="mx-3"
+         role="button"
+         (click)="adminService.editToggle()">
+        <i class="fas fa-pen-nib"
+           [class]="{ 'editable': adminService.editable$ | async }"
+        ></i>
+      </a>
+    </ng-container>
 
     <app-schedule-checked-list></app-schedule-checked-list>
   </div>

@@ -3,6 +3,7 @@ import * as lodash from 'lodash'
 import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
 
 export interface Stream {
+  id: string,
   streamer: string,
   title: string,
   onSchedule: boolean,
@@ -12,7 +13,7 @@ export interface Stream {
   isModified: boolean | null,
   isCanceled: boolean | null,
   featStreamers: Array<string>,
-  mainStreamer: string | null
+  mainStreamer: string
 }
 
 export interface StreamDto {
@@ -31,6 +32,7 @@ export interface StreamDto {
 
 export function initStream (): Stream {
   return {
+    id: '',
     isCanceled: false,
     isModified: false,
     isUncertain: false,
@@ -40,8 +42,12 @@ export function initStream (): Stream {
     timestamp: null,
     title: '',
     featStreamers: [],
-    mainStreamer: null
+    mainStreamer: ''
   }
+}
+
+export function resetStream(stream: Stream): void {
+  Object.assign(stream, initStream())
 }
 
 export function toDto (item: Stream): StreamDto {
@@ -62,9 +68,10 @@ export function toDto (item: Stream): StreamDto {
   return itemDto
 }
 
-export function fromDto (dto: StreamDto): Stream {
+export function fromDto (id: string, dto: StreamDto): Stream {
   const featStreamers = dto.featStreamers?.length ? dto.featStreamers.split(',') : []
   const item: Stream = {
+    id: id,
     streamer: dto.streamer,
     title: dto.title,
     onSchedule: dto.onSchedule,
@@ -74,7 +81,7 @@ export function fromDto (dto: StreamDto): Stream {
     isModified: dto.isModified,
     isCanceled: dto.isCanceled,
     featStreamers: featStreamers,
-    mainStreamer: null
+    mainStreamer: ''
   }
 
   return item
@@ -84,7 +91,7 @@ export function toStreamData (origData: Array<QueryDocumentSnapshot<StreamDto>>)
   const data: Array<Stream> = []
   origData.forEach((doc) => {
     const origItem = doc.data()
-    const item = fromDto(origItem)
+    const item = fromDto(doc.id, origItem)
     data.push(item)
 
     if (item.featStreamers.length) {
@@ -104,6 +111,7 @@ export function getFeatStream (mainStream: Stream, featStreamer: string) :Stream
   feat.streamer = featStreamer as string
   feat.title = `(ref:${mainStream.streamer}) ${mainStream.title}`
   feat.mainStreamer = mainStream.streamer
+  feat.featStreamers = []
 
   return feat
 }
