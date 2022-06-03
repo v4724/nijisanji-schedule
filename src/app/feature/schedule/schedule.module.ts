@@ -21,6 +21,7 @@ import { TBDTagComponent } from './common/tbd-tag/tbd-tag.component';
 import { NewStreamComponent } from './test/new-stream.component'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
 import { CommonComponentModule } from '@app/common-component/common-component.module'
+import { LoginComponent } from '@app/feature/schedule/common/login/login.component'
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+    LoginComponent,
     ScheduleComponent,
     WeekComponent,
     MonthComponent,
@@ -62,12 +64,12 @@ const routes: Routes = [
     TBDTagComponent,
     NewStreamComponent
   ],
-	imports: [
-		CommonComponentModule,
-		RouterModule.forChild(routes),
-		MdbFormsModule,
-		FormsModule,
-		CommonModule
-	]
+  imports: [
+    CommonComponentModule,
+    RouterModule.forChild(routes),
+    MdbFormsModule,
+    FormsModule,
+    CommonModule
+  ]
 })
 export class ScheduleModule { }

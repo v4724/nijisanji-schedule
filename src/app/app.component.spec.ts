@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'nijisanji-schedule'`, () => {
+  it(`should have as title 'nijisanji-schedule-yt'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('nijisanji-schedule');
+    expect(app.title).toEqual('nijisanji-schedule-yt');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('nijisanji-schedule app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('nijisanji-schedule-yt app is running!');
   });
 });

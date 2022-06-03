@@ -11,7 +11,7 @@ export interface Stream {
   isUncertain: boolean | null,
   isModified: boolean | null,
   isCanceled: boolean | null,
-  featStreamers: Array<String> | [],
+  featStreamers: Array<string>,
   mainStreamer: string | null
 }
 

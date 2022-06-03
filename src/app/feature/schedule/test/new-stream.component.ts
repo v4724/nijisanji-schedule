@@ -5,6 +5,7 @@ import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
 import { Stream, initStream, toDto } from '@app/feature/schedule/test/dto/Stream'
 import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { ExcelStreamService } from '@app/service/excel-stream.service'
 
 @Component({
   selector: 'app-test',
@@ -36,7 +37,8 @@ export class NewStreamComponent implements OnInit {
   searchFeatStreamer: string = ''
   findFeatStreamerInfo: StreamerInfo | undefined = undefined
 
-  constructor(public firebaseService: FirebaseService) {
+  constructor(public firebaseService: FirebaseService,
+              private excelStreamService: ExcelStreamService) {
 
 
   }
@@ -117,5 +119,9 @@ export class NewStreamComponent implements OnInit {
       .finally(() => {
         this.submitLoading = false
     })
+  }
+
+  batchImport(): void {
+    this.excelStreamService.readFromExcel()
   }
 }

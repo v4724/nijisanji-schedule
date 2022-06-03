@@ -1,0 +1,15 @@
+
+<div class="d-flex align-items-center justify-content-center">
+  <ng-container *ngIf="auth.user | async as user; else showLogin">
+    <div>{{ user.displayName }}</div>
+    <a style="color: #dd4b39;" role="button" (click)="logout()">
+      <i class="fab fa-google fa-lg"></i>
+    </a>
+  </ng-container>
+</div>
+<ng-template #showLogin>
+  <div>Please login.</div>
+  <a style="color: #dd4b39;" role="button" (click)="login()">
+    <i class="fab fa-google fa-lg"></i>
+  </a>
+</ng-template>

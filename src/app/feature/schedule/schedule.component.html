@@ -18,6 +18,8 @@
          [class.cursor-pointer]="current !== Schedule.New"
          (click)="current = Schedule.New">New Schedule</div>
 
+    <app-login *ngIf="isDevMode()" class="mx-3"></app-login>
+
     <app-schedule-checked-list></app-schedule-checked-list>
   </div>
 

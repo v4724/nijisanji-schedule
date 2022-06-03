@@ -1,4 +1,4 @@
-<p>test works!</p>
+
 <ul>
     <li class="text" *ngFor="let item of items | async">
         {{item}}
@@ -143,3 +143,7 @@
   </button>
   <button class="btn btn-outline-primary" type="button" (click)="clear()">Clear</button>
 </div>
+
+<button class="btn btn-primary" type="button" (click)="batchImport()">
+    batch import stream
+  </button>

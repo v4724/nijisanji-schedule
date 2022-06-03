@@ -227,7 +227,13 @@
 }
 
 body {
-  font-family: auto;
+
+}
+.table th {
+  padding: 0.5rem;
+}
+.table td {
+  padding: 0.5rem;
 }
 
 .cursor-pointer {
