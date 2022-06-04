@@ -1,6 +1,5 @@
-import { FirebaseStreamViewItem, StreamViewItem } from '../type'
+import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { Moment } from 'moment-timezone'
-import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 
 export enum Day {
   SUN='0',

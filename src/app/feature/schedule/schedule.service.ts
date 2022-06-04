@@ -1,7 +1,6 @@
-import { Injectable, isDevMode } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
-import { StreamViewItem, TBDStreamViewItem } from '@app/feature/schedule/type'
-import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
+import { Stream as ExcelStream, StreamViewItem as ExcelStreamViewItem, TBDStream, TBDStreamViewItem } from '@app/feature/schedule/data/excel-stream/Stream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
@@ -15,12 +14,12 @@ import * as moment from 'moment-timezone'
 })
 export class ScheduleService {
 
-  origData$ = new Subject<Array<Stream>>();
-  allStreams: Array<StreamViewItem> = [];
-  streamerStreams: Array<StreamViewItem> = [];
-  guestStreams: Array<StreamViewItem> = [];
+  origData$ = new Subject<Array<ExcelStream>>();
+  allStreams: Array<ExcelStreamViewItem> = [];
+  streamerStreams: Array<ExcelStreamViewItem> = [];
+  guestStreams: Array<ExcelStreamViewItem> = [];
 
-  streams$ = new BehaviorSubject<Array<Stream>>([])
+  streams$ = new BehaviorSubject<Array<ExcelStream>>([])
 
   origTBDData$ = new Subject<Array<TBDStream>>();
   TBDStreams: Array<TBDStreamViewItem> = [];
@@ -30,7 +29,8 @@ export class ScheduleService {
   constructor(private streamTypeService: StreamTypeService,
               private streamGroupService: StreamGroupService) {
 
-    this.readFromExcel()
+    // 不從 excel 取得資料
+    // this.readFromExcel()
     this.origData$.subscribe((data) => {
       this.initData(data)
     })
@@ -40,10 +40,10 @@ export class ScheduleService {
     })
   }
 
-  initData(origData: Array<Stream>): void {
-    this.allStreams = lodash.cloneDeep(origData) as Array<StreamViewItem>
+  initData(origData: Array<ExcelStream>): void {
+    this.allStreams = lodash.cloneDeep(origData) as Array<ExcelStreamViewItem>
     this.allStreams.forEach((stream) => {
-      const s = stream as StreamViewItem
+      const s = stream as ExcelStreamViewItem
       const info = findStreamerInfo(stream.streamer)
       if (info) {
         s.streamerInfo = info

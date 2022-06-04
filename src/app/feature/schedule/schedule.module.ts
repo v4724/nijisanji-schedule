@@ -4,7 +4,6 @@ import { ScheduleComponent } from './schedule.component';
 import { RouterModule, Routes } from '@angular/router'
 import { FormsModule } from '@angular/forms';
 import { WeekComponent } from './week/week.component';
-import { MonthComponent } from './month/month.component';
 import { MonthComponent as MonthComponent2 } from './month-2/month.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { TimezoneComponent } from './toolbar/timezone/timezone.component';
@@ -55,7 +54,6 @@ const routes: Routes = [
     LoginComponent,
     ScheduleComponent,
     WeekComponent,
-    MonthComponent,
     MonthComponent2,
     ToolbarComponent,
     TimezoneComponent,

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { FirebaseService } from '@app/service/firebase.service'
-import { Stream, initStream, toDto } from '@app/feature/schedule/test/dto/Stream'
+import { Stream, initStream, toDto } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { ExcelStreamService } from '@app/service/excel-stream.service'
 import { StreamDetailComponent } from '@app/feature/schedule/common/stream-detail/stream-detail.component'
 

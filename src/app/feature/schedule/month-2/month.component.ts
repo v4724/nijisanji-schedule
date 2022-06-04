@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Day, HourStreams, MonthHeader, WeekItem } from './types'
 import { headers } from './data'
 import * as moment from 'moment-timezone'
-import { FirebaseStreamViewItem } from '../type'
+import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { openUrl } from '@app/feature/schedule/utils'
 import { MonthService } from '@app/feature/schedule/month-2/month.service'
 import { Moment } from 'moment-timezone'

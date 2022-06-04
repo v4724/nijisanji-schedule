@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment-timezone'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
+import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { openUrl } from '@app/feature/schedule/utils'
 import { DateService } from '@app/feature/schedule/date/date.service'
 

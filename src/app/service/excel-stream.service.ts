@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone'
 import * as XLSX from 'xlsx'
 import { Subject } from 'rxjs'
-import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
+import { Stream, TBDStream } from '@app/feature/schedule/data/excel-stream/Stream'
 import { FirebaseService } from '@app/service/firebase.service'
-import { initStream, Stream as FirebaseStream, StreamDto, toDto } from '@app/feature/schedule/test/dto/Stream'
+import { initStream, Stream as FirebaseStream, StreamDto, toDto } from '@app/feature/schedule/data/firebase-stream/Stream'
 
 @Injectable({
   providedIn: 'root'

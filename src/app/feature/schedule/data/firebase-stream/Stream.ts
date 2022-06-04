@@ -1,7 +1,24 @@
 import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
 import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
+import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { Moment } from 'moment-timezone'
 
+// for firebase
+export interface StreamDto {
+  streamer: string,
+  title: string,
+  onSchedule: boolean,
+  link: string,
+  timestamp: number | null,
+  isUncertain: boolean | null,
+  isModified: boolean | null,
+  isCanceled: boolean | null,
+  featStreamers: string,
+  updatedTimestamp: number
+}
+
+// arrange feat streamers from StreamDto,
 export interface Stream {
   id: string,
   streamer: string,
@@ -17,19 +34,13 @@ export interface Stream {
   mainStreamer: string
 }
 
-export interface StreamDto {
-  streamer: string,
-  title: string,
-  onSchedule: boolean,
-  link: string,
-  timestamp: number | null,
-  isUncertain: boolean | null,
-  isModified: boolean | null,
-  isCanceled: boolean | null,
-  featStreamers: string,
-  updatedTimestamp: number
+// include information of streamer and the date converted by timezome
+export interface FirebaseStreamViewItem extends Stream {
+  displayMoment: Moment
+  displayDate: string
+  displayTime: string
+  streamerInfo: StreamerInfo
 }
-
 
 export function initStream (): Stream {
   return {
@@ -117,4 +128,19 @@ export function getFeatStream (mainStream: Stream, featStreamer: string) :Stream
   feat.featStreamers = []
 
   return feat
+}
+
+export function setDisplayValue(item: FirebaseStreamViewItem, tz: string):void {
+
+  if ('displayMoment' in item) {
+    item.displayMoment = moment(item.timestamp).tz(tz)
+  }
+
+  item.displayDate = moment(item.timestamp).tz(tz).format('yyyy-MM-DD')
+  item.displayTime = moment(item.timestamp).tz(tz).format('HH:mm')
+
+  const info = findStreamerInfo(item.streamer)
+  if (info) {
+    item.streamerInfo = info
+  }
 }

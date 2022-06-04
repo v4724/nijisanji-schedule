@@ -8,7 +8,7 @@ import {
 import {
   Stream,
   StreamDto, toStreamData
-} from '@app/feature/schedule/test/dto/Stream'
+} from '@app/feature/schedule/data/firebase-stream/Stream'
 import { delay, map } from 'rxjs/internal/operators'
 import { SysParam } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
 

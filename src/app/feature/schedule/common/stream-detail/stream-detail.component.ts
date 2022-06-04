@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { initStream, resetStream, Stream } from '@app/feature/schedule/test/dto/Stream'
+import { resetStream, Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
 import * as moment from 'moment-timezone'
 import { Observable } from 'rxjs'
 

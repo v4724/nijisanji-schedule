@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { openUrl } from '@app/feature/schedule/utils'
-import { FirebaseStreamViewItem, StreamViewItem } from '@app/feature/schedule/type'
+import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { AdminService } from '@app/service/admin.service'
 
 @Component({

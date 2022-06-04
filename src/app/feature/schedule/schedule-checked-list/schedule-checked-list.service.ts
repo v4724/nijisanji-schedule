@@ -9,7 +9,7 @@ import { FirebaseService } from '@app/service/firebase.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
-import { Stream } from '@app/feature/schedule/test/dto/Stream'
+import { Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
 
 export interface SysParam {
   id: string,

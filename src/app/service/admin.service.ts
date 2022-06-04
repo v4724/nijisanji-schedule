@@ -1,7 +1,7 @@
 import { Injectable, isDevMode } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
+import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { EditModalComponent } from '@app/feature/schedule/common/edit-modal/edit-modal.component'
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 

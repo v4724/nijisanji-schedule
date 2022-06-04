@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Stream } from '@app/feature/schedule/test/dto/Stream'
+import { setDisplayValue, Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
+import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { Moment } from 'moment-timezone'
 import * as moment from 'moment-timezone'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
@@ -11,7 +11,6 @@ import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/s
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 import { setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { setDisplayValue } from '@app/feature/schedule/data'
 
 @Injectable({
   providedIn: 'root'

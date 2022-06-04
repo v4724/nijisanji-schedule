@@ -13,6 +13,7 @@ export interface StreamerInfo {
   bgColor: string,
   timezone: Timezone,
 }
+
 export const luxiem: Array<StreamerInfo> = [{
   img: 'assets/imgs/ike_profile.jpg',
   name: Streamer.Ike,

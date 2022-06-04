@@ -1,5 +1,5 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core'
-import { initStream, Stream, toDto } from '@app/feature/schedule/test/dto/Stream'
+import { Component, OnInit } from '@angular/core'
+import { initStream, Stream, toDto } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { FirebaseService } from '@app/service/firebase.service'
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'

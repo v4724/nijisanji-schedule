@@ -1,22 +1,6 @@
 import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
+import { TBDStream } from '@app/feature/schedule/data/excel-stream/Stream'
 
-import { Stream as FirebaseStream } from '@app/feature/schedule/test/dto/Stream'
+import { Stream as FirebaseStream } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { Moment } from 'moment-timezone'
 
-export interface StreamViewItem extends Stream {
-  displayDate: string
-  displayTime: string
-  streamerInfo: StreamerInfo
-}
-
-export interface FirebaseStreamViewItem extends FirebaseStream {
-  displayMoment: Moment
-  displayDate: string
-  displayTime: string
-  streamerInfo: StreamerInfo
-}
-
-export interface TBDStreamViewItem extends TBDStream {
-  streamerInfo: StreamerInfo
-}

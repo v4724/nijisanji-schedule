@@ -7,7 +7,7 @@ import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone
 import { openUrl } from '@app/feature/schedule/utils'
 import { FirebaseService } from '@app/service/firebase.service'
 import { ScheduleCheckedListService } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
-import { Stream } from '@app/feature/schedule/test/dto/Stream'
+import { Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
 
 interface ScheduleUpdatedInfo extends StreamerInfo {
   scheduleUpdated: boolean
