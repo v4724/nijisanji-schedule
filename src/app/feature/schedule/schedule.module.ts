@@ -31,7 +31,11 @@ const routes: Routes = [
     path: '',
     component: ScheduleComponent,
     children: [{
-      path: '',
+      path:'',
+      redirectTo: 'week',
+      pathMatch: 'full',
+    },{
+      path: 'week',
       component: WeekComponent
     }, {
       path: 'month',

@@ -1,25 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseStreamViewItem as StreamViewItem } from '../type'
-import { setDisplayValue } from '../data'
+import { FirebaseStreamViewItem } from '../type'
 import { Streamer, streamerList } from '../data/Streamer'
 import * as moment from 'moment-timezone'
 import { WeekHeader } from './types'
-import { Moment } from 'moment-timezone'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
-import { StreamType } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
-import { ScheduleService } from '@app/feature/schedule/schedule.service'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { combineLatest, forkJoin, Observable, Subscription } from 'rxjs'
-import { openUrl, setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
-import { Stream, TBDStream } from '@app/feature/schedule/data/Stream'
-import { Stream as FirebaseStream } from '@app/feature/schedule/test/dto/Stream'
-import { FirebaseService } from '@app/service/firebase.service'
-import { tap } from 'rxjs/operators'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
-import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
-import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
+import { Subscription } from 'rxjs'
+import { openUrl } from '@app/feature/schedule/utils'
+import { TBDStream } from '@app/feature/schedule/data/Stream'
 import { DisplayText } from '@app/feature/schedule/common/display-text/DisplayText'
 import * as lodash from 'lodash'
+import { WeekService } from '@app/feature/schedule/week/week.service'
 
 @Component({
   selector: 'app-week',
@@ -27,65 +17,30 @@ import * as lodash from 'lodash'
   styleUrls: ['./week.component.scss']
 })
 export class WeekComponent implements OnInit {
-  displayWeekText: string = ''
-  date: Moment = moment()
+  title: string = ''
 
-  streams: Array<FirebaseStream> = []
-  filterStreams: Array<FirebaseStream> = []
-  timezone = ''
+  streams: Array<FirebaseStreamViewItem> = []
   TBDStreams: Array<TBDStream> = []
-
-  groups: Array<StreamerGroup> = []
 
   headers: Array<WeekHeader> = []
   data: Array<any> = []
 
-  StreamType = StreamType
-  categoryType: StreamType = StreamType.Streamer
-
-  currStreamer: string = ''
   streamers = streamerList()
 
   findStreamerInfo = findStreamerInfo
   openUrl = openUrl
 
-  startTimestamp: number = moment().valueOf()
-  endTimestamp: number = moment().valueOf()
-
   subscription: Subscription | undefined
 
-  constructor(private scheduleService: ScheduleService,
-              private tzService: TimezoneService,
-              private firebaseService: FirebaseService,
-              private streamGroupService: StreamGroupService,
-              private rainbowLoaderService: RainbowLoaderService,)
-  {
+  constructor(public weekService: WeekService){
   }
 
   ngOnInit(): void {
-    const defaultTimezone = this.tzService.timezone$.getValue()
-    const currentMoment = this.date.tz(defaultTimezone)
-    const currentDay = currentMoment.day()
-    this.startTimestamp = setMidnightStartMoment(currentMoment.clone().add(-currentDay, 'day')).valueOf()
-    this.endTimestamp = setMidnightEndMoment(currentMoment.clone().add(7-currentDay-1, 'day')).valueOf()
 
-    combineLatest([
-      this.tzService.timezone$,
-      this.scheduleService.TBDStreams$,
-      this.streamGroupService.group$
-    ])
-      .subscribe((result) => {
-        const timezone = result[0]
-        this.TBDStreams = result[1]
-        this.groups = result[2]
-
-        if (timezone !== this.timezone) {
-          this.timezone = timezone
-          this.changeTimezone()
-        } else {
-          this.updateSchedule()
-        }
-      })
+    this.weekService.filterStreams$.subscribe((streams) => {
+      this.streams = streams
+      this.update()
+    })
 
   }
 
@@ -97,49 +52,20 @@ export class WeekComponent implements OnInit {
     }
   }
 
-  changeTimezone(): void {
-    this.date = moment(this.date).tz(this.timezone)
-    this.updateStreams()
-  }
-
   changeWeek(dateNumber: number): void {
-    this.date.add(dateNumber, 'd')
-    this.updateStreams()
+    const date = this.weekService.date$.getValue().clone()
+    date.add(dateNumber, 'd')
+    this.weekService.updateDate(date)
   }
 
   resetWeek(): void {
-    this.date = moment().tz(this.timezone)
-    this.updateStreams()
+    const date = moment()
+    this.weekService.updateDate(date)
   }
 
-  updateStreams(): void {
-    const currentDay = this.date.day()
-    this.startTimestamp = setMidnightStartMoment(this.date.clone().add(-currentDay, 'day')).valueOf()
-    this.endTimestamp = setMidnightEndMoment(this.date.clone().add(7-currentDay-1, 'day')).valueOf()
-
-    this.rainbowLoaderService.set(true)
-
-    if (this.subscription) {
-      this.subscription.unsubscribe()
-    }
-
-    this.subscription = this.firebaseService.where(this.startTimestamp, this.endTimestamp)
-        .pipe(
-          tap((result) => {
-            this.streams = result
-          })
-        )
-        .subscribe(() => {
-          this.subscription?.unsubscribe()
-
-          this.rainbowLoaderService.set(false)
-          this.updateWeek(this.date)
-          this.updateSchedule()
-        })
-  }
-
-  updateWeek(nowDate: Moment): void {
-    const nowDay = nowDate.day()
+  private updateWeek(): void {
+    const date = this.weekService.date$.getValue()
+    const nowDay = date.day()
 
     const headerMap = new Map<number, WeekHeader>()
     headerMap.set(0, { key: 'streamer', value: 'streamer', isToday: false })
@@ -147,11 +73,11 @@ export class WeekComponent implements OnInit {
     const setHeaders = (fromDay: number, toDay: number): void => {
       for (let day = fromDay; day < toDay; day++) {
         const gap = nowDay - day
-        const tmpDate = moment(nowDate).subtract(gap, 'day')
+        const tmpDate = date.clone().subtract(gap, 'day')
         const timestamp = tmpDate.valueOf()
         const dateText = tmpDate.format('YYYY-MM-DD')
         const dayText = tmpDate.format('ddd')
-        const isToday = tmpDate.date() === moment().tz(this.timezone).date()
+        const isToday = tmpDate.date() === date.date()
 
         headerMap.set(timestamp, { key: dateText, value: dayText, isToday: isToday })
       }
@@ -161,43 +87,24 @@ export class WeekComponent implements OnInit {
 
     const newMap = new Map([...headerMap.entries()].sort())
     this.headers = Array.from(newMap.values())
-    this.displayWeekText = `${this.headers[1].key} ~ ${this.headers[this.headers.length - 1].key}`
+    this.title = `${this.headers[1].key} ~ ${this.headers[this.headers.length - 1].key}`
   }
 
-  updateSchedule(): void {
-    this.filterStreams = this.streams.filter((s) => {
-
-      const streamer = findStreamerInfo(s.streamer)
-      if (streamer) {
-        if (this.groups.indexOf(streamer.group) > -1) {
-          return true
-        }
-      }
-      return false
-    })
-    this._updateScheduleByTZ(this.filterStreams, this.timezone)
-  }
-
-  _updateScheduleByTZ(streams: Array<FirebaseStream>, tz: string): void {
+  update(): void {
+    this.updateWeek()
 
     const streamerMap = new Map<string, any>()
 
-    streams.forEach((item) => {
-      const viewItem = item as StreamViewItem
+    this.streams.forEach((item) => {
 
-      if (viewItem.timestamp) {
-        setDisplayValue(viewItem, tz)
-      }
-
-      const streamer = viewItem.streamer
+      const streamer = item.streamer
       if (!streamerMap.has(streamer)) {
         streamerMap.set(streamer, {
           streamer: streamer,
         })
       }
 
-      const momentTz = moment(viewItem.timestamp).tz(tz)
-      const dateText = momentTz.format('YYYY-MM-DD')
+      const dateText = item.displayMoment.format('YYYY-MM-DD')
 
       const findDate = this.headers.find((h) => {
         return h.key === dateText
@@ -206,13 +113,13 @@ export class WeekComponent implements OnInit {
         return
       }
 
-      const date = viewItem.displayDate
+      const date = item.displayDate
       const week = streamerMap.get(streamer)
       if (week) {
         const stream: DisplayText = Object.assign(
-          lodash.cloneDeep(viewItem),
+          lodash.cloneDeep(item),
           {
-            text: `${ viewItem.title } ${ viewItem.displayTime }`}
+            text: `${ item.title } ${ item.displayTime }`}
         )
 
         if (week[date]) {

@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs'
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal'
 import { FirebaseStreamViewItem } from '@app/feature/schedule/type'
 import { EditModalComponent } from '@app/feature/schedule/common/edit-modal/edit-modal.component'
+import { AngularFireAuth } from '@angular/fire/compat/auth'
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,22 @@ import { EditModalComponent } from '@app/feature/schedule/common/edit-modal/edit
 export class AdminService {
 
   isDevMode$ = new BehaviorSubject<boolean>(false)
+  isLogin$ = new BehaviorSubject<boolean>(false)
   editable$ = new BehaviorSubject<boolean>(false)
 
   modalRef: MdbModalRef<EditModalComponent> | null = null;
 
-  constructor(private modalService: MdbModalService) {
+  constructor(public auth: AngularFireAuth,
+              private modalService: MdbModalService) {
     this.isDevMode$.next(isDevMode())
+    this.auth.authState.subscribe((user) => {
+      if (user) {
+        this.isLogin$.next(true)
+      } else {
+        this.isLogin$.next(false)
+        this.editable$.next(false)
+      }
+    })
   }
 
   editToggle (): void {

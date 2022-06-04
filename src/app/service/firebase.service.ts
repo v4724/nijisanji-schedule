@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 import {
   AngularFirestore,
-  DocumentSnapshot,
   QuerySnapshot
 } from '@angular/fire/compat/firestore'
 import {
-  fromDto,
-  initStream,
   Stream,
   StreamDto, toStreamData
 } from '@app/feature/schedule/test/dto/Stream'
-import { delay, flatMap, map } from 'rxjs/internal/operators'
+import { delay, map } from 'rxjs/internal/operators'
+import { SysParam } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
+  lastUpdateTimestamp$: BehaviorSubject<number> = new BehaviorSubject<number>(-1)
   items: Observable<any[]>;
 
   constructor(private db: AngularFirestore) {
@@ -34,23 +33,10 @@ export class FirebaseService {
       })
                .catch((err) => {
                  console.error(err)
+                 window.alert(err)
                  return false;
                })
   }
-
-  // public get (id: string): Observable<Stream> {
-  //   return this.db.collection<Array<StreamDto>>('streams')
-  //              .doc<StreamDto>(id)
-  //              .get()
-  //              .pipe(
-  //                map((snapshot: DocumentSnapshot<StreamDto>) => {
-  //                  // if (snapshot.exists) {
-  //                  //   return fromDto(snapshot.id, snapshot.data)
-  //                  // }
-  //                  return snapshot.data
-  //                })
-  //              )
-  // }
 
   public update (id: string, data: StreamDto): Promise<void> {
     return this.db.collection<StreamDto>('streams')
@@ -58,6 +44,7 @@ export class FirebaseService {
                .update(data)
                .catch((err) => {
                  console.error(err)
+                 window.alert(err)
                })
   }
 
@@ -67,14 +54,18 @@ export class FirebaseService {
                .delete()
                .catch((err) => {
                  console.error(err)
+                 window.alert(err)
                })
   }
 
-  public where (start: number, end: number): Observable<Array<Stream>> {
+  public where (start: number, end: number, optional?: any): Observable<Array<Stream>> {
     return this.db.collection<Array<StreamDto>>(
       'streams',ref => {
-                  return ref.where('timestamp', '>=', start)
-                            .where('timestamp', '<=', end)
+                  const condition = ref.where('timestamp', '>=', start)
+                                 .where('timestamp', '<=', end)
+                  return optional && (typeof optional === 'function')
+                    ? optional(condition)
+                    : condition
                })
                .get()
                 .pipe(
@@ -82,8 +73,40 @@ export class FirebaseService {
                   map((snapshot:QuerySnapshot<any>) => {
                     const origData = snapshot.docs
                     const data: Array<Stream> = toStreamData(origData)
+                    this.updateLastUpdateTimestamp(data)
                     return data
                   })
                 )
+  }
+
+  public getSysParam (key: string): Observable<SysParam | undefined> {
+    return this.db.collection<Array<SysParam>>(
+          'sysParams'
+               )
+               .get()
+               .pipe(
+                 map((snapshot:QuerySnapshot<any>) => {
+                   console.log(snapshot)
+                   const doc = snapshot.docs[0]
+                   return doc?.exists
+                     ? Object.assign({id: doc.id}, doc.data())
+                     : undefined
+      }))
+  }
+
+  private updateLastUpdateTimestamp(streams: Array<Stream>): void {
+    let lastUpdateTimestamp = this.lastUpdateTimestamp$.getValue()
+    let next = false
+    streams.forEach((stream) => {
+      const updateTimestamp = stream.updatedTimestamp
+      if (updateTimestamp > lastUpdateTimestamp) {
+        lastUpdateTimestamp = updateTimestamp
+        next = true
+      }
+    })
+
+    if (next) {
+      this.lastUpdateTimestamp$.next(lastUpdateTimestamp)
+    }
   }
 }

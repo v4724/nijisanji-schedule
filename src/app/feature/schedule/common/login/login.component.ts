@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
+import { AdminService } from '@app/service/admin.service'
 
 @Component({
   selector: 'app-login',

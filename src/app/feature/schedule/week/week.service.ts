@@ -8,16 +8,15 @@ import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { FirebaseService } from '@app/service/firebase.service'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
+import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 import { setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { setDisplayValue } from '@app/feature/schedule/data'
-import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
-import { debounceTime } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
-export class MonthService {
+export class WeekService {
   allStreams: Array<Stream> = []
   filterStreams$: BehaviorSubject<Array<FirebaseStreamViewItem>> = new BehaviorSubject<Array<FirebaseStreamViewItem>>([])
 
@@ -67,8 +66,9 @@ export class MonthService {
 
   public updateStreams(): void {
     const date = this.date$.getValue()
-    this.startTimestamp = setMidnightStartMoment(date.clone().startOf('month')).valueOf()
-    this.endTimestamp = setMidnightEndMoment(date.clone().endOf('month')).valueOf()
+    const currentDay = date.day()
+    this.startTimestamp = setMidnightStartMoment(date.clone().add(-currentDay, 'day')).valueOf()
+    this.endTimestamp = setMidnightEndMoment(date.clone().add(6-currentDay, 'day')).valueOf()
 
     this.rainbowLoaderService.set(true)
 
@@ -76,7 +76,9 @@ export class MonthService {
       this.subscription.unsubscribe()
     }
 
-    this.subscription = this.firebaseService.where(this.startTimestamp, this.endTimestamp)
+    this.subscription = this.firebaseService.where(
+      this.startTimestamp,
+      this.endTimestamp)
                             .pipe()
                             .subscribe((result) => {
                               this.allStreams = result
@@ -88,8 +90,8 @@ export class MonthService {
   }
 
   updateFilterStreams(): void {
+    const filterStreams = this.allStreams.filter((s) => {
 
-    let filterStreams = this.allStreams.filter((s) => {
       const streamer = findStreamerInfo(s.streamer)
       if (streamer) {
         if (this.groups.indexOf(streamer.group) > -1) {
@@ -99,8 +101,8 @@ export class MonthService {
       return false
     })
 
-    filterStreams = filterStreams.map((stream) => {
-      const viewItem: FirebaseStreamViewItem = stream as FirebaseStreamViewItem
+    filterStreams.map((stream) => {
+      const viewItem = stream as FirebaseStreamViewItem
       viewItem.displayMoment = moment()
       setDisplayValue(viewItem, this.timezone)
       return viewItem

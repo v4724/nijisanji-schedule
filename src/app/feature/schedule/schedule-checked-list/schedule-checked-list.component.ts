@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { StreamerInfo, streamers } from '@app/feature/schedule/data/StreamerInfo'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
-import * as moment from 'moment-timezone'
-import * as lodash from 'lodash'
 import { Streamer } from '@app/feature/schedule/data/Streamer'
 import { Moment } from 'moment-timezone'
-import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
-import { ScheduleService } from '@app/feature/schedule/schedule.service'
-import { combineLatest } from 'rxjs'
-import { Stream } from '@app/feature/schedule/data/Stream'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { openUrl } from '@app/feature/schedule/utils'
+import { FirebaseService } from '@app/service/firebase.service'
+import { ScheduleCheckedListService } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
+import { Stream } from '@app/feature/schedule/test/dto/Stream'
 
 interface ScheduleUpdatedInfo extends StreamerInfo {
   scheduleUpdated: boolean
@@ -22,19 +19,16 @@ interface ScheduleUpdatedInfo extends StreamerInfo {
   styleUrls: ['./schedule-checked-list.component.scss']
 })
 export class ScheduleCheckedListComponent implements OnInit {
-  selectedGroups: Array<StreamerGroup> = []
   streamers: Array<ScheduleUpdatedInfo> = []
-  date: Moment = moment()
   displayWeekText: string = ''
-
-  newScheduleId: number = 1728
-  newScheduleDay: number = 29
 
   updateInfo: Map<Streamer, boolean> = new Map<Streamer, boolean>()
 
   constructor(private groupService: StreamGroupService,
-              private scheduleService: ScheduleService,
-              private tzService: TimezoneService ) {
+              private firebaseService: FirebaseService,
+              private tzService: TimezoneService,
+              private service: ScheduleCheckedListService
+              ) {
 
     streamers.forEach((info) => {
       this.updateInfo.set(info.name, false)
@@ -43,25 +37,15 @@ export class ScheduleCheckedListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tzService.timezone$.subscribe((tz) => {
-      const tzMoment = moment().tz(tz).set('D', this.newScheduleDay)
-      this.updateWeekText(tzMoment)
+
+    this.service.date$.subscribe((date) => {
+      this.updateWeekText(date)
     })
 
-    combineLatest([this.scheduleService.streams$, this.groupService.group$])
-      .subscribe((results) => {
-        const streams = results[0]
-        const groups = results[1]
+    this.service.filterStreams$.subscribe((streams) => {
+      this.updateInfoScheduled(streams)
+    })
 
-        this.updateInfoScheduled(streams)
-
-        this.selectedGroups = groups
-        this.updateSchedule(groups)
-      })
-  }
-
-  isNewSchedule(id: number | null): boolean {
-    return !!id && id >= this.newScheduleId
   }
 
   updateInfoScheduled(streams: Array<Stream>): void {
@@ -69,33 +53,33 @@ export class ScheduleCheckedListComponent implements OnInit {
       this.updateInfo.set(k, false)
     })
 
+    const countLimitation = this.service.count$.getValue()
+    const streamsCounter = new Map<Streamer, number>()
     streams.forEach((stream: Stream) => {
-      const id = stream.id
-      const guestId = stream.guestId
       const name = stream.streamer as Streamer
-      const onSchedule = stream.onSchedule
 
-      if ((this.isNewSchedule(id) || this.isNewSchedule(guestId) )
-          && onSchedule
-          && this.updateInfo.has(name)) {
+      let count = streamsCounter.get(name) ?? 0
+      count += 1
+      streamsCounter.set(name, count)
+
+      if (count >= countLimitation) {
         this.updateInfo.set(name, true)
       }
 
     })
-  }
 
-  updateSchedule(groups: Array<StreamerGroup>): void {
-    const clone = lodash.cloneDeep(streamers) as Array<ScheduleUpdatedInfo>
+    const clone = streamers as Array<ScheduleUpdatedInfo>
+    const groups = this.groupService.group$.getValue()
     this.streamers = clone.filter((info) => {
       info.scheduleUpdated = this.updateInfo.get(info.name) ?? false
-      return groups.find((group) => group === info.group)
+      return groups.find(group => group === info.group)
     })
   }
 
   updateWeekText(date: Moment): void {
     const day = date.day()
-    const startMoment = moment(date).add(0 - day, 'd')
-    const weekendMoment = moment(date).add(6 - day, 'd')
+    const startMoment = date.clone().add(0 - day, 'd')
+    const weekendMoment = date.clone().add(6 - day, 'd')
     this.displayWeekText = `${startMoment.format('YYYY-MM-DD')}~${weekendMoment.format('YYYY-MM-DD')}`
   }
 

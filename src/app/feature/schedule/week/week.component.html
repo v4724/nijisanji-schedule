@@ -1,7 +1,7 @@
 <div class="d-flex flex-column justify-content-center h-100">
   <div class="d-flex align-items-center py-2">
     <div class="week-title">
-      {{ displayWeekText }}
+      {{ title }}
     </div>
     <div class="d-flex change-week-block">
       <div class="change-week-icon cursor-pointer m-2" (click)="changeWeek(-7)"><</div>
@@ -10,7 +10,11 @@
       </div>
       <div class="change-week-icon cursor-pointer m-2" (click)="changeWeek(+7)">></div>
     </div>
-
+    <a class="mx-3"
+       role="button"
+       (click)="weekService.updateStreams()">
+      <i class="fas fa-refresh"></i>
+    </a>
     <app-mascot-img src="assets/imgs/ike/anyway.png"></app-mascot-img>
 
   </div>

@@ -5,7 +5,7 @@ import { AdminService } from '@app/service/admin.service'
 enum Schedule {
   Date='date',
   Month='month',
-  Week='',
+  Week='week',
   New='new'
 }
 

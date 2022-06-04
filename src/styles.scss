@@ -240,6 +240,20 @@ body {
   cursor: pointer;
 }
 
+.form-check-input[type=radio]:checked:after {
+ color: var(--mdb-primary);
+ background-color: var(--mdb-primary);
+}
+
+.form-check-input:checked {
+  border-color: var(--mdb-primary);
+}
+
+.form-check-input[type=checkbox]:checked {
+  background-image: none;
+  background-color: var(--mdb-primary);
+}
+
 .h-1 {
   height: 1px;
 }

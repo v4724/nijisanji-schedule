@@ -13,6 +13,7 @@ export interface Stream {
   isModified: boolean | null,
   isCanceled: boolean | null,
   featStreamers: Array<string>,
+  updatedTimestamp: number,
   mainStreamer: string
 }
 
@@ -42,6 +43,7 @@ export function initStream (): Stream {
     timestamp: null,
     title: '',
     featStreamers: [],
+    updatedTimestamp: -1,
     mainStreamer: ''
   }
 }
@@ -81,6 +83,7 @@ export function fromDto (id: string, dto: StreamDto): Stream {
     isModified: dto.isModified,
     isCanceled: dto.isCanceled,
     featStreamers: featStreamers,
+    updatedTimestamp: dto.updatedTimestamp,
     mainStreamer: ''
   }
 

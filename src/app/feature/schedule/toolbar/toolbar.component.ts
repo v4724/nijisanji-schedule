@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment-timezone'
+import { FirebaseService } from '@app/service/firebase.service'
+import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { combineLatest } from 'rxjs'
 
 @Component({
   selector: 'app-toolbar',
@@ -10,11 +13,23 @@ export class ToolbarComponent implements OnInit {
 
   scheduleUpdatedTime: string = ''
 
-  constructor() {
-    this.scheduleUpdatedTime = moment(1654165801357).format('YYYY-MM-DD HH:mm')
+  constructor(private firebaseService: FirebaseService,
+              private timezoneService: TimezoneService) {
+
   }
 
   ngOnInit(): void {
+
+    combineLatest([this.firebaseService.lastUpdateTimestamp$, this.timezoneService.timezone$])
+      .subscribe((result) => {
+        const tz = result[1]
+        const timestamp = result[0]
+        if (timestamp > -1) {
+          this.scheduleUpdatedTime = moment(timestamp).tz(tz).format('YYYY-MM-DD HH:mm')
+        } else {
+          this.scheduleUpdatedTime = 'Long Time Ago pien'
+        }
+      })
   }
 
 }
