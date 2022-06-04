@@ -63,7 +63,7 @@ export const luxiem: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/shu_yamino',
   color: 'shu-primary-color',
   bgColor: 'shu-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }]
 
 export const noctyx: Array<StreamerInfo> = [{
@@ -85,7 +85,7 @@ export const noctyx: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/alban_knox/',
   color: 'alban-primary-color',
   bgColor: 'alban-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }, {
   img: 'assets/imgs/sonny_profile.jpg',
   name: Streamer.Sonny,
@@ -95,7 +95,7 @@ export const noctyx: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/sonny_brisko',
   color: 'sonny-primary-color',
   bgColor: 'sonny-primary-bg-color',
-  timezone: Timezone.AEST
+  timezone: Timezone.JST
 }, {
   img: 'assets/imgs/uki_profile.jpg',
   name: Streamer.Uki,
@@ -127,7 +127,7 @@ export const ethyria: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/EnnaAlouette',
   color: 'enna-primary-color',
   bgColor: 'enna-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }, {
   img: 'assets/imgs/nina_profile.jpg',
   name: Streamer.Nina,
@@ -157,7 +157,7 @@ export const ethyria: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/ReimuEndou',
   color: 'reimu-primary-color',
   bgColor: 'reimu-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }]
 
 
@@ -170,7 +170,7 @@ export const obsydia: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/Selen_Tatsuki',
   color: 'selen-primary-color',
   bgColor: 'selen-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }, {
   img: 'assets/imgs/rosemi_profile.jpg',
   name: Streamer.Rosemi,
@@ -190,7 +190,7 @@ export const obsydia: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/Petra_Gurin',
   color: 'petra-primary-color',
   bgColor: 'petra-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }]
 
 
@@ -203,7 +203,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/EliraPendora',
   color: 'elira-primary-color',
   bgColor: 'elira-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }, {
   img: 'assets/imgs/pomu_profile.jpg',
   name: Streamer.Pomu,
@@ -213,7 +213,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/PomuRainpuff',
   color: 'pomu-primary-color',
   bgColor: 'pomu-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }, {
   img: 'assets/imgs/finana_profile.jpg',
   name: Streamer.Finana,
@@ -223,7 +223,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   twitterLink: 'https://twitter.com/FinanaRyugu',
   color: 'finana-primary-color',
   bgColor: 'finana-primary-bg-color',
-  timezone: Timezone.EST5EDT
+  timezone: Timezone.PST8PDT
 }]
 
 export const NIJISANJI: Array<StreamerInfo> = [{
@@ -239,7 +239,6 @@ export const NIJISANJI: Array<StreamerInfo> = [{
 }]
 
 export let streamers: Array<StreamerInfo> = []
-// streamers = streamers.concat(luxiem, noctyx)
 streamers = streamers.concat(luxiem, noctyx, ethyria, obsydia, lazuLight, NIJISANJI)
 
 export function findStreamersInfoByGroup(group: StreamerGroup | string): StreamerInfo | undefined {
