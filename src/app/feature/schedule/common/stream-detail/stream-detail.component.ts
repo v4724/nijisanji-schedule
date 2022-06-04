@@ -3,6 +3,8 @@ import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/Strea
 import { resetStream, Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
 import * as moment from 'moment-timezone'
 import { Observable } from 'rxjs'
+import { Moment } from 'moment-timezone'
+import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 
 @Component({
   selector: 'app-stream-detail[item]',
@@ -13,10 +15,15 @@ export class StreamDetailComponent implements OnInit, OnChanges {
 
   // @ts-ignore
   @Input() item: Stream
+  @Input() update: boolean = false
 
   date: string = moment().format('YYYY-MM-DD')
   time: string = '00:00'
   timezone: string = moment.tz.guess()
+  globalTz: string = moment.tz.guess()
+  datetimeFromTz: string = ''
+  gmtMoment: string = ''
+  datetimeFromGlobalTz: string = ''
 
   timezones = [
     'Australia/Sydney',
@@ -34,35 +41,29 @@ export class StreamDetailComponent implements OnInit, OnChanges {
   searchFeatStreamer: string = ''
   findFeatStreamerInfo: StreamerInfo | undefined = undefined
 
-  constructor() {
+  constructor(private timezoneService: TimezoneService) {
 
-  }
-
-  get timestampFromTz(): number {
-    return moment.tz(`${this.date} ${this.time}`, this.timezone).valueOf();
-  }
-
-  get datetimeFromTz(): string {
-    return moment(this.timestampFromTz).tz(this.timezone).format('YYYY/MM/DD HH:mm z')
-  }
-
-  get gmtMoment(): string {
-    return moment(this.timestampFromTz).tz('GMT+0').format('YYYY/MM/DD HH:mm z')
   }
 
   get isValid(): boolean {
     return !!this.item.streamer &&
       !!this.item.title &&
-      !!this.timestampFromTz
+      !!this.item.timestamp
   }
 
   ngOnInit(): void {
+    this.timezoneService.timezone$.subscribe((tz) => {
+      this.globalTz = tz
+      this.updateTimestampAndText()
+    })
   }
 
   ngOnChanges (changes: SimpleChanges): void {
     if (this.item.timestamp) {
-      this.date = moment(this.item.timestamp).tz(this.timezone).format('YYYY/MM/DD')
-      this.time = moment(this.item.timestamp).tz(this.timezone).format('HH:mm')
+      this.date = moment(this.item.timestamp).format('YYYY-MM-DD')
+      this.time = moment(this.item.timestamp).format('HH:mm')
+
+      this.updateTimestampAndText()
     }
   }
 
@@ -73,8 +74,13 @@ export class StreamDetailComponent implements OnInit, OnChanges {
     }
   }
 
-  dateOrTimeChanged(): void {
-    this.item.timestamp = this.timestampFromTz
+  updateTimestampAndText(): void {
+    const date = moment.tz(`${this.date} ${this.time}`, this.timezone)
+    this.item.timestamp = date.valueOf();
+
+    this.datetimeFromTz = date.clone().tz(this.timezone).format('YYYY/MM/DD HH:mm z')
+    this.gmtMoment = date.clone().tz('GMT+0').format('YYYY/MM/DD HH:mm z')
+    this.datetimeFromGlobalTz = date.clone().tz(this.globalTz).format('YYYY/MM/DD HH:mm z')
   }
 
   findFeatStreamerInfoChanged(value: string): void {

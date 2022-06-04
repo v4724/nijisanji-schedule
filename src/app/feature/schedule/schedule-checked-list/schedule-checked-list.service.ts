@@ -37,6 +37,7 @@ export class ScheduleCheckedListService {
 
   subscription: Subscription | undefined
 
+  loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   count$: BehaviorSubject<number> = new BehaviorSubject<number>(3)
 
   constructor(
@@ -84,6 +85,7 @@ export class ScheduleCheckedListService {
       this.subscription.unsubscribe()
     }
 
+    this.loading$.next(true)
     this.subscription = this.firebaseService.where(
       this.startTimestamp,
       this.endTimestamp
@@ -93,6 +95,8 @@ export class ScheduleCheckedListService {
       )
                             .pipe()
                             .subscribe((result) => {
+                              this.loading$.next(false)
+
                               this.allStreams = result
                               this.updateFilterStreams()
 

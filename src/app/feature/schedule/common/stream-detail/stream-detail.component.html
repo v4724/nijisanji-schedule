@@ -3,6 +3,7 @@
   <mdb-form-control>
     <input mdbInput type="text" id="formControlStreamer" class="form-control"
            [(ngModel)]="item.streamer"
+           [disabled]="update"
            (ngModelChange)="streamerChanged($event)"/>
     <label mdbLabel class="form-label" for="formControlStreamer">Streamer</label>
   </mdb-form-control>
@@ -17,13 +18,13 @@
   <mdb-form-control>
     <input mdbInput type="text" id="formControlDate" class="form-control"
            [(ngModel)]="date"
-           (ngModelChange)="dateOrTimeChanged()"/>
+           (ngModelChange)="updateTimestampAndText()"/>
     <label mdbLabel class="form-label" for="formControlDate">Date</label>
   </mdb-form-control>
   <mdb-form-control>
     <input mdbInput type="text" id="formControlTime" class="form-control"
            [(ngModel)]="time"
-           (ngModelChange)="dateOrTimeChanged()"/>
+           (ngModelChange)="updateTimestampAndText()"/>
     <label mdbLabel class="form-label" for="formControlTime">Time</label>
   </mdb-form-control>
 
@@ -39,6 +40,7 @@
         [id]="'inlineRadio-' + tz"
         [value]="tz"
         [(ngModel)]="timezone"
+        (ngModelChange)="updateTimestampAndText()"
       />
       <label class="form-check-label" [for]="'inlineRadio-' + tz">{{tz}}</label>
     </div>
@@ -49,6 +51,8 @@
     {{timezone}}: {{ datetimeFromTz }}
     <br>
     GMT: {{ gmtMoment }}
+    <br>
+    {{ globalTz }}: {{ datetimeFromGlobalTz }}
   </div>
 
   <div class="d-flex flex-wrap col-gap-1">

@@ -9,7 +9,7 @@
 </div>
 <div class="modal-body">
   <div *ngIf="immutable" class="mask" style="background-color: rgba(0, 0, 0, 0.6); z-index: 2;"></div>
-  <app-stream-detail #itemCmpRef [item]="item"></app-stream-detail>
+  <app-stream-detail #itemCmpRef [item]="item" [update]="true"></app-stream-detail>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" (click)="edit()"

@@ -11,14 +11,19 @@
   top: 1rem;
   z-index: 1;
   width: auto;
-  border: 1px rgba(0, 0, 0, 0.53) solid;
+  border: 1px rgba(0, 0, 0, 0.05) solid;
   border-radius: 10px;
-  box-shadow: 1px 1px 2px #6a69695c;
+  box-shadow: 5px 5px 5px 5px #6a696926;
   background-color: #ffffff;
   cursor: default;
 
   min-width: 300px;
   max-width: 300px;
+}
+
+.mask {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .streamer-icon-block {

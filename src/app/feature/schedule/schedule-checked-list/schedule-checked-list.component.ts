@@ -25,9 +25,7 @@ export class ScheduleCheckedListComponent implements OnInit {
   updateInfo: Map<Streamer, boolean> = new Map<Streamer, boolean>()
 
   constructor(private groupService: StreamGroupService,
-              private firebaseService: FirebaseService,
-              private tzService: TimezoneService,
-              private service: ScheduleCheckedListService
+              public service: ScheduleCheckedListService
               ) {
 
     streamers.forEach((info) => {

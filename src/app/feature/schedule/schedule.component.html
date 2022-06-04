@@ -15,11 +15,11 @@
 
     <app-login class="mx-3"></app-login>
     <ng-container *ngIf="adminService.isLogin$ | async">
-      <div class="schedule-lick py-1 px-2" [routerLink]="Schedule.New"
+      <div class="schedule-lick py-1 px-2 me-3" [routerLink]="Schedule.New"
            [class.cursor-pointer]="current !== Schedule.New"
            (click)="current = Schedule.New">New Schedule</div>
 
-      <a class="mx-3"
+      <a class="me-3"
          role="button"
          (click)="adminService.editToggle()">
         <i class="fas fa-pen-nib"

@@ -21,6 +21,12 @@
         </div>
       </div>
 
+      <div *ngIf="service.loading$ | async"
+           class="mask d-flex align-items-center justify-content-center w-100 h-100">
+          <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+      </div>
     </div>
 
   </div>

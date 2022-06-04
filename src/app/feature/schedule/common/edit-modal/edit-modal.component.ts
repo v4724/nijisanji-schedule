@@ -13,8 +13,6 @@ export class EditModalComponent implements OnInit {
 
   item: Stream = initStream()
 
-  origTimestamp: number = -1
-
   constructor(public modalRef: MdbModalRef<EditModalComponent>,
               public firebaseService: FirebaseService,
               private loaderService: RainbowLoaderService) { }
@@ -24,14 +22,6 @@ export class EditModalComponent implements OnInit {
 
   get immutable(): boolean {
     return !!this.item.mainStreamer.length
-  }
-
-  get timestampForUpdate (): number {
-    if (this.origTimestamp === -1 && this.item.timestamp) {
-      this.origTimestamp = this.item.timestamp
-    }
-
-    return this.origTimestamp
   }
 
   edit(): void {
