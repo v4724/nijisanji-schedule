@@ -1,12 +1,12 @@
 <div>
   Timezone:
   <select
-    *ngIf="selectable || testTimezone; else textRef"
+    *ngIf="adminService.editable$ | async; else textRef"
     [(ngModel)]="timezone"
     (change)="changeTimezone()">
-    <option *ngFor="let country of countries"
-            [value]="country">
-      {{ country }}
+    <option *ngFor="let value of timezones"
+            [value]="value">
+      {{ value }}
     </option>
   </select>
   <ng-template #textRef>

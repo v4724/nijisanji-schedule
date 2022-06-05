@@ -1,12 +1,16 @@
 
-<app-stream-detail #itemCmpRef [item]="item"></app-stream-detail>
+<div class="mt-2 ">
 
-<div class="d-flex flex-row-reverse col-gap-1 my-2">
-  <button class="btn btn-primary" type="button" (click)="submit()"
-          [disabled]="submitLoading || !itemCmpRef.isValid">
-    Submit
-  </button>
-  <button class="btn btn-outline-primary" type="button" (click)="itemCmpRef.clear()">Clear</button>
+  <app-stream-detail #itemCmpRef [item]="item"></app-stream-detail>
+
+  <div class="d-flex flex-row-reverse col-gap-1 my-2">
+    <button class="btn btn-primary" type="button" (click)="submit()"
+            [disabled]="submitLoading || !itemCmpRef.isValid">
+      Submit
+    </button>
+    <button class="btn btn-outline-primary" type="button" (click)="itemCmpRef.clear()">Clear</button>
+  </div>
+
 </div>
 
 <!--<button class="btn btn-primary" type="button" (click)="batchImport()">-->

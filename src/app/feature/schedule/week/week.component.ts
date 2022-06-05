@@ -10,6 +10,7 @@ import { TBDStream } from '@app/feature/schedule/data/excel-stream/Stream'
 import { DisplayText } from '@app/feature/schedule/common/display-text/DisplayText'
 import * as lodash from 'lodash'
 import { WeekService } from '@app/feature/schedule/week/week.service'
+import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 
 @Component({
   selector: 'app-week',
@@ -32,7 +33,8 @@ export class WeekComponent implements OnInit {
 
   subscription: Subscription | undefined
 
-  constructor(public weekService: WeekService){
+  constructor(public weekService: WeekService,
+              private tzService: TimezoneService){
   }
 
   ngOnInit(): void {
@@ -64,6 +66,8 @@ export class WeekComponent implements OnInit {
   }
 
   private updateWeek(): void {
+    const tz = this.tzService.timezone$.getValue()
+    const currDate = moment().tz(tz)
     const date = this.weekService.date$.getValue()
     const nowDay = date.day()
 
@@ -77,7 +81,7 @@ export class WeekComponent implements OnInit {
         const timestamp = tmpDate.valueOf()
         const dateText = tmpDate.format('YYYY-MM-DD')
         const dayText = tmpDate.format('ddd')
-        const isToday = tmpDate.date() === date.date()
+        const isToday = tmpDate.format('YYYY/MM/DD') === currDate.format('YYYY/MM/DD')
 
         headerMap.set(timestamp, { key: dateText, value: dayText, isToday: isToday })
       }

@@ -1,6 +1,8 @@
 import { Component, Input, isDevMode, OnInit } from '@angular/core'
 import * as moment from 'moment-timezone'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { AdminService } from '@app/service/admin.service'
+import { timezoneEntries, timezoneValues } from '@app/feature/schedule/data/Timezone'
 
 @Component({
   selector: 'app-timezone',
@@ -12,29 +14,33 @@ export class TimezoneComponent implements OnInit {
   @Input() selectable: boolean = false;
   testTimezone: boolean = false
 
-  countries = moment.tz.names()
+  timezones = moment.tz.names()
 
   timezone: string = '';
 
-  constructor(private tzService: TimezoneService) {
+  constructor(private tzService: TimezoneService,
+              public adminService: AdminService) {
     if (isDevMode()) {
       this.testTimezone = true
-      this.countries = [
-        'Australia/Sydney',
-        'Japan',
-        'Asia/Taipei',
-        'Asia/Jakarta',
-        'Europe/London',
-        'GMT+0',
-        'EST5EDT',
-        'PST8PDT'
-      ]
+      this.timezones = timezoneValues
     }
   }
 
   ngOnInit(): void {
     this.tzService.timezone$.subscribe((timezone) => {
       this.timezone = timezone
+    })
+
+    this.adminService.editable$.subscribe((editable) => {
+      if (editable) {
+        const origTz = moment.tz.guess()
+        this.timezones = timezoneValues
+        if (this.timezones.indexOf(origTz) === -1) {
+          this.timezones.push(origTz)
+        }
+      } else {
+        this.timezones = moment.tz.names()
+      }
     })
   }
 
