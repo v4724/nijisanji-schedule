@@ -17,7 +17,7 @@ import { SelectionComponent } from './toolbar/stream-group/selection/selection.c
 import { ButtonComponent } from './toolbar/stream-group/button/button.component';
 import { MascotImgComponent } from './common/mascot-img/mascot-img.component';
 import { TBDTagComponent } from './common/tbd-tag/tbd-tag.component';
-import { NewStreamComponent } from './test/new-stream.component'
+import { NewStreamComponent } from './new-stream/new-stream.component'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
 import { CommonComponentModule } from '@app/common-component/common-component.module'
 import { LoginComponent } from '@app/feature/schedule/common/login/login.component';

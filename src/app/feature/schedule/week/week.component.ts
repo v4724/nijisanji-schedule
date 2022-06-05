@@ -182,6 +182,9 @@ export class WeekComponent implements OnInit {
     this.data = []
     orders.forEach((streamer: Streamer) => {
       if (!streamerMap.has(streamer)) {
+        this.data.push({
+          streamer: streamer,
+        })
         return
       }
 
