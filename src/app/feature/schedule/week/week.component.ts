@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
-import { Streamer, streamerList } from '../data/Streamer'
+import { orders, Streamer, streamerList } from '../data/Streamer'
 import * as moment from 'moment-timezone'
 import { WeekHeader } from './types'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
@@ -155,29 +155,6 @@ export class WeekComponent implements OnInit {
         week['TBD'][dateText] = s
       }
     })
-
-    const orders = new Array<Streamer>()
-    orders.push(Streamer.Ike)
-    orders.push(Streamer.Vox)
-    orders.push(Streamer.Mysta)
-    orders.push(Streamer.Shu)
-    orders.push(Streamer.Luca)
-    orders.push(Streamer.Yugo)
-    orders.push(Streamer.Fulgur)
-    orders.push(Streamer.Alban)
-    orders.push(Streamer.Uki)
-    orders.push(Streamer.Sonny)
-    orders.push(Streamer.Nina)
-    orders.push(Streamer.Enna)
-    orders.push(Streamer.Reimu)
-    orders.push(Streamer.Elira)
-    orders.push(Streamer.Finana)
-    orders.push(Streamer.Selen)
-    orders.push(Streamer.Pomu)
-    orders.push(Streamer.Rosemi)
-    orders.push(Streamer.Petra)
-    orders.push(Streamer.Millie)
-    orders.push(Streamer.Mika)
 
     this.data = []
     orders.forEach((streamer: Streamer) => {

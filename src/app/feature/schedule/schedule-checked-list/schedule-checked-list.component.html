@@ -8,17 +8,50 @@
           Schedule Updated On Twitter
         </div>
         <div class="fs-6 d-flex align-items-center">
-          <i class="bi bi-twitter" [style.color]="'cornflowerblue'"></i>
-          {{ displayWeekText}}
+          <i class="bi bi-twitter mx-1" [style.color]="'cornflowerblue'"></i>
+          This week's schedule
+          <a class="mx-1"
+             role="button"
+             (click)="service.load()">
+            <i class="fas fa-refresh"></i>
+          </a>
         </div>
       </div>
       <div class="d-flex flex-wrap">
-        <div class="streamer-icon-block d-flex align-items-center tooltip-div cursor-pointer" *ngFor="let streamer of streamers"
-            (click)="linkToTwitter(streamer)">
-          <img class="streamer-icon me-1" [src]="streamer.img"/>
-          <input class="form-check-input" type="checkbox" [checked]="streamer.scheduleUpdated" disabled/>
+        <div class="streamer-icon-block d-flex align-items-center tooltip-div cursor-pointer" *ngFor="let item of streamers"
+            (click)="linkToTwitter(item.streamerInfo)">
+          <img class="streamer-icon me-1" [src]="item.streamerInfo?.img"/>
+
+          <div *ngIf="adminService.editable$ | async; else viewTmp">
+            <select
+              [(ngModel)]="item.state">
+              <option *ngFor="let value of ScheduleCheckedStateValues"
+                      [value]="value">
+                {{ value }}
+              </option>
+            </select>
+          </div>
+
+          <ng-template #viewTmp>
+            <div class="checked-icon-block"
+                [class.checked]="item.state !== ScheduleCheckedState.none">
+              <i *ngIf="item.state === ScheduleCheckedState.none" class="bi bi-question"></i>
+              <i *ngIf="item.state === ScheduleCheckedState.checked" class="bi bi-check"></i>
+              <i *ngIf="item.state === ScheduleCheckedState.break" class="bi bi-check"></i>
+            </div>
+          </ng-template>
+
           <span class="tooltiptext tooltip-right">twitter</span>
         </div>
+      </div>
+
+      <div class="editable-btn-block col-gap-1" *ngIf="adminService.editable$ | async">
+        <button class="btn btn-outline-primary" type="button" (click)="clear()">
+          CLEAR
+        </button>
+        <button class="btn btn-primary" type="button" (click)="update()">
+          UPDATE
+        </button>
       </div>
 
       <div *ngIf="service.loading$ | async"

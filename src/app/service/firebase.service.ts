@@ -11,6 +11,10 @@ import {
 } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { delay, map } from 'rxjs/internal/operators'
 import { SysParam } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
+import {
+  ScheduleCheckedItem, ScheduleCheckedItemDto,
+  toScheduleCheckedData
+} from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +96,29 @@ export class FirebaseService {
                      ? Object.assign({id: doc.id}, doc.data())
                      : undefined
       }))
+  }
+
+  public getScheduleCheckedList (): Observable<Array<ScheduleCheckedItem>> {
+    return this.db.collection<Array<ScheduleCheckedItemDto>>(
+      'scheduleChecked'
+               )
+               .get()
+               .pipe(
+                 map((snapshot:QuerySnapshot<any>) => {
+                   const origData = snapshot.docs
+                   const data: Array<ScheduleCheckedItem> = toScheduleCheckedData(origData)
+                   return data
+                 }))
+  }
+
+  public updateScheduleChecked (id: string, data: ScheduleCheckedItemDto): Promise<void> {
+    return this.db.collection<StreamDto>('scheduleChecked')
+               .doc(id)
+               .update(data)
+               .catch((err) => {
+                 console.error(err)
+                 window.alert(err)
+               })
   }
 
   private updateLastUpdateTimestamp(streams: Array<Stream>): void {

@@ -125,6 +125,7 @@ export function getFeatStream (mainStream: Stream, featStreamer: string) :Stream
   feat.streamer = featStreamer as string
   feat.title = `(ref:${mainStream.streamer}) ${mainStream.title}`
   feat.mainStreamer = mainStream.streamer
+  feat.onSchedule = false
   feat.featStreamers = []
 
   return feat

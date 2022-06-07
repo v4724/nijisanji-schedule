@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { StreamerInfo, streamers } from '@app/feature/schedule/data/StreamerInfo'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
-import { Streamer } from '@app/feature/schedule/data/Streamer'
-import { Moment } from 'moment-timezone'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { Component, OnInit } from '@angular/core'
+import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { openUrl } from '@app/feature/schedule/utils'
-import { FirebaseService } from '@app/service/firebase.service'
 import { ScheduleCheckedListService } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
-import { Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
-
-interface ScheduleUpdatedInfo extends StreamerInfo {
-  scheduleUpdated: boolean
-}
+import { AdminService } from '@app/service/admin.service'
+import {
+  ScheduleCheckedItem,
+  ScheduleCheckedState,
+  ScheduleCheckedStateValues
+} from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
 
 @Component({
   selector: 'app-schedule-checked-list',
@@ -19,70 +15,42 @@ interface ScheduleUpdatedInfo extends StreamerInfo {
   styleUrls: ['./schedule-checked-list.component.scss']
 })
 export class ScheduleCheckedListComponent implements OnInit {
-  streamers: Array<ScheduleUpdatedInfo> = []
-  displayWeekText: string = ''
+  streamers: Array<ScheduleCheckedItem> = []
 
-  updateInfo: Map<Streamer, boolean> = new Map<Streamer, boolean>()
+  ScheduleCheckedState = ScheduleCheckedState
+  ScheduleCheckedStateValues = ScheduleCheckedStateValues
 
-  constructor(private groupService: StreamGroupService,
-              public service: ScheduleCheckedListService
+  constructor(public service: ScheduleCheckedListService,
+              public adminService: AdminService,
               ) {
-
-    streamers.forEach((info) => {
-      this.updateInfo.set(info.name, false)
-    })
 
   }
 
   ngOnInit(): void {
 
-    this.service.date$.subscribe((date) => {
-      this.updateWeekText(date)
-    })
-
-    this.service.filterStreams$.subscribe((streams) => {
-      this.updateInfoScheduled(streams)
+    this.service.filterData$.subscribe((streams) => {
+      this.streamers = streams
     })
 
   }
 
-  updateInfoScheduled(streams: Array<Stream>): void {
-    this.updateInfo.forEach((v, k) => {
-      this.updateInfo.set(k, false)
-    })
-
-    const countLimitation = this.service.count$.getValue()
-    const streamsCounter = new Map<Streamer, number>()
-    streams.forEach((stream: Stream) => {
-      const name = stream.streamer as Streamer
-
-      let count = streamsCounter.get(name) ?? 0
-      count += 1
-      streamsCounter.set(name, count)
-
-      if (count >= countLimitation) {
-        this.updateInfo.set(name, true)
-      }
-
-    })
-
-    const clone = streamers as Array<ScheduleUpdatedInfo>
-    const groups = this.groupService.group$.getValue()
-    this.streamers = clone.filter((info) => {
-      info.scheduleUpdated = this.updateInfo.get(info.name) ?? false
-      return groups.find(group => group === info.group)
-    })
-  }
-
-  updateWeekText(date: Moment): void {
-    const day = date.day()
-    const startMoment = date.clone().add(0 - day, 'd')
-    const weekendMoment = date.clone().add(6 - day, 'd')
-    this.displayWeekText = `${startMoment.format('YYYY-MM-DD')}~${weekendMoment.format('YYYY-MM-DD')}`
-  }
-
-  linkToTwitter(streamer: StreamerInfo): void {
-    const ytLink = streamer.twitterLink
+  linkToTwitter(streamer: StreamerInfo | undefined): void {
+    const editable = this.adminService.editable$.getValue()
+    if (editable) {
+      return
+    }
+    
+    const ytLink = streamer?.twitterLink ?? ''
     openUrl(ytLink)
+  }
+
+  clear(): void {
+    this.streamers.forEach((item) => {
+      item.state = ScheduleCheckedState.none
+    })
+  }
+
+  update(): void {
+    this.service.update(this.streamers)
   }
 }

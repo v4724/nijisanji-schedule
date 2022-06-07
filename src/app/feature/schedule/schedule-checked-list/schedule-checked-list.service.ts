@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs'
-import { Moment } from 'moment-timezone'
-import * as moment from 'moment-timezone'
-import { CollectionReference } from '@angular/fire/compat/firestore'
-import { setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
 import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { FirebaseService } from '@app/service/firebase.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
-import { Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { ScheduleCheckedItem, toDto } from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
+import { orders } from '@app/feature/schedule/data/Streamer'
 
 export interface SysParam {
   id: string,
@@ -17,28 +14,18 @@ export interface SysParam {
   description: string
 }
 
-enum SysParamKey {
-  scheduleCount ='SHCEDULE_COUNT'
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduleCheckedListService {
-  allStreams: Array<Stream> = []
-  filterStreams$: BehaviorSubject<Array<Stream>> = new BehaviorSubject<Array<Stream>>([])
-
-  date$: BehaviorSubject<Moment> = new BehaviorSubject(moment())
-  startTimestamp: number = moment().valueOf()
-  endTimestamp: number = moment().valueOf()
+  allData: Array<ScheduleCheckedItem> = []
+  filterData$: BehaviorSubject<Array<ScheduleCheckedItem>> = new BehaviorSubject<Array<ScheduleCheckedItem>>([])
 
   groups: Array<StreamerGroup> = []
-  timezone = ''
 
   subscription: Subscription | undefined
 
   loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  count$: BehaviorSubject<number> = new BehaviorSubject<number>(3)
 
   constructor(
     private tzService: TimezoneService,
@@ -46,76 +33,65 @@ export class ScheduleCheckedListService {
     private firebaseService: FirebaseService,
   ) {
 
-    this.firebaseService.getSysParam(SysParamKey.scheduleCount).subscribe((sysParam) => {
-      if (sysParam) {
-        this.count$.next(Number.parseInt(sysParam.value, 10))
-      }
-    })
+    this.load()
 
     combineLatest([
-      this.tzService.timezone$,
       this.streamGroupService.group$
     ])
       .subscribe((result) => {
-        const timezone = result[0]
-        this.groups = result[1]
+        this.groups = result[0]
 
-        if (timezone !== this.timezone) {
-          this.timezone = timezone
-          this.changeTimezone()
-        } else {
-          this.updateFilterStreams()
-        }
+        this.updateFilterData()
       })
   }
 
-  private changeTimezone(): void {
-    const date = this.date$.getValue().tz(this.timezone)
-    this.date$.next(date)
-    this.updateStreams()
-  }
-
-  private updateStreams(): void {
-    const date = this.date$.getValue()
-    const currentDay = date.day()
-    this.startTimestamp = setMidnightStartMoment(date.clone().add(-currentDay, 'day')).valueOf()
-    this.endTimestamp = setMidnightEndMoment(date.clone().add(6-currentDay, 'day')).valueOf()
-
-    if (this.subscription) {
-      this.subscription.unsubscribe()
-    }
-
+  public load (): void {
     this.loading$.next(true)
-    this.subscription = this.firebaseService.where(
-      this.startTimestamp,
-      this.endTimestamp
-      // ,
-      // (ref: CollectionReference) =>
-      //   ref.where('onSchedule', '==', 'true')
-      )
-                            .pipe()
-                            .subscribe((result) => {
-                              this.loading$.next(false)
+    const subscription = this.firebaseService.getScheduleCheckedList()
+        .subscribe((data) => {
+          this.loading$.next(false)
+          subscription.unsubscribe()
+          this.loading$.next(false)
 
-                              this.allStreams = result
-                              this.updateFilterStreams()
+          const allData: Array<ScheduleCheckedItem> = []
+          orders.forEach((streamer) => {
+            const item = data.find((item) => item.streamer === streamer)
+            if (item) {
+              allData.push(item)
+            }
+          })
+          this.allData = allData
 
-                              this.subscription?.unsubscribe()
-                            })
+          this.updateFilterData()
+        })
   }
 
-  updateFilterStreams(): void {
-    const filterStreams = this.allStreams.filter((s) => {
+  public update (list: Array<ScheduleCheckedItem>): void {
+    this.loading$.next(true)
+    let count = 0
+    list.forEach((item) => {
+      const dto = toDto(item)
+      this.firebaseService.updateScheduleChecked(item.id, dto)
+          .finally(() => {
+            count += 1
+            if (count === list.length) {
+              this.loading$.next(false)
+            }
+          })
+    })
+  }
+
+  private updateFilterData(): void {
+    const filterData = this.allData.filter((s) => {
 
       const streamer = findStreamerInfo(s.streamer)
       if (streamer) {
-        if (this.groups.indexOf(streamer.group) > -1) {
-          return true && s.onSchedule
-        }
+        return this.groups.indexOf(streamer.group) > -1
       }
       return false
     })
 
-    this.filterStreams$.next(filterStreams as Array<Stream>)
+    this.filterData$.next(filterData as Array<ScheduleCheckedItem>)
   }
+
 }

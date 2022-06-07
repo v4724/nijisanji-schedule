@@ -236,6 +236,12 @@ body {
   padding: 0.5rem;
 }
 
+select {
+  border-radius: 0.25rem;
+  color: #4c4c4c;
+  border: 1px solid #bdbdbd;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

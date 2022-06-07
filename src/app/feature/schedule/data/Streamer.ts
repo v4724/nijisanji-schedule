@@ -1,31 +1,31 @@
 import { enumList } from '../utils'
 
 export enum Streamer {
-  Vox='Vox',
   Ike='Ike',
-  Luca='Luca',
+  Vox='Vox',
   Mysta='Mysta',
   Shu='Shu',
+  Luca='Luca',
   Fulgur='Fulgur',
+  Uki='Uki',
   Alban='Alban',
   Sonny='Sonny',
-  Uki='Uki',
   Yugo='Yugo',
-  Elira='Elira',
-  Pomu='Pomu',
-  Finana='Finana',
+  Reimu='Reimu',
+  Enna='Enna',
+  Millie='Millie',
+  Nina='Nina',
   Selen='Selen',
   Rosemi='Rosemi',
   Petra='Petra',
-  Enna='Enna',
-  Nina='Nina',
-  Millie='Millie',
-  Reimu='Reimu',
-  NijisanjiOfficial='Nijisanji Official',
-  Ironmouse='Ironmouse',
+  Pomu='Pomu',
+  Elira='Elira',
+  Finana='Finana',
+  // NijisanjiOfficial='Nijisanji Official',
+  // Ironmouse='Ironmouse',
   Mika='Mika',
 }
-
+export const orders = Object.values(Streamer)
 export function streamerList (): Array<string> {
   const list = enumList(Streamer)
   return list
