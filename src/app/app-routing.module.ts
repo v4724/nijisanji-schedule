@@ -9,8 +9,12 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'schedule',
         loadChildren: () => import('./feature/schedule/schedule.module').then(m => m.ScheduleModule),
+      },
+      {
+        path: 'member',
+        loadChildren: () => import('./feature/member/member.module').then(m => m.MemberModule),
       },
     ]
   }

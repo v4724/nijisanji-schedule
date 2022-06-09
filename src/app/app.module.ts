@@ -10,11 +10,13 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal'
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MemberComponent } from './feature/member/member.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule,

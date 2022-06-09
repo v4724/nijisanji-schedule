@@ -9,6 +9,7 @@ export interface StreamerInfo {
   channelId: string,
   youtubeLink: string,
   twitterLink: string,
+  twitchLink: string,
   color: string,
   bgColor: string,
   timezone: Timezone,
@@ -21,6 +22,7 @@ export const luxiem: Array<StreamerInfo> = [{
   channelId: 'UC4yNIKGvy-YUrwYupVdLDXA',
   youtubeLink: 'https://t.co/hTyg2xavZF',
   twitterLink: 'https://twitter.com/ike_eveland',
+  twitchLink: '',
   color: 'ike-primary-color',
   bgColor: 'ike-primary-bg-color',
   timezone: Timezone.EST5EDT
@@ -31,6 +33,7 @@ export const luxiem: Array<StreamerInfo> = [{
   channelId: 'UCckdfYDGrjojJM28n5SHYrA',
   youtubeLink: 'https://t.co/vKNOC3Nr5S',
   twitterLink: 'https://twitter.com/Vox_Akuma',
+  twitchLink: '',
   color: 'vox-primary-color',
   bgColor: 'vox-primary-bg-color',
   timezone: Timezone.JST
@@ -41,6 +44,7 @@ export const luxiem: Array<StreamerInfo> = [{
   channelId: 'UC7Gb7Uawe20QyFibhLl1lzA',
   youtubeLink: 'https://t.co/3gtlv10UA6',
   twitterLink: 'https://twitter.com/luca_kaneshiro',
+  twitchLink: '',
   color: 'luca-primary-color',
   bgColor: 'luca-primary-bg-color',
   timezone: Timezone.AEST
@@ -51,6 +55,7 @@ export const luxiem: Array<StreamerInfo> = [{
   channelId: 'UCIM92Ok_spNKLVB5TsgwseQ',
   youtubeLink: 'https://t.co/zDhDXEWG5t',
   twitterLink: 'https://twitter.com/Mysta_Rias',
+  twitchLink: '',
   color: 'mysta-primary-color',
   bgColor: 'mysta-primary-bg-color',
   timezone: Timezone.BST
@@ -61,6 +66,7 @@ export const luxiem: Array<StreamerInfo> = [{
   channelId: 'UCG0rzBZV_QMP4MtWg6IjhEA',
   youtubeLink: 'https://t.co/pmO0oD7Z7V',
   twitterLink: 'https://twitter.com/shu_yamino',
+  twitchLink: '',
   color: 'shu-primary-color',
   bgColor: 'shu-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -73,6 +79,7 @@ export const noctyx: Array<StreamerInfo> = [{
   channelId: 'UCGhqxhovNfaPBpxfCruy9EA',
   youtubeLink: 'https://t.co/SHdAQvdg9w',
   twitterLink: 'https://twitter.com/Fulgur_Ovid',
+  twitchLink: '',
   color: 'fulgur-primary-color',
   bgColor: 'fulgur-primary-bg-color',
   timezone: Timezone.EST5EDT
@@ -83,6 +90,7 @@ export const noctyx: Array<StreamerInfo> = [{
   channelId: 'UCQ1zGxHrfEmmW4CPpBx9-qw',
   youtubeLink: 'https://t.co/My93c0L6HV',
   twitterLink: 'https://twitter.com/alban_knox/',
+  twitchLink: '',
   color: 'alban-primary-color',
   bgColor: 'alban-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -93,6 +101,7 @@ export const noctyx: Array<StreamerInfo> = [{
   channelId: 'UCuuAb_72QzK0M1USPMEl1yw',
   youtubeLink: 'https://t.co/0cXVAQQI4m',
   twitterLink: 'https://twitter.com/sonny_brisko',
+  twitchLink: '',
   color: 'sonny-primary-color',
   bgColor: 'sonny-primary-bg-color',
   timezone: Timezone.JST
@@ -103,6 +112,7 @@ export const noctyx: Array<StreamerInfo> = [{
   channelId: 'UChJ5FTsHOu72_5OVx0rvsvQ',
   youtubeLink: 'https://t.co/sLBqq2cJlA',
   twitterLink: 'https://twitter.com/uki_violeta',
+  twitchLink: '',
   color: 'uki-primary-color',
   bgColor: 'uki-primary-bg-color',
   timezone: Timezone.EST5EDT
@@ -113,6 +123,7 @@ export const noctyx: Array<StreamerInfo> = [{
   channelId: 'UCSc_KzY_9WYAx9LghggjVRA',
   youtubeLink: 'https://t.co/WKF0Vx8fI9',
   twitterLink: 'https://twitter.com/Yugo_Asuma',
+  twitchLink: '',
   color: 'yugo-primary-color',
   bgColor: 'yugo-primary-bg-color',
   timezone: Timezone.JST
@@ -125,6 +136,7 @@ export const ethyria: Array<StreamerInfo> = [{
   channelId: 'UCR6qhsLpn62WVxCBK1dkLow',
   youtubeLink: 'https://www.youtube.com/channel/UCR6qhsLpn62WVxCBK1dkLow',
   twitterLink: 'https://twitter.com/EnnaAlouette',
+  twitchLink: '',
   color: 'enna-primary-color',
   bgColor: 'enna-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -135,6 +147,7 @@ export const ethyria: Array<StreamerInfo> = [{
   channelId: 'UCkieJGn3pgJikVW8gmMXE2w',
   youtubeLink: 'https://www.youtube.com/channel/UCkieJGn3pgJikVW8gmMXE2w',
   twitterLink: 'https://twitter.com/NinaKosaka',
+  twitchLink: '',
   color: 'nina-primary-color',
   bgColor: 'nina-primary-bg-color',
   timezone: Timezone.EST5EDT
@@ -145,6 +158,7 @@ export const ethyria: Array<StreamerInfo> = [{
   channelId: 'UC47rNmkDcNgbOcM-2BwzJTQ',
   youtubeLink: 'https://www.youtube.com/channel/UC47rNmkDcNgbOcM-2BwzJTQ',
   twitterLink: 'https://twitter.com/MillieParfait',
+  twitchLink: '',
   color: 'millie-primary-color',
   bgColor: 'millie-primary-bg-color',
   timezone: Timezone.EST5EDT
@@ -155,6 +169,7 @@ export const ethyria: Array<StreamerInfo> = [{
   channelId: 'UCBURM8S4LH7cRZ0Clea9RDA',
   youtubeLink: 'https://www.youtube.com/channel/UCBURM8S4LH7cRZ0Clea9RDA',
   twitterLink: 'https://twitter.com/ReimuEndou',
+  twitchLink: '',
   color: 'reimu-primary-color',
   bgColor: 'reimu-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -168,6 +183,7 @@ export const obsydia: Array<StreamerInfo> = [{
   channelId: 'UCV1xUwfM2v2oBtT3JNvic3w',
   youtubeLink: 'https://www.youtube.com/channel/UCV1xUwfM2v2oBtT3JNvic3w',
   twitterLink: 'https://twitter.com/Selen_Tatsuki',
+  twitchLink: '',
   color: 'selen-primary-color',
   bgColor: 'selen-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -178,6 +194,7 @@ export const obsydia: Array<StreamerInfo> = [{
   channelId: 'UC4WvIIAo89_AzGUh1AZ6Dkg',
   youtubeLink: 'https://www.youtube.com/channel/UC4WvIIAo89_AzGUh1AZ6Dkg',
   twitterLink: 'https://twitter.com/Rosemi_Lovelock',
+  twitchLink: '',
   color: 'rosemi-primary-color',
   bgColor: 'rosemi-primary-bg-color',
   timezone: Timezone.EST5EDT
@@ -188,6 +205,7 @@ export const obsydia: Array<StreamerInfo> = [{
   channelId: 'UCgA2jKRkqpY_8eysPUs8sjw',
   youtubeLink: 'https://www.youtube.com/channel/UCgA2jKRkqpY_8eysPUs8sjw',
   twitterLink: 'https://twitter.com/Petra_Gurin',
+  twitchLink: '',
   color: 'petra-primary-color',
   bgColor: 'petra-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -201,6 +219,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   channelId: 'UCIeSUTOTkF9Hs7q3SGcO-Ow',
   youtubeLink: 'https://www.youtube.com/channel/UCIeSUTOTkF9Hs7q3SGcO-Ow',
   twitterLink: 'https://twitter.com/EliraPendora',
+  twitchLink: '',
   color: 'elira-primary-color',
   bgColor: 'elira-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -211,6 +230,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   channelId: 'UCP4nMSTdwU1KqYWu3UH5DHQ',
   youtubeLink: 'https://www.youtube.com/channel/UCP4nMSTdwU1KqYWu3UH5DHQ',
   twitterLink: 'https://twitter.com/PomuRainpuff',
+  twitchLink: '',
   color: 'pomu-primary-color',
   bgColor: 'pomu-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -221,6 +241,7 @@ export const lazuLight: Array<StreamerInfo> = [{
   channelId: 'UCu-J8uIXuLZh16gG-cT1naw',
   youtubeLink: 'https://www.youtube.com/channel/UCu-J8uIXuLZh16gG-cT1naw',
   twitterLink: 'https://twitter.com/FinanaRyugu',
+  twitchLink: '',
   color: 'finana-primary-color',
   bgColor: 'finana-primary-bg-color',
   timezone: Timezone.PST8PDT
@@ -233,6 +254,7 @@ export const NIJISANJI: Array<StreamerInfo> = [{
   channelId: 'UCahgMxSIQ2zIRrPKhM6Mjvg',
   youtubeLink: 'https://www.youtube.com/channel/UCahgMxSIQ2zIRrPKhM6Mjvg',
   twitterLink: 'https://twitter.com/MikaMelatika',
+  twitchLink: '',
   bgColor: 'mika-primary-bg-color',
   color: 'mika-primary-color',
   timezone: Timezone.WIB

@@ -13,12 +13,7 @@
          [class.cursor-pointer]="current !== Schedule.Month"
          (click)="current = Schedule.Month">Month</div>
 
-    <app-login class="mx-3"></app-login>
     <ng-container *ngIf="adminService.isLogin$ | async">
-      <div class="schedule-lick py-1 px-2 me-3" [routerLink]="Schedule.New"
-           [class.cursor-pointer]="current !== Schedule.New"
-           (click)="current = Schedule.New">New Schedule</div>
-
       <a class="me-3"
          role="button"
          (click)="adminService.editToggle()">
@@ -26,6 +21,10 @@
            [class]="{ 'editable': adminService.editable$ | async }"
         ></i>
       </a>
+      <div class="schedule-lick py-1 px-2 me-3" [routerLink]="Schedule.New"
+           [class.cursor-pointer]="current !== Schedule.New"
+           (click)="current = Schedule.New">New Schedule</div>
+
     </ng-container>
 
     <app-schedule-checked-list></app-schedule-checked-list>
@@ -33,7 +32,7 @@
 
   <app-toolbar></app-toolbar>
 
-  <div class="h-100 flex-grow-1 mb-3">
+  <div class="h-100 flex-grow-1">
     <router-outlet></router-outlet>
   </div>
 </div>

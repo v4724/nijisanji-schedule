@@ -1,0 +1,65 @@
+<div class="container h-100 d-flex flex-column">
+
+  <button type="button" class="btn btn-link btn-sm btn-rounded">
+    Edit
+  </button>
+
+  <div class="h-1 flex-grow-1 table-block">
+
+    <table class="table align-middle mb-0 bg-white h-100">
+      <thead class="bg-light">
+        <tr>
+          <th>Vtuber</th>
+          <th>Group</th>
+          <th>Twitter</th>
+          <th>Youtube</th>
+          <th>Twitch</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let streamer of streamers">
+          <td>
+            <div class="d-flex align-items-center">
+              <img
+                [src]="streamer.img"
+                alt=""
+                style="width: 45px; height: 45px"
+                class="rounded-circle"
+              />
+              <div class="ms-3">
+                <p class="fw-bold mb-1">{{ streamer.name }}</p>
+                <p class="text-muted mb-0">{{ streamer.timezone }}</p>
+              </div>
+            </div>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{ streamer.group }}</p>
+          </td>
+          <td>
+            <a role="button" (click)="openUrl(streamer.twitterLink)">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <i></i>
+          </td>
+          <td>
+            <a role="button" (click)="openUrl(streamer.youtubeLink)">
+              <i class="bi bi-youtube"></i>
+            </a>
+          </td>
+          <td>
+            <a role="button" (click)="openUrl(streamer.twitchLink)">
+              <i class="bi bi-twitch"></i>
+            </a>
+          </td>
+          <td>
+            <button type="button" class="btn btn-link btn-sm btn-rounded">
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
