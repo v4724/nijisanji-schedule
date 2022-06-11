@@ -14,9 +14,10 @@
          (click)="current = Schedule.Month">Month</div>
 
     <ng-container *ngIf="adminService.isLogin$ | async">
+      <div class="mx-1">|</div>
       <div class="schedule-lick py-1 px-2 me-3" [routerLink]="Schedule.New"
            [class.cursor-pointer]="current !== Schedule.New"
-           (click)="current = Schedule.New">New Schedule</div>
+           (click)="current = Schedule.New">New</div>
     </ng-container>
 
     <app-schedule-checked-list></app-schedule-checked-list>

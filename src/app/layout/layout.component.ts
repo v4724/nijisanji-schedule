@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import * as XLSX from 'xlsx';
+import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core'
 import { AdminService } from '@app/service/admin.service'
+import { MdbCollapseDirective } from 'mdb-angular-ui-kit/collapse'
 
 @Component({
   selector: 'app-layout',
@@ -9,6 +9,8 @@ import { AdminService } from '@app/service/admin.service'
 })
 export class LayoutComponent implements OnInit {
 
+  @ViewChild('backgroundImageExample2') backgroundImageExample2: MdbCollapseDirective | undefined
+
   constructor(public adminService: AdminService) {
   }
 
@@ -16,4 +18,7 @@ export class LayoutComponent implements OnInit {
 
   }
 
+  click(): void {
+    this.backgroundImageExample2?.hide()
+  }
 }

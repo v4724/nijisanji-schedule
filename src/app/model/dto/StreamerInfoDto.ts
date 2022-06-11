@@ -19,7 +19,7 @@ export interface StreamerInfoDto {
   order: number,
 }
 
-export function initStreamer(): StreamerInfoDto {
+export function initStreamerDto(): StreamerInfoDto {
   const streamer = {
     img: '',
     name: '',
@@ -31,7 +31,7 @@ export function initStreamer(): StreamerInfoDto {
     color: '',
     bgColor: '',
     timezone: Timezone.GMT,
-    order: 999,
+    order: 0,
   }
   return streamer
 }

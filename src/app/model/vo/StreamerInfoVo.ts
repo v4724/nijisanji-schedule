@@ -28,7 +28,7 @@ export function initStreamerInfoVo(): StreamerInfoVo {
     color: '',
     bgColor: '',
     timezone: Timezone.GMT,
-    order: 999
+    order: 0
   }
   return streamer
 }

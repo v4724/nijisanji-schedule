@@ -1,26 +1,26 @@
 <div class="container h-100 d-flex flex-column">
 
-  <button type="button" class="btn btn-link btn-sm btn-rounded"
-          (click)="adminService.openStreamerInfoModal(true, streamerInfoVo)">
-    New
-  </button>
-  <button type="button" class="btn btn-link btn-sm btn-rounded"
-          (click)="batchImport()">
-    Batch Import
-  </button>
+  <div class="fs-4 d-flex align-items-center justify-content-center mt-2">
+    Streamer's info
+  </div>
 
-  <a class="mx-3"
-     role="button"
-     (click)="streamerInfoService.load()">
-    <i class="fas fa-refresh"></i>
-  </a>
+  <div class="d-flex">
+    <button type="button" class="ms-auto btn btn-link btn-sm btn-rounded"
+            (click)="adminService.openStreamerInfoModal(true, streamerInfoVo)">
+      New
+    </button>
+  </div>
+<!--  <button type="button" class="btn btn-link btn-sm btn-rounded"-->
+<!--          (click)="batchImport()">-->
+<!--    Batch Import-->
+<!--  </button>-->
 
   <div class="h-1 flex-grow-1 table-block">
 
     <table class="table align-middle mb-0 h-100">
       <thead class="">
         <tr>
-          <th>Vtuber</th>
+          <th>Streamer</th>
           <th>Group</th>
           <th>Twitter</th>
           <th>Youtube</th>
@@ -48,23 +48,24 @@
             <p class="fw-normal mb-1">{{ streamer.group }}</p>
           </td>
           <td>
-            <a role="button" (click)="openUrl(streamer.twitterLink)">
+            <a *ngIf="streamer.twitterLink" role="button" (click)="openUrl(streamer.twitterLink)">
               <i class="bi bi-twitter"></i>
             </a>
-            <i></i>
           </td>
           <td>
-            <a role="button" (click)="openUrl(streamer.youtubeLink)">
+            <a *ngIf="streamer.youtubeLink" role="button" (click)="openUrl(streamer.youtubeLink)">
               <i class="bi bi-youtube"></i>
             </a>
           </td>
           <td>
-            <a role="button" (click)="openUrl(streamer.twitchLink)">
+            <a *ngIf="streamer.twitchLink" role="button" (click)="openUrl(streamer.twitchLink)">
               <i class="bi bi-twitch"></i>
             </a>
           </td>
           <td>
-            <button type="button" class="btn btn-link btn-sm btn-rounded" (click)="adminService.openStreamerInfoModal(false, streamer)">
+            <button type="button" class="btn btn-link btn-sm btn-rounded"
+                    (click)="adminService.openStreamerInfoModal(false, streamer)"
+                    [disabled]="!(adminService.editable$ | async)">
               Edit
             </button>
           </td>

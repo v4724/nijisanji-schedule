@@ -25,6 +25,9 @@ export class EditStreamerInfoModalComponent implements OnInit {
   }
 
   new(): void {
+    if (this.item.order === 0) {
+      this.item.order = this.streamerInfoService.streamerInfos$.getValue().length + 1
+    }
     this.loaderService.set(true)
 
     this.streamerInfoService.add(this.item)

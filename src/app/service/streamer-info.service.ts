@@ -82,11 +82,11 @@ export class StreamerInfoService {
 
   public load(): void {
 
-    this.loader.loading$.next(true)
-    this.get().subscribe((data) => {
-      this.streamerInfos$.next(data)
-      this.loader.loading$.next(false)
-    })
+    // this.loader.loading$.next(true)
+    // this.get().subscribe((data) => {
+    //   this.streamerInfos$.next(data)
+    //   this.loader.loading$.next(false)
+    // })
 
   }
 

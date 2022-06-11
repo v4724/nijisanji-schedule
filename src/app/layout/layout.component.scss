@@ -8,21 +8,24 @@ footer {
   font-size: 0.5rem;
   background-color: rgba(0, 0, 0, 0.05);
 }
+.navbar {
+  background-color: #fffbfb;
+}
 
 .navbar-scroll .nav-link,
 .navbar-scroll .navbar-toggler-icon {
-  color: #fff;
+  //color: #fff;
 }
 
 /* Color of the links AFTER scroll */
 .navbar-scrolled .nav-link,
 .navbar-scrolled .navbar-toggler-icon {
-  color: #4f4f4f;
+  //color: #4f4f4f;
 }
 
 /* Color of the navbar AFTER scroll */
 .navbar-scrolled {
-  background-color: #fff;
+  //background-color: #fff;
 }
 
 /* An optional height of the navbar AFTER scroll */
@@ -32,16 +35,16 @@ footer {
 }
 
 .bg-image {
-  background-color: #adbbc7;
+  //background-color: #adbbc7;
   //background-image: url('assets/imgs/free/ackground_964413.jpg');
 }
 
 .content-block {
-  padding-top: 4.5rem;
+  padding-top: 3rem;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .content-block {
-    padding-top: 3.8rem;
+    padding-top: 4.5rem;
   }
 }
 

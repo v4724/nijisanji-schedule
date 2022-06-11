@@ -7,13 +7,21 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
-    children: [
+    children: [{
+        path: '',
+        redirectTo: 'schedule',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        loadChildren: () => import('./feature/home/home.module').then(m => m.HomeModule),
+      },
       {
         path: 'schedule',
         loadChildren: () => import('./feature/schedule/schedule.module').then(m => m.ScheduleModule),
       },
       {
-        path: 'member',
+        path: 'streamer',
         loadChildren: () => import('./feature/member/member.module').then(m => m.MemberModule),
       },
     ]
