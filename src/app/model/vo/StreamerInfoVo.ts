@@ -1,0 +1,34 @@
+import { Timezone } from '@app/feature/schedule/data/Timezone'
+
+export interface StreamerInfoVo {
+  id: string
+  img: string,
+  name: string,
+  group: string,
+  channelId: string,
+  youtubeLink: string,
+  twitterLink: string,
+  twitchLink: string,
+  color: string,
+  bgColor: string,
+  timezone: Timezone,
+  order: number
+}
+
+export function initStreamerInfoVo(): StreamerInfoVo {
+  const streamer = {
+    id: '',
+    img: '',
+    name: '',
+    group: '',
+    channelId: '',
+    youtubeLink: '',
+    twitterLink: '',
+    twitchLink: '',
+    color: '',
+    bgColor: '',
+    timezone: Timezone.GMT,
+    order: 999
+  }
+  return streamer
+}

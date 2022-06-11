@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { StreamerInfo, streamers } from '@app/feature/schedule/data/StreamerInfo'
 import { openUrl } from '@app/feature/schedule/utils'
+import { AdminService } from '@app/service/admin.service'
+import { initStreamerInfoVo, StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
+import { defaultStreamers, StreamerInfoDto } from '@app/model/dto/StreamerInfoDto'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
+import * as lodash from 'lodash'
 
 @Component({
   selector: 'app-member',
@@ -8,11 +12,23 @@ import { openUrl } from '@app/feature/schedule/utils'
   styleUrls: ['./member.component.scss']
 })
 export class MemberComponent implements OnInit {
-  streamers: Array<StreamerInfo> = streamers
+  streamers: Array<StreamerInfoVo> = []
   openUrl = openUrl
-  constructor() { }
+  streamerInfoVo = initStreamerInfoVo()
+
+  constructor(public adminService: AdminService,
+              public streamerInfoService: StreamerInfoService) { }
 
   ngOnInit(): void {
+    this.streamerInfoService.streamerInfos$.subscribe((data) => {
+      this.streamers = lodash.cloneDeep(data)
+    })
   }
 
+  batchImport(): void {
+    const infos = defaultStreamers
+    infos.forEach((info: any) => {
+      this.streamerInfoService.add(info as StreamerInfoDto)
+    })
+  }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs'
-import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { FirebaseService } from '@app/service/firebase.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 import { ScheduleCheckedItem, toDto } from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
 import { orders } from '@app/feature/schedule/data/Streamer'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 export interface SysParam {
   id: string,
@@ -31,6 +31,7 @@ export class ScheduleCheckedListService {
     private tzService: TimezoneService,
     private streamGroupService: StreamGroupService,
     private firebaseService: FirebaseService,
+    private streamerInfoService: StreamerInfoService,
   ) {
 
     this.load()
@@ -84,9 +85,9 @@ export class ScheduleCheckedListService {
   private updateFilterData(): void {
     const filterData = this.allData.filter((s) => {
 
-      const streamer = findStreamerInfo(s.streamer)
-      if (streamer) {
-        return this.groups.indexOf(streamer.group) > -1
+      const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
+      if (streamer && streamer.group) {
+        return this.groups.indexOf(<StreamerGroup>streamer.group) > -1
       }
       return false
     })

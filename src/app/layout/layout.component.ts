@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
+import { AdminService } from '@app/service/admin.service'
 
 @Component({
   selector: 'app-layout',
@@ -8,7 +9,7 @@ import * as XLSX from 'xlsx';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() {
+  constructor(public adminService: AdminService) {
   }
 
   ngOnInit(): void {

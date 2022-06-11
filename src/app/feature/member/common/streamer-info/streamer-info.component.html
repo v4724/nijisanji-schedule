@@ -1,0 +1,68 @@
+<div class="d-flex flex-column gap-2">
+  <div class="fs-5">Streamer's info</div>
+
+  <div>
+    <img
+      [src]="item.img"
+      alt=""
+      style="width: 45px; height: 45px"
+      class="rounded-circle"
+    />
+  </div>
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlImg" class="form-control" [(ngModel)]="item.img"/>
+    <label mdbLabel class="form-label" for="formControlImg">Image</label>
+  </mdb-form-control>
+
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlStreamer" class="form-control"
+           [(ngModel)]="item.name"
+           [disabled]="!isNew"/>
+    <label mdbLabel class="form-label" for="formControlStreamer">Streamer</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlTitle" class="form-control" [(ngModel)]="item.group"/>
+    <label mdbLabel class="form-label" for="formControlTitle">Group</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlChannelId" class="form-control" [(ngModel)]="item.channelId"/>
+    <label mdbLabel class="form-label" for="formControlChannelId">Youtube Channel Id</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlYoutubeLink" class="form-control" [(ngModel)]="item.youtubeLink"/>
+    <label mdbLabel class="form-label" for="formControlYoutubeLink">Youtube Link</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlTwitterLink" class="form-control" [(ngModel)]="item.twitterLink"/>
+    <label mdbLabel class="form-label" for="formControlTwitterLink">Twitter Link</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlTwitchLink" class="form-control" [(ngModel)]="item.twitchLink"/>
+    <label mdbLabel class="form-label" for="formControlTwitchLink">Twitch Link</label>
+  </mdb-form-control>
+
+  <div class="d-flex flex-wrap col-gap-1">
+    <div>Timezone:</div>
+    <div *ngFor="let tz of timezones" class="form-check form-check-inline">
+      <input
+        mdbRadio
+        class="form-check-input"
+        type="radio"
+        name="inlineRadioOptions"
+        [id]="'inlineRadio-' + tz[0]"
+        [value]="tz[1]"
+        [(ngModel)]="item.timezone"
+      />
+      <label class="form-check-label" [for]="'inlineRadio-' + tz[0]">{{tz[0]}}</label>
+    </div>
+  </div>
+
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlColor" class="form-control" [(ngModel)]="item.color"/>
+    <label mdbLabel class="form-label" for="formControlColor">Color</label>
+  </mdb-form-control>
+  <mdb-form-control>
+    <input mdbInput type="text" id="formControlBgColor" class="form-control" [(ngModel)]="item.bgColor"/>
+    <label mdbLabel class="form-label" for="formControlBgColor">Background Color</label>
+  </mdb-form-control>
+</div>

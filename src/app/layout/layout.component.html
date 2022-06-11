@@ -36,9 +36,18 @@
           </ul>
         </div>
 
+        <ng-container *ngIf="adminService.isLogin$ | async">
+          <a class="me-3"
+             role="button"
+             (click)="adminService.editToggle()">
+            <i class="fas fa-pen-nib"
+               [class]="{ 'editable': adminService.editable$ | async }"
+            ></i>
+          </a>
+        </ng-container>
         <app-login class="mx-3"></app-login>
       </div>
-    </nav>
+  </nav>
   <!-- Navbar -->
 
   <div class="h-100 flex-grow-1 content-block pb-5">
@@ -59,3 +68,7 @@
     <!-- Copyright -->
   </footer>
 </header>
+
+
+<app-rainbow-loader>
+</app-rainbow-loader>

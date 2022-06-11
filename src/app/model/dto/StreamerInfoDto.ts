@@ -1,0 +1,354 @@
+import { Streamer } from '@app/feature/schedule/data/Streamer'
+import { Timezone } from '@app/feature/schedule/data/Timezone'
+import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
+import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
+import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
+import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+
+export interface StreamerInfoDto {
+  img: string,
+  name: string,
+  group: string,
+  channelId: string,
+  youtubeLink: string,
+  twitterLink: string,
+  twitchLink: string,
+  color: string,
+  bgColor: string,
+  timezone: Timezone,
+  order: number,
+}
+
+export function initStreamer(): StreamerInfoDto {
+  const streamer = {
+    img: '',
+    name: '',
+    group: '',
+    channelId: '',
+    youtubeLink: '',
+    twitterLink: '',
+    twitchLink: '',
+    color: '',
+    bgColor: '',
+    timezone: Timezone.GMT,
+    order: 999,
+  }
+  return streamer
+}
+
+export function toDto (item: StreamerInfoVo): StreamerInfoDto {
+  const itemDto: StreamerInfoDto = {
+    img: item.img,
+    name: item.name,
+    group: item.group,
+    channelId: item.channelId,
+    youtubeLink: item.youtubeLink,
+    twitterLink: item.twitterLink,
+    twitchLink: item.twitchLink,
+    color: item.color,
+    bgColor: item.color,
+    timezone: item.timezone,
+    order: item.order
+  }
+
+  return itemDto
+}
+
+export function fromDto (id: string, dto: StreamerInfoDto): StreamerInfoVo {
+  const item: StreamerInfoVo = {
+    id: id,
+    img: dto.img,
+    name: dto.name,
+    group: dto.group,
+    channelId: dto.channelId,
+    youtubeLink: dto.youtubeLink,
+    twitterLink: dto.twitterLink,
+    twitchLink: dto.twitchLink,
+    color: dto.color,
+    bgColor: dto.color,
+    timezone: dto.timezone,
+    order: dto.order
+  }
+  return item
+}
+
+export function toStreamerInfoData (origData: Array<QueryDocumentSnapshot<StreamerInfoDto>>): Array<StreamerInfoVo> {
+  const data: Array<StreamerInfoVo> = []
+  origData.forEach((doc) => {
+    const origItem = doc.data()
+    const item = fromDto(doc.id, origItem)
+    data.push(item)
+  })
+
+  return data
+}
+
+
+export const luxiem: Array<StreamerInfoDto> = [{
+  img: 'assets/imgs/ike_profile.jpg',
+  name: Streamer.Ike,
+  group: StreamerGroup.Luxiem,
+  channelId: 'UC4yNIKGvy-YUrwYupVdLDXA',
+  youtubeLink: 'https://t.co/hTyg2xavZF',
+  twitterLink: 'https://twitter.com/ike_eveland',
+  twitchLink: '',
+  color: 'ike-primary-color',
+  bgColor: 'ike-primary-bg-color',
+  timezone: Timezone.EST5EDT,
+  order: 1
+}, {
+  img: 'assets/imgs/vox_profile.jpg',
+  name: Streamer.Vox,
+  group: StreamerGroup.Luxiem,
+  channelId: 'UCckdfYDGrjojJM28n5SHYrA',
+  youtubeLink: 'https://t.co/vKNOC3Nr5S',
+  twitterLink: 'https://twitter.com/Vox_Akuma',
+  twitchLink: '',
+  color: 'vox-primary-color',
+  bgColor: 'vox-primary-bg-color',
+  timezone: Timezone.JST,
+  order: 2
+}, {
+  img: 'assets/imgs/luca_profile.jpg',
+  name: Streamer.Luca,
+  group: StreamerGroup.Luxiem,
+  channelId: 'UC7Gb7Uawe20QyFibhLl1lzA',
+  youtubeLink: 'https://t.co/3gtlv10UA6',
+  twitterLink: 'https://twitter.com/luca_kaneshiro',
+  twitchLink: '',
+  color: 'luca-primary-color',
+  bgColor: 'luca-primary-bg-color',
+  timezone: Timezone.AEST,
+  order: 5
+}, {
+  img: 'assets/imgs/mysta_profile.jpg',
+  name: Streamer.Mysta,
+  group: StreamerGroup.Luxiem,
+  channelId: 'UCIM92Ok_spNKLVB5TsgwseQ',
+  youtubeLink: 'https://t.co/zDhDXEWG5t',
+  twitterLink: 'https://twitter.com/Mysta_Rias',
+  twitchLink: '',
+  color: 'mysta-primary-color',
+  bgColor: 'mysta-primary-bg-color',
+  timezone: Timezone.BST,
+  order: 3
+}, {
+  img: 'assets/imgs/shu_profile.jpg',
+  name: Streamer.Shu,
+  group: StreamerGroup.Luxiem,
+  channelId: 'UCG0rzBZV_QMP4MtWg6IjhEA',
+  youtubeLink: 'https://t.co/pmO0oD7Z7V',
+  twitterLink: 'https://twitter.com/shu_yamino',
+  twitchLink: '',
+  color: 'shu-primary-color',
+  bgColor: 'shu-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order: 4
+}]
+
+export const noctyx: Array<StreamerInfoDto> = [{
+  img: 'assets/imgs/fulgur_profile.jpg',
+  name: Streamer.Fulgur,
+  group: StreamerGroup.Noctyx,
+  channelId: 'UCGhqxhovNfaPBpxfCruy9EA',
+  youtubeLink: 'https://t.co/SHdAQvdg9w',
+  twitterLink: 'https://twitter.com/Fulgur_Ovid',
+  twitchLink: '',
+  color: 'fulgur-primary-color',
+  bgColor: 'fulgur-primary-bg-color',
+  timezone: Timezone.EST5EDT,
+  order: 6
+}, {
+  img: 'assets/imgs/alban_profile.jpg',
+  name: Streamer.Alban,
+  group: StreamerGroup.Noctyx,
+  channelId: 'UCQ1zGxHrfEmmW4CPpBx9-qw',
+  youtubeLink: 'https://t.co/My93c0L6HV',
+  twitterLink: 'https://twitter.com/alban_knox/',
+  twitchLink: '',
+  color: 'alban-primary-color',
+  bgColor: 'alban-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order: 8
+}, {
+  img: 'assets/imgs/sonny_profile.jpg',
+  name: Streamer.Sonny,
+  group: StreamerGroup.Noctyx,
+  channelId: 'UCuuAb_72QzK0M1USPMEl1yw',
+  youtubeLink: 'https://t.co/0cXVAQQI4m',
+  twitterLink: 'https://twitter.com/sonny_brisko',
+  twitchLink: '',
+  color: 'sonny-primary-color',
+  bgColor: 'sonny-primary-bg-color',
+  timezone: Timezone.JST,
+  order: 9
+}, {
+  img: 'assets/imgs/uki_profile.jpg',
+  name: Streamer.Uki,
+  group: StreamerGroup.Noctyx,
+  channelId: 'UChJ5FTsHOu72_5OVx0rvsvQ',
+  youtubeLink: 'https://t.co/sLBqq2cJlA',
+  twitterLink: 'https://twitter.com/uki_violeta',
+  twitchLink: '',
+  color: 'uki-primary-color',
+  bgColor: 'uki-primary-bg-color',
+  timezone: Timezone.EST5EDT,
+  order: 7
+}, {
+  img: 'assets/imgs/yugo_profile.jpg',
+  name: Streamer.Yugo,
+  group: StreamerGroup.Noctyx,
+  channelId: 'UCSc_KzY_9WYAx9LghggjVRA',
+  youtubeLink: 'https://t.co/WKF0Vx8fI9',
+  twitterLink: 'https://twitter.com/Yugo_Asuma',
+  twitchLink: '',
+  color: 'yugo-primary-color',
+  bgColor: 'yugo-primary-bg-color',
+  timezone: Timezone.JST,
+  order: 10
+}]
+
+export const ethyria: Array<StreamerInfoDto> = [{
+  img: 'assets/imgs/enna_profile.jpg',
+  name: Streamer.Enna,
+  group: StreamerGroup.Ethyria,
+  channelId: 'UCR6qhsLpn62WVxCBK1dkLow',
+  youtubeLink: 'https://www.youtube.com/channel/UCR6qhsLpn62WVxCBK1dkLow',
+  twitterLink: 'https://twitter.com/EnnaAlouette',
+  twitchLink: '',
+  color: 'enna-primary-color',
+  bgColor: 'enna-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order: 12
+}, {
+  img: 'assets/imgs/nina_profile.jpg',
+  name: Streamer.Nina,
+  group: StreamerGroup.Ethyria,
+  channelId: 'UCkieJGn3pgJikVW8gmMXE2w',
+  youtubeLink: 'https://www.youtube.com/channel/UCkieJGn3pgJikVW8gmMXE2w',
+  twitterLink: 'https://twitter.com/NinaKosaka',
+  twitchLink: '',
+  color: 'nina-primary-color',
+  bgColor: 'nina-primary-bg-color',
+  timezone: Timezone.EST5EDT,
+  order: 14
+}, {
+  img: 'assets/imgs/millie_profile.jpg',
+  name: Streamer.Millie,
+  group: StreamerGroup.Ethyria,
+  channelId: 'UC47rNmkDcNgbOcM-2BwzJTQ',
+  youtubeLink: 'https://www.youtube.com/channel/UC47rNmkDcNgbOcM-2BwzJTQ',
+  twitterLink: 'https://twitter.com/MillieParfait',
+  twitchLink: '',
+  color: 'millie-primary-color',
+  bgColor: 'millie-primary-bg-color',
+  timezone: Timezone.EST5EDT,
+  order: 13
+}, {
+  img: 'assets/imgs/reimu_profile.jpg',
+  name: Streamer.Reimu,
+  group: StreamerGroup.Ethyria,
+  channelId: 'UCBURM8S4LH7cRZ0Clea9RDA',
+  youtubeLink: 'https://www.youtube.com/channel/UCBURM8S4LH7cRZ0Clea9RDA',
+  twitterLink: 'https://twitter.com/ReimuEndou',
+  twitchLink: '',
+  color: 'reimu-primary-color',
+  bgColor: 'reimu-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order: 11
+}]
+
+
+export const obsydia: Array<StreamerInfoDto> = [{
+  img: 'assets/imgs/selen_profile.jpg',
+  name: Streamer.Selen,
+  group: StreamerGroup.OBSYDIA,
+  channelId: 'UCV1xUwfM2v2oBtT3JNvic3w',
+  youtubeLink: 'https://www.youtube.com/channel/UCV1xUwfM2v2oBtT3JNvic3w',
+  twitterLink: 'https://twitter.com/Selen_Tatsuki',
+  twitchLink: '',
+  color: 'selen-primary-color',
+  bgColor: 'selen-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order: 15
+}, {
+  img: 'assets/imgs/rosemi_profile.jpg',
+  name: Streamer.Rosemi,
+  group: StreamerGroup.OBSYDIA,
+  channelId: 'UC4WvIIAo89_AzGUh1AZ6Dkg',
+  youtubeLink: 'https://www.youtube.com/channel/UC4WvIIAo89_AzGUh1AZ6Dkg',
+  twitterLink: 'https://twitter.com/Rosemi_Lovelock',
+  twitchLink: '',
+  color: 'rosemi-primary-color',
+  bgColor: 'rosemi-primary-bg-color',
+  timezone: Timezone.EST5EDT,
+  order: 16
+}, {
+  img: 'assets/imgs/petra_profile.jpg',
+  name: Streamer.Petra,
+  group: StreamerGroup.OBSYDIA,
+  channelId: 'UCgA2jKRkqpY_8eysPUs8sjw',
+  youtubeLink: 'https://www.youtube.com/channel/UCgA2jKRkqpY_8eysPUs8sjw',
+  twitterLink: 'https://twitter.com/Petra_Gurin',
+  twitchLink: '',
+  color: 'petra-primary-color',
+  bgColor: 'petra-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order: 17
+}]
+
+
+export const lazuLight: Array<StreamerInfoDto> = [{
+  img: 'assets/imgs/elira_profile.jpg',
+  name: Streamer.Elira,
+  group: StreamerGroup.LazuLight,
+  channelId: 'UCIeSUTOTkF9Hs7q3SGcO-Ow',
+  youtubeLink: 'https://www.youtube.com/channel/UCIeSUTOTkF9Hs7q3SGcO-Ow',
+  twitterLink: 'https://twitter.com/EliraPendora',
+  twitchLink: '',
+  color: 'elira-primary-color',
+  bgColor: 'elira-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order: 19
+}, {
+  img: 'assets/imgs/pomu_profile.jpg',
+  name: Streamer.Pomu,
+  group: StreamerGroup.LazuLight,
+  channelId: 'UCP4nMSTdwU1KqYWu3UH5DHQ',
+  youtubeLink: 'https://www.youtube.com/channel/UCP4nMSTdwU1KqYWu3UH5DHQ',
+  twitterLink: 'https://twitter.com/PomuRainpuff',
+  twitchLink: '',
+  color: 'pomu-primary-color',
+  bgColor: 'pomu-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order:18
+}, {
+  img: 'assets/imgs/finana_profile.jpg',
+  name: Streamer.Finana,
+  group: StreamerGroup.LazuLight,
+  channelId: 'UCu-J8uIXuLZh16gG-cT1naw',
+  youtubeLink: 'https://www.youtube.com/channel/UCu-J8uIXuLZh16gG-cT1naw',
+  twitterLink: 'https://twitter.com/FinanaRyugu',
+  twitchLink: '',
+  color: 'finana-primary-color',
+  bgColor: 'finana-primary-bg-color',
+  timezone: Timezone.PST8PDT,
+  order: 20
+}]
+
+export const NIJISANJI: Array<StreamerInfoDto> = [{
+  img: 'assets/imgs/mika_profile.jpg',
+  name: Streamer.Mika,
+  group: StreamerGroup.NIJISANJI,
+  channelId: 'UCahgMxSIQ2zIRrPKhM6Mjvg',
+  youtubeLink: 'https://www.youtube.com/channel/UCahgMxSIQ2zIRrPKhM6Mjvg',
+  twitterLink: 'https://twitter.com/MikaMelatika',
+  twitchLink: '',
+  bgColor: 'mika-primary-bg-color',
+  color: 'mika-primary-color',
+  timezone: Timezone.WIB,
+  order: 21
+}]
+
+export let defaultStreamers: Array<StreamerInfo> = []
+defaultStreamers = defaultStreamers.concat(luxiem, noctyx, ethyria, obsydia, lazuLight, NIJISANJI)

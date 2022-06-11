@@ -4,6 +4,8 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal'
 import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { EditModalComponent } from '@app/feature/schedule/common/edit-modal/edit-modal.component'
 import { AngularFireAuth } from '@angular/fire/compat/auth'
+import { EditStreamerInfoModalComponent } from '@app/feature/member/edit-streamer-info-modal/edit-streamer-info-modal.component'
+import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class AdminService {
   editable$ = new BehaviorSubject<boolean>(false)
 
   modalRef: MdbModalRef<EditModalComponent> | null = null;
+  editStreamerInfoModalRef: MdbModalRef<EditStreamerInfoModalComponent> | null = null;
 
   constructor(public auth: AngularFireAuth,
               private modalService: MdbModalService) {
@@ -37,6 +40,12 @@ export class AdminService {
   openModal(stream: FirebaseStreamViewItem): void {
     this.modalRef = this.modalService.open(EditModalComponent,{
       data: { item: stream },
+    })
+  }
+
+  openStreamerInfoModal(isNew: boolean, streamer?: StreamerInfo): void {
+    this.editStreamerInfoModalRef = this.modalService.open(EditStreamerInfoModalComponent,{
+      data: { item: streamer, isNew: isNew },
     })
   }
 }

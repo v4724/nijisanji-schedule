@@ -1,8 +1,9 @@
 import * as moment from 'moment-timezone'
 import * as lodash from 'lodash'
 import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
-import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { Moment } from 'moment-timezone'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 // for firebase
 export interface StreamDto {
@@ -131,7 +132,7 @@ export function getFeatStream (mainStream: Stream, featStreamer: string) :Stream
   return feat
 }
 
-export function setDisplayValue(item: FirebaseStreamViewItem, tz: string):void {
+export function setDisplayValue(item: FirebaseStreamViewItem, tz: string, streamerInfoService: StreamerInfoService):void {
 
   if ('displayMoment' in item) {
     item.displayMoment = moment(item.timestamp).tz(tz)
@@ -140,7 +141,7 @@ export function setDisplayValue(item: FirebaseStreamViewItem, tz: string):void {
   item.displayDate = moment(item.timestamp).tz(tz).format('yyyy-MM-DD')
   item.displayTime = moment(item.timestamp).tz(tz).format('HH:mm')
 
-  const info = findStreamerInfo(item.streamer)
+  const info = streamerInfoService.findStreamerInfo(item.streamer)
   if (info) {
     item.streamerInfo = info
   }

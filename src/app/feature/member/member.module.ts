@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router'
-import { ScheduleComponent } from '@app/feature/schedule/schedule.component'
-import { WeekComponent } from '@app/feature/schedule/week/week.component'
-import { MonthComponent as MonthComponent2 } from '@app/feature/schedule/month-2/month.component'
-import { DateComponent } from '@app/feature/schedule/date/date.component'
-import { NewStreamComponent } from '@app/feature/schedule/new-stream/new-stream.component'
-import { MemberComponent } from '@app/feature/member/member.component'
+import { MemberComponent } from '@app/feature/member/member.component';
+import { EditStreamerInfoModalComponent } from './edit-streamer-info-modal/edit-streamer-info-modal.component';
+import { StreamerInfoComponent } from './common/streamer-info/streamer-info.component'
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
+import { FormsModule } from '@angular/forms'
 
 
 const routes: Routes = [
@@ -18,10 +17,15 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    EditStreamerInfoModalComponent,
+    StreamerInfoComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    MdbFormsModule,
+    FormsModule
   ]
 })
 export class MemberModule { }

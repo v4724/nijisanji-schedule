@@ -3,11 +3,11 @@ import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
 import { Stream as ExcelStream, StreamViewItem as ExcelStreamViewItem, TBDStream, TBDStreamViewItem } from '@app/feature/schedule/data/excel-stream/Stream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
-import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 import * as XLSX from 'xlsx'
 import * as moment from 'moment-timezone'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,8 @@ export class ScheduleService {
 
 
   constructor(private streamTypeService: StreamTypeService,
-              private streamGroupService: StreamGroupService) {
+              private streamGroupService: StreamGroupService,
+              private streamerInfoService: StreamerInfoService) {
 
     // 不從 excel 取得資料
     // this.readFromExcel()
@@ -44,7 +45,7 @@ export class ScheduleService {
     this.allStreams = lodash.cloneDeep(origData) as Array<ExcelStreamViewItem>
     this.allStreams.forEach((stream) => {
       const s = stream as ExcelStreamViewItem
-      const info = findStreamerInfo(stream.streamer)
+      const info = this.streamerInfoService.findStreamerInfo(stream.streamer)
       if (info) {
         s.streamerInfo = info
       }
@@ -80,7 +81,7 @@ export class ScheduleService {
 
     this.TBDStreams = lodash.cloneDeep(origData) as Array<TBDStreamViewItem>
     this.TBDStreams.forEach((stream) => {
-      const info = findStreamerInfo(stream.streamer)
+      const info = this.streamerInfoService.findStreamerInfo(stream.streamer)
       if (info) {
         stream.streamerInfo = info
       }
@@ -131,9 +132,9 @@ export class ScheduleService {
 
     list = list.filter((s) => {
 
-      const streamer = findStreamerInfo(s.streamer)
+      const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
       if (streamer) {
-        if (groups.indexOf(streamer.group) > -1) {
+        if (groups.indexOf(streamer.group as StreamerGroup) > -1) {
           return true
         }
       }
@@ -148,9 +149,9 @@ export class ScheduleService {
 
     list = list.filter((s) => {
 
-      const streamer = findStreamerInfo(s.streamer)
+      const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
       if (streamer) {
-        if (groups.indexOf(streamer.group) > -1) {
+        if (groups.indexOf(streamer.group as StreamerGroup) > -1) {
           return true
         }
       }

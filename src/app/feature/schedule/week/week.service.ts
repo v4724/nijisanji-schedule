@@ -10,7 +10,7 @@ import { FirebaseService } from '@app/service/firebase.service'
 import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 import { setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
-import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,8 @@ export class WeekService {
   constructor(private tzService: TimezoneService,
               private firebaseService: FirebaseService,
               private streamGroupService: StreamGroupService,
-              private rainbowLoaderService: RainbowLoaderService) {
+              private rainbowLoaderService: RainbowLoaderService,
+              private streamerInfoService: StreamerInfoService) {
 
     combineLatest([
       this.tzService.timezone$,
@@ -91,9 +92,9 @@ export class WeekService {
   updateFilterStreams(): void {
     const filterStreams = this.allStreams.filter((s) => {
 
-      const streamer = findStreamerInfo(s.streamer)
-      if (streamer) {
-        if (this.groups.indexOf(streamer.group) > -1) {
+      const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
+      if (streamer && streamer.group) {
+        if (this.groups.indexOf(<StreamerGroup>streamer.group) > -1) {
           return true
         }
       }
@@ -103,7 +104,7 @@ export class WeekService {
     filterStreams.map((stream) => {
       const viewItem = stream as FirebaseStreamViewItem
       viewItem.displayMoment = moment()
-      setDisplayValue(viewItem, this.timezone)
+      setDisplayValue(viewItem, this.timezone, this.streamerInfoService)
       return viewItem
     })
 

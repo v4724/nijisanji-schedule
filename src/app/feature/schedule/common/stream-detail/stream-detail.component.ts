@@ -1,10 +1,11 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { resetStream, Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
 import * as moment from 'moment-timezone'
 import { Observable } from 'rxjs'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { timezoneEntries } from '@app/feature/schedule/data/Timezone'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Component({
   selector: 'app-stream-detail[item]',
@@ -32,7 +33,8 @@ export class StreamDetailComponent implements OnInit, OnChanges {
   searchFeatStreamer: string = ''
   findFeatStreamerInfo: StreamerInfo | undefined = undefined
 
-  constructor(private timezoneService: TimezoneService) {
+  constructor(private timezoneService: TimezoneService,
+              private streamerInfoService: StreamerInfoService) {
 
   }
 
@@ -56,9 +58,9 @@ export class StreamDetailComponent implements OnInit, OnChanges {
   }
 
   streamerChanged(value: string): void {
-    const info = findStreamerInfo(value)
+    const info = this.streamerInfoService.findStreamerInfo(value)
     if (info) {
-      this.timezone = info.timezone
+      this.timezone = info.timezone ?? ''
     }
   }
 
@@ -83,7 +85,7 @@ export class StreamDetailComponent implements OnInit, OnChanges {
   }
 
   findFeatStreamerInfoChanged(value: string): void {
-    this.findFeatStreamerInfo = findStreamerInfo(value)
+    this.findFeatStreamerInfo = this.streamerInfoService.findStreamerInfo(value)
   }
 
   addFeatStreamer(): void {

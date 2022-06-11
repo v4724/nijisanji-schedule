@@ -15,6 +15,7 @@ import {
   ScheduleCheckedItem, ScheduleCheckedItemDto,
   toScheduleCheckedData
 } from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class FirebaseService {
   lastUpdateTimestamp$: BehaviorSubject<number> = new BehaviorSubject<number>(-1)
   items: Observable<any[]>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore,
+              private streamerInfoService: StreamerInfoService) {
     // Initialize Firebase
     this.items = db.collection('streams').valueChanges();
   }
@@ -106,7 +108,7 @@ export class FirebaseService {
                .pipe(
                  map((snapshot:QuerySnapshot<any>) => {
                    const origData = snapshot.docs
-                   const data: Array<ScheduleCheckedItem> = toScheduleCheckedData(origData)
+                   const data: Array<ScheduleCheckedItem> = toScheduleCheckedData(origData, this.streamerInfoService)
                    return data
                  }))
   }

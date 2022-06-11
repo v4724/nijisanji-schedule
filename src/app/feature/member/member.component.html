@@ -1,13 +1,24 @@
 <div class="container h-100 d-flex flex-column">
 
-  <button type="button" class="btn btn-link btn-sm btn-rounded">
-    Edit
+  <button type="button" class="btn btn-link btn-sm btn-rounded"
+          (click)="adminService.openStreamerInfoModal(true, streamerInfoVo)">
+    New
   </button>
+  <button type="button" class="btn btn-link btn-sm btn-rounded"
+          (click)="batchImport()">
+    Batch Import
+  </button>
+
+  <a class="mx-3"
+     role="button"
+     (click)="streamerInfoService.load()">
+    <i class="fas fa-refresh"></i>
+  </a>
 
   <div class="h-1 flex-grow-1 table-block">
 
-    <table class="table align-middle mb-0 bg-white h-100">
-      <thead class="bg-light">
+    <table class="table align-middle mb-0 h-100">
+      <thead class="">
         <tr>
           <th>Vtuber</th>
           <th>Group</th>
@@ -53,7 +64,7 @@
             </a>
           </td>
           <td>
-            <button type="button" class="btn btn-link btn-sm btn-rounded">
+            <button type="button" class="btn btn-link btn-sm btn-rounded" (click)="adminService.openStreamerInfoModal(false, streamer)">
               Edit
             </button>
           </td>

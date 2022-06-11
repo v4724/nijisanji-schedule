@@ -3,7 +3,6 @@ import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stre
 import { orders, Streamer, streamerList } from '../data/Streamer'
 import * as moment from 'moment-timezone'
 import { WeekHeader } from './types'
-import { findStreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { Subscription } from 'rxjs'
 import { openUrl } from '@app/feature/schedule/utils'
 import { TBDStream } from '@app/feature/schedule/data/excel-stream/Stream'
@@ -11,6 +10,7 @@ import { DisplayText } from '@app/feature/schedule/common/display-text/DisplayTe
 import * as lodash from 'lodash'
 import { WeekService } from '@app/feature/schedule/week/week.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Component({
   selector: 'app-week',
@@ -28,13 +28,13 @@ export class WeekComponent implements OnInit {
 
   streamers = streamerList()
 
-  findStreamerInfo = findStreamerInfo
   openUrl = openUrl
 
   subscription: Subscription | undefined
 
   constructor(public weekService: WeekService,
-              private tzService: TimezoneService){
+              private tzService: TimezoneService,
+              public streamerInfoService: StreamerInfoService){
   }
 
   ngOnInit(): void {
@@ -47,7 +47,7 @@ export class WeekComponent implements OnInit {
   }
 
   linkToYoutube (streamer: string): void {
-    const info = findStreamerInfo(streamer)
+    const info = this.streamerInfoService.findStreamerInfo(streamer)
     if (info) {
       const ytLink = info.youtubeLink
       openUrl(ytLink)

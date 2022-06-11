@@ -49,7 +49,7 @@
                     <div class="tooltip-div">
                       <img
                         class="m-1 profile-icon cursor-pointer "
-                        [src]="findStreamerInfo(item[header.key])?.img"
+                        [src]="streamerInfoService.findStreamerInfo(item[header.key])?.img"
                         (click)="linkToYoutube(item[header.key])"/>
                       <span class="tooltiptext tooltip-right">youtube</span>
                     </div>

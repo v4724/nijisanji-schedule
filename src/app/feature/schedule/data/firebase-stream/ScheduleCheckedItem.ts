@@ -1,5 +1,6 @@
 import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
-import { findStreamerInfo, StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 export enum ScheduleCheckedState {
   none="NONE",
@@ -29,22 +30,22 @@ export function toDto (item: ScheduleCheckedItem): ScheduleCheckedItemDto {
   return itemDto
 }
 
-export function fromDto (id: string, dto: ScheduleCheckedItemDto): ScheduleCheckedItem {
+export function fromDto (id: string, dto: ScheduleCheckedItemDto, streamerInfoService: StreamerInfoService): ScheduleCheckedItem {
   const item: ScheduleCheckedItem = {
     id: id,
     streamer: dto.streamer,
-    streamerInfo: findStreamerInfo((dto.streamer)),
+    streamerInfo: streamerInfoService.findStreamerInfo((dto.streamer)),
     state: dto.state
   }
 
   return item
 }
 
-export function toScheduleCheckedData (origData: Array<QueryDocumentSnapshot<ScheduleCheckedItemDto>>): Array<ScheduleCheckedItem> {
+export function toScheduleCheckedData (origData: Array<QueryDocumentSnapshot<ScheduleCheckedItemDto>>, streamerInfoService: StreamerInfoService): Array<ScheduleCheckedItem> {
   const data: Array<ScheduleCheckedItem> = []
   origData.forEach((doc) => {
     const origItem = doc.data()
-    const item = fromDto(doc.id, origItem)
+    const item = fromDto(doc.id, origItem, streamerInfoService)
     data.push(item)
   })
 
