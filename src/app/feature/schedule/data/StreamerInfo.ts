@@ -1,4 +1,3 @@
-import { StreamerGroup } from './StreamerGroups'
 import { Streamer } from '@app/feature/schedule/data/Streamer'
 import { Timezone } from '@app/feature/schedule/data/Timezone'
 

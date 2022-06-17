@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import {
   AngularFirestore,
   QuerySnapshot
@@ -9,12 +9,8 @@ import {
   Stream,
   StreamDto, toStreamData
 } from '@app/feature/schedule/data/firebase-stream/Stream'
-import { delay, map } from 'rxjs/internal/operators'
+import { delay, map, tap } from 'rxjs/internal/operators'
 import { SysParam } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
-import {
-  ScheduleCheckedItem, ScheduleCheckedItemDto,
-  toScheduleCheckedData
-} from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Injectable({
@@ -22,7 +18,6 @@ import { StreamerInfoService } from '@app/service/streamer-info.service'
 })
 export class FirebaseService {
 
-  lastUpdateTimestamp$: BehaviorSubject<number> = new BehaviorSubject<number>(-1)
   items: Observable<any[]>;
 
   constructor(private db: AngularFirestore,
@@ -79,7 +74,6 @@ export class FirebaseService {
                   map((snapshot:QuerySnapshot<any>) => {
                     const origData = snapshot.docs
                     const data: Array<Stream> = toStreamData(origData)
-                    this.updateLastUpdateTimestamp(data)
                     return data
                   })
                 )
@@ -98,44 +92,5 @@ export class FirebaseService {
                      ? Object.assign({id: doc.id}, doc.data())
                      : undefined
       }))
-  }
-
-  public getScheduleCheckedList (): Observable<Array<ScheduleCheckedItem>> {
-    return this.db.collection<Array<ScheduleCheckedItemDto>>(
-      'scheduleChecked'
-               )
-               .get()
-               .pipe(
-                 map((snapshot:QuerySnapshot<any>) => {
-                   const origData = snapshot.docs
-                   const data: Array<ScheduleCheckedItem> = toScheduleCheckedData(origData, this.streamerInfoService)
-                   return data
-                 }))
-  }
-
-  public updateScheduleChecked (id: string, data: ScheduleCheckedItemDto): Promise<void> {
-    return this.db.collection<StreamDto>('scheduleChecked')
-               .doc(id)
-               .update(data)
-               .catch((err) => {
-                 console.error(err)
-                 window.alert(err)
-               })
-  }
-
-  private updateLastUpdateTimestamp(streams: Array<Stream>): void {
-    let lastUpdateTimestamp = this.lastUpdateTimestamp$.getValue()
-    let next = false
-    streams.forEach((stream) => {
-      const updateTimestamp = stream.updatedTimestamp
-      if (updateTimestamp > lastUpdateTimestamp) {
-        lastUpdateTimestamp = updateTimestamp
-        next = true
-      }
-    })
-
-    if (next) {
-      this.lastUpdateTimestamp$.next(lastUpdateTimestamp)
-    }
   }
 }

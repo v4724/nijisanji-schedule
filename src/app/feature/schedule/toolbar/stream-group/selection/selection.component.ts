@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core'
 import { Group } from '@app/feature/schedule/toolbar/stream-group/stream-group.component'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
+import { StreamGroupService } from '@app/service/stream-group.service'
 
 @Component({
   selector: 'app-selection',
@@ -28,7 +28,7 @@ export class SelectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.streamGroupService.group$.subscribe((groups) => {
+    this.streamGroupService.selectedGroup$.subscribe((groups) => {
       this.displayText = groups.join(',')
     })
   }

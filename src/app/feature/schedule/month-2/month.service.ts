@@ -4,10 +4,9 @@ import { BehaviorSubject, combineLatest, Subscription } from 'rxjs'
 import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { Moment } from 'moment-timezone'
 import * as moment from 'moment-timezone'
-import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { FirebaseService } from '@app/service/firebase.service'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
+import { StreamGroupService } from '@app/service/stream-group.service'
 import { setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
@@ -23,7 +22,7 @@ export class MonthService {
   startTimestamp: number = moment().valueOf()
   endTimestamp: number = moment().valueOf()
 
-  groups: Array<StreamerGroup> = []
+  groups: Array<string> = []
   timezone = ''
 
   subscription: Subscription | undefined
@@ -36,7 +35,7 @@ export class MonthService {
 
     combineLatest([
       this.tzService.timezone$,
-      this.streamGroupService.group$
+      this.streamGroupService.selectedGroup$
     ])
       .subscribe((result) => {
         const timezone = result[0]
@@ -91,7 +90,7 @@ export class MonthService {
     let filterStreams = this.allStreams.filter((s) => {
       const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
       if (streamer && streamer.group) {
-        if (this.groups.indexOf(<StreamerGroup>streamer.group) > -1) {
+        if (this.groups.indexOf(streamer.group) > -1) {
           return true
         }
       }

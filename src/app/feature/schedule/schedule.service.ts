@@ -3,8 +3,7 @@ import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
 import { Stream as ExcelStream, StreamViewItem as ExcelStreamViewItem, TBDStream, TBDStreamViewItem } from '@app/feature/schedule/data/excel-stream/Stream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
-import { StreamGroupService } from '@app/feature/schedule/toolbar/stream-group/stream-group.service'
-import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
+import { StreamGroupService } from '@app/service/stream-group.service'
 import * as XLSX from 'xlsx'
 import * as moment from 'moment-timezone'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
@@ -69,7 +68,7 @@ export class ScheduleService {
       return Number(s1.timestamp) - Number(s2.timestamp)
     })
 
-    combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
+    combineLatest([this.streamGroupService.selectedGroup$, this.streamTypeService.type$])
       .subscribe((results) => {
         const groups = results[0]
         const type = results[1]
@@ -88,7 +87,7 @@ export class ScheduleService {
 
     })
 
-    combineLatest([this.streamGroupService.group$, this.streamTypeService.type$])
+    combineLatest([this.streamGroupService.selectedGroup$, this.streamTypeService.type$])
       .subscribe((results) => {
         const groups = results[0]
         const type = results[1]
@@ -116,7 +115,7 @@ export class ScheduleService {
     });
   }
 
-  updateStreams(groups: Array<StreamerGroup>, type: StreamType): void {
+  updateStreams(groups: Array<string>, type: StreamType): void {
     let list = []
     switch (type) {
       case StreamType.Streamer:
@@ -134,7 +133,7 @@ export class ScheduleService {
 
       const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
       if (streamer) {
-        if (groups.indexOf(streamer.group as StreamerGroup) > -1) {
+        if (groups.indexOf(streamer.group) > -1) {
           return true
         }
       }
@@ -144,14 +143,14 @@ export class ScheduleService {
     this.streams$.next(list)
   }
 
-  updateTBDStreams(groups: Array<StreamerGroup>, type: StreamType): void {
+  updateTBDStreams(groups: Array<string>, type: StreamType): void {
     let list = this.TBDStreams
 
     list = list.filter((s) => {
 
       const streamer = this.streamerInfoService.findStreamerInfo(s.streamer)
       if (streamer) {
-        if (groups.indexOf(streamer.group as StreamerGroup) > -1) {
+        if (groups.indexOf(streamer.group) > -1) {
           return true
         }
       }

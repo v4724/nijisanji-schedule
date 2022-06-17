@@ -11,6 +11,8 @@ import * as lodash from 'lodash'
 import { WeekService } from '@app/feature/schedule/week/week.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
+import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
+import { StreamGroupService } from '@app/service/stream-group.service'
 
 @Component({
   selector: 'app-week',
@@ -34,7 +36,8 @@ export class WeekComponent implements OnInit {
 
   constructor(public weekService: WeekService,
               private tzService: TimezoneService,
-              public streamerInfoService: StreamerInfoService){
+              public streamerInfoService: StreamerInfoService,
+              private streamerGroupService: StreamGroupService){
   }
 
   ngOnInit(): void {
@@ -157,16 +160,21 @@ export class WeekComponent implements OnInit {
     })
 
     this.data = []
-    orders.forEach((streamer: Streamer) => {
-      if (!streamerMap.has(streamer)) {
-        this.data.push({
-          streamer: streamer,
-        })
+    const streamerInfo = this.streamerInfoService.streamerInfos$.getValue()
+    const selectedGroups = this.streamerGroupService.selectedGroup$.getValue()
+    streamerInfo.forEach((streamer: StreamerInfoVo) => {
+      if (streamerMap.has(streamer.name)) {
+        const o = streamerMap.get(streamer.name)
+        this.data.push(o)
         return
       }
 
-      const o = streamerMap.get(streamer)
-      this.data.push(o)
+      if (selectedGroups.indexOf(streamer.group) > -1) {
+        this.data.push({
+          streamer: streamer.name,
+        })
+        return
+      }
     })
   }
 }

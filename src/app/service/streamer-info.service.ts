@@ -12,6 +12,8 @@ import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainb
 import { sortByDefaultStreamer } from '@app/model/model'
 import { Streamer } from '@app/feature/schedule/data/Streamer'
 import { StreamDto } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { distinctArray } from '@app/feature/schedule/utils'
+import { StreamGroupService } from '@app/service/stream-group.service'
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +24,16 @@ export class StreamerInfoService {
   items: Observable<any[]>;
 
   constructor(private db: AngularFirestore,
+              private groupService: StreamGroupService,
               private loader: RainbowLoaderService) {
     // Initialize Firebase
     this.items = db.collection('streamerInfos').valueChanges({ idField: 'id' });
     this.items.subscribe((result) => {
       sortByDefaultStreamer<StreamerInfoVo>(result, 'name', this)
+      const groups = distinctArray(result.map(info => info.group))
+
       this.streamerInfos$.next(result)
+      this.groupService.group$.next(groups)
     })
   }
 

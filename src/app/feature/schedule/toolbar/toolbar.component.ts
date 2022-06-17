@@ -3,6 +3,7 @@ import * as moment from 'moment-timezone'
 import { FirebaseService } from '@app/service/firebase.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { combineLatest } from 'rxjs'
+import { ScheduleCheckedService } from '@app/service/schedule-checked.service'
 
 @Component({
   selector: 'app-toolbar',
@@ -13,14 +14,14 @@ export class ToolbarComponent implements OnInit {
 
   scheduleUpdatedTime: string = ''
 
-  constructor(private firebaseService: FirebaseService,
+  constructor(private scheduleCheckedService: ScheduleCheckedService,
               private timezoneService: TimezoneService) {
 
   }
 
   ngOnInit(): void {
 
-    combineLatest([this.firebaseService.lastUpdateTimestamp$, this.timezoneService.timezone$])
+    combineLatest([this.scheduleCheckedService.lastUpdateTimestamp$, this.timezoneService.timezone$])
       .subscribe((result) => {
         const tz = result[1]
         const timestamp = result[0]

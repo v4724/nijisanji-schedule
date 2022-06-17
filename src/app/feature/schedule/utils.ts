@@ -19,3 +19,12 @@ export function setMidnightEndMoment (moment: Moment): Moment {
         .set('minute', 59)
         .set('second', 59)
 }
+
+export function distinctArray<T> (source: Array<T>): Array<T> {
+  const arr = source
+    .filter((value, index, self) => {
+      return self.indexOf(value) === index
+    })
+
+  return arr
+}

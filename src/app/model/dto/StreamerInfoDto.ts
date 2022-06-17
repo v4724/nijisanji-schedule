@@ -1,6 +1,5 @@
 import { Streamer } from '@app/feature/schedule/data/Streamer'
 import { Timezone } from '@app/feature/schedule/data/Timezone'
-import { StreamerGroup } from '@app/feature/schedule/data/StreamerGroups'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
 import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
@@ -46,7 +45,7 @@ export function toDto (item: StreamerInfoVo): StreamerInfoDto {
     twitterLink: item.twitterLink,
     twitchLink: item.twitchLink,
     color: item.color,
-    bgColor: item.color,
+    bgColor: item.bgColor,
     timezone: item.timezone,
     order: item.order
   }
@@ -65,7 +64,7 @@ export function fromDto (id: string, dto: StreamerInfoDto): StreamerInfoVo {
     twitterLink: dto.twitterLink,
     twitchLink: dto.twitchLink,
     color: dto.color,
-    bgColor: dto.color,
+    bgColor: dto.bgColor,
     timezone: dto.timezone,
     order: dto.order
   }
@@ -84,7 +83,16 @@ export function toStreamerInfoData (origData: Array<QueryDocumentSnapshot<Stream
 }
 
 
-export const luxiem: Array<StreamerInfoDto> = [{
+enum StreamerGroup {
+  LazuLight='LazuLight',
+  OBSYDIA='OBSYDIA',
+  Ethyria='Ethyria',
+  Luxiem='Luxiem',
+  Noctyx='Noctyx',
+  NIJISANJI='NIJISANJI',
+}
+
+const luxiem: Array<StreamerInfoDto> = [{
   img: 'assets/imgs/ike_profile.jpg',
   name: Streamer.Ike,
   group: StreamerGroup.Luxiem,
@@ -146,7 +154,7 @@ export const luxiem: Array<StreamerInfoDto> = [{
   order: 4
 }]
 
-export const noctyx: Array<StreamerInfoDto> = [{
+const noctyx: Array<StreamerInfoDto> = [{
   img: 'assets/imgs/fulgur_profile.jpg',
   name: Streamer.Fulgur,
   group: StreamerGroup.Noctyx,
@@ -208,7 +216,7 @@ export const noctyx: Array<StreamerInfoDto> = [{
   order: 10
 }]
 
-export const ethyria: Array<StreamerInfoDto> = [{
+const ethyria: Array<StreamerInfoDto> = [{
   img: 'assets/imgs/enna_profile.jpg',
   name: Streamer.Enna,
   group: StreamerGroup.Ethyria,
@@ -259,7 +267,7 @@ export const ethyria: Array<StreamerInfoDto> = [{
 }]
 
 
-export const obsydia: Array<StreamerInfoDto> = [{
+const obsydia: Array<StreamerInfoDto> = [{
   img: 'assets/imgs/selen_profile.jpg',
   name: Streamer.Selen,
   group: StreamerGroup.OBSYDIA,
@@ -298,7 +306,7 @@ export const obsydia: Array<StreamerInfoDto> = [{
 }]
 
 
-export const lazuLight: Array<StreamerInfoDto> = [{
+const lazuLight: Array<StreamerInfoDto> = [{
   img: 'assets/imgs/elira_profile.jpg',
   name: Streamer.Elira,
   group: StreamerGroup.LazuLight,
@@ -336,7 +344,7 @@ export const lazuLight: Array<StreamerInfoDto> = [{
   order: 20
 }]
 
-export const NIJISANJI: Array<StreamerInfoDto> = [{
+const NIJISANJI: Array<StreamerInfoDto> = [{
   img: 'assets/imgs/mika_profile.jpg',
   name: Streamer.Mika,
   group: StreamerGroup.NIJISANJI,

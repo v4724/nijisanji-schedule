@@ -40,8 +40,8 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let item of data">
-          <tr>
+        <ng-container *ngIf="data.length; else emptyDataRef">
+          <tr *ngFor="let item of data">
             <ng-container *ngFor="let header of headers">
               <ng-container *ngIf="header.key === 'streamer'; else streamRef">
                 <td class="data-streamer">
@@ -82,6 +82,28 @@
             </ng-container>
           </tr>
         </ng-container>
+      <ng-template #emptyDataRef>
+        <tr>
+            <ng-container *ngFor="let header of headers">
+              <ng-container *ngIf="header.key === 'streamer'; else streamRef">
+                <td class="data-streamer">
+                  <div class="d-flex flex-column align-items-center h-100 justify-content-center m-2">
+                    <div class="streamer-name">
+                      -
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-template #streamRef>
+                <td class="h-1" [class.is-today]="header.isToday">
+                  <div class="h-100 d-flex flex-column justify-content-center">
+                    -
+                  </div>
+                </td>
+              </ng-template>
+            </ng-container>
+          </tr>
+      </ng-template>
       </tbody>
     </table>
     <app-icon-def></app-icon-def>

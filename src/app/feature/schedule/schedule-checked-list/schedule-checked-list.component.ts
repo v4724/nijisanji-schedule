@@ -8,6 +8,7 @@ import {
   ScheduleCheckedState,
   ScheduleCheckedStateValues
 } from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
+import * as lodash from 'lodash'
 
 @Component({
   selector: 'app-schedule-checked-list',
@@ -29,7 +30,7 @@ export class ScheduleCheckedListComponent implements OnInit {
   ngOnInit(): void {
 
     this.service.filterData$.subscribe((streams) => {
-      this.streamers = streams
+      this.streamers = lodash.cloneDeep(streams)
     })
 
   }
@@ -39,7 +40,7 @@ export class ScheduleCheckedListComponent implements OnInit {
     if (editable) {
       return
     }
-    
+
     const ytLink = streamer?.twitterLink ?? ''
     openUrl(ytLink)
   }
