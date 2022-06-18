@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { FirebaseService } from '@app/service/firebase.service'
-import { Stream, initStream, toDto } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { StreamService } from '@app/service/stream.service'
+import { StreamVo, initStream } from '@app/model/vo/StreamVo'
 import { ExcelStreamService } from '@app/service/excel-stream.service'
 import { StreamDetailComponent } from '@app/feature/schedule/common/stream-detail/stream-detail.component'
+import { toDto } from '@app/model/dto/StreamDto'
 
 @Component({
   selector: 'app-test',
@@ -13,10 +14,10 @@ export class NewStreamComponent implements OnInit {
 
   @ViewChild('itemCmpRef') itemCmpRef: StreamDetailComponent | undefined
 
-  item: Stream = initStream()
+  item: StreamVo = initStream()
   submitLoading: boolean = false
 
-  constructor(public firebaseService: FirebaseService,
+  constructor(public firebaseService: StreamService,
               private excelStreamService: ExcelStreamService) {
 
   }

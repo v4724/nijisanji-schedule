@@ -15,3 +15,10 @@
     border-color: var(--is-today);
   }
 }
+
+@media (max-width: 425px) {
+  .stream-group-button {
+    padding: 0rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs'
-import { FirebaseService } from '@app/service/firebase.service'
+import { StreamService } from '@app/service/stream.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { StreamGroupService } from '@app/service/stream-group.service'
-import { ScheduleCheckedItem, toDto } from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
-import { orders } from '@app/feature/schedule/data/Streamer'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
-import { sortByDefaultStreamer } from '@app/model/model'
 import { ScheduleCheckedService } from '@app/service/schedule-checked.service'
+import { ScheduleCheckedItemVo } from '@app/model/vo/ScheduleCheckedItemVo'
+import { toDto } from '@app/model/dto/ScheduleCheckedItemDto'
 
 export interface SysParam {
   id: string,
@@ -19,8 +18,8 @@ export interface SysParam {
   providedIn: 'root'
 })
 export class ScheduleCheckedListService {
-  allData: Array<ScheduleCheckedItem> = []
-  filterData$: BehaviorSubject<Array<ScheduleCheckedItem>> = new BehaviorSubject<Array<ScheduleCheckedItem>>([])
+  allData: Array<ScheduleCheckedItemVo> = []
+  filterData$: BehaviorSubject<Array<ScheduleCheckedItemVo>> = new BehaviorSubject<Array<ScheduleCheckedItemVo>>([])
 
   groups: Array<string> = []
 
@@ -31,7 +30,7 @@ export class ScheduleCheckedListService {
   constructor(
     private tzService: TimezoneService,
     private streamGroupService: StreamGroupService,
-    private firebaseService: FirebaseService,
+    private firebaseService: StreamService,
     private streamerInfoService: StreamerInfoService,
     private service: ScheduleCheckedService
   ) {
@@ -55,7 +54,7 @@ export class ScheduleCheckedListService {
         })
   }
 
-  public update (list: Array<ScheduleCheckedItem>): void {
+  public update (list: Array<ScheduleCheckedItemVo>): void {
     this.loading$.next(true)
     let count = 0
     const partialUpdate = list.filter((item) => {
@@ -87,7 +86,7 @@ export class ScheduleCheckedListService {
       return false
     })
 
-    this.filterData$.next(filterData as Array<ScheduleCheckedItem>)
+    this.filterData$.next(filterData as Array<ScheduleCheckedItemVo>)
   }
 
 }

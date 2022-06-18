@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { openUrl } from '@app/feature/schedule/utils'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import { AdminService } from '@app/service/admin.service'
 
 @Component({
@@ -10,7 +10,7 @@ import { AdminService } from '@app/service/admin.service'
 })
 export class DisplayTextComponent implements OnInit {
 
-  @Input() stream: FirebaseStreamViewItem | undefined;
+  @Input() stream: StreamViewItem | undefined;
 
   openUrl = openUrl
   constructor(private adminService: AdminService) { }

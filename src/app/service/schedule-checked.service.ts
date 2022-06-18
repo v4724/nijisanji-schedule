@@ -5,12 +5,10 @@ import {
   AngularFirestore
 } from '@angular/fire/compat/firestore'
 import { sortByDefaultStreamer } from '@app/model/model'
-import { StreamDto } from '@app/feature/schedule/data/firebase-stream/Stream'
-import {
-  ScheduleCheckedItem,
-  ScheduleCheckedItemDto, toScheduleCheckedData
-} from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
+import { StreamDto } from '@app/model/dto/StreamDto'
+import { ScheduleCheckedItemVo } from '@app/model/vo/ScheduleCheckedItemVo'
+import { ScheduleCheckedItemDto, toScheduleCheckedData } from '@app/model/dto/ScheduleCheckedItemDto'
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +16,7 @@ import { StreamerInfoService } from '@app/service/streamer-info.service'
 export class ScheduleCheckedService {
 
   lastUpdateTimestamp$: BehaviorSubject<number> = new BehaviorSubject<number>(-1)
-  scheduleCheckedList$: BehaviorSubject<Array<ScheduleCheckedItem>> = new BehaviorSubject<Array<ScheduleCheckedItem>>([])
+  scheduleCheckedList$: BehaviorSubject<Array<ScheduleCheckedItemVo>> = new BehaviorSubject<Array<ScheduleCheckedItemVo>>([])
   items: Observable<any[]>;
 
   constructor(private db: AngularFirestore,
@@ -28,14 +26,14 @@ export class ScheduleCheckedService {
     this.items = db.collection('scheduleChecked').valueChanges({ idField: 'id' });
     this.items.subscribe((result) => {
       const data = toScheduleCheckedData(result, streamerInfoService)
-      sortByDefaultStreamer<ScheduleCheckedItem>(data, 'streamer', streamerInfoService)
+      sortByDefaultStreamer<ScheduleCheckedItemVo>(data, 'streamer', streamerInfoService)
 
       this.updateLastUpdateTimestamp(data)
       this.scheduleCheckedList$.next(data)
     })
   }
 
-  private updateLastUpdateTimestamp(items: Array<ScheduleCheckedItem>): void {
+  private updateLastUpdateTimestamp(items: Array<ScheduleCheckedItemVo>): void {
     let lastUpdateTimestamp = this.lastUpdateTimestamp$.getValue()
     items.forEach((item) => {
       const updateTimestamp = item.updatedTimestamp

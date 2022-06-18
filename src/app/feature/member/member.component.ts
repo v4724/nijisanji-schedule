@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { openUrl } from '@app/feature/schedule/utils'
 import { AdminService } from '@app/service/admin.service'
 import { initStreamerInfoVo, StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
-import { defaultStreamers, StreamerInfoDto } from '@app/model/dto/StreamerInfoDto'
+import { StreamerInfoDto } from '@app/model/dto/StreamerInfoDto'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import * as lodash from 'lodash'
+import { defaultStreamers } from '@app/model/data/streamerInfo'
 
 @Component({
   selector: 'app-member',

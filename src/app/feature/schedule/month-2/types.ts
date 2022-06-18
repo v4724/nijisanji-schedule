@@ -1,4 +1,4 @@
-import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import { Moment } from 'moment-timezone'
 
 export enum Day {
@@ -18,7 +18,7 @@ export interface MonthHeader {
 
 export interface HourStreams {
   hour: String,
-  streamViewItems: FirebaseStreamViewItem[]
+  streamViewItems: StreamViewItem[]
 }
 
 export interface DayItem {

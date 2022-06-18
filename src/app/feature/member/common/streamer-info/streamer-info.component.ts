@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { timezoneEntries } from '@app/feature/schedule/data/Timezone'
+import { timezoneEntries } from '@app/model/enum/Timezone'
 import { initStreamerInfoVo, StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 
 @Component({

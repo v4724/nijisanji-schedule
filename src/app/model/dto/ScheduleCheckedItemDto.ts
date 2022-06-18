@@ -1,7 +1,6 @@
-import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
-import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import * as moment from 'moment-timezone'
+import { ScheduleCheckedItemVo } from '@app/model/vo/ScheduleCheckedItemVo'
 
 export enum ScheduleCheckedState {
   none="NONE",
@@ -16,15 +15,7 @@ export interface ScheduleCheckedItemDto {
   updatedTimestamp: number
 }
 
-export interface ScheduleCheckedItem {
-  id: string,
-  streamer: string,
-  streamerInfo: StreamerInfo | undefined,
-  updatedTimestamp: number,
-  state: ScheduleCheckedState
-}
-
-export function toDto (item: ScheduleCheckedItem): ScheduleCheckedItemDto {
+export function toDto (item: ScheduleCheckedItemVo): ScheduleCheckedItemDto {
   const itemDto: ScheduleCheckedItemDto = {
     streamer: item.streamer,
     state: item.state,
@@ -34,8 +25,8 @@ export function toDto (item: ScheduleCheckedItem): ScheduleCheckedItemDto {
   return itemDto
 }
 
-export function fromDto (id: string, dto: ScheduleCheckedItemDto, streamerInfoService: StreamerInfoService): ScheduleCheckedItem {
-  const item: ScheduleCheckedItem = {
+export function fromDto (id: string, dto: ScheduleCheckedItemDto, streamerInfoService: StreamerInfoService): ScheduleCheckedItemVo {
+  const item: ScheduleCheckedItemVo = {
     id: id,
     streamer: dto.streamer,
     streamerInfo: streamerInfoService.findStreamerInfo((dto.streamer)),
@@ -46,7 +37,7 @@ export function fromDto (id: string, dto: ScheduleCheckedItemDto, streamerInfoSe
   return item
 }
 
-export function toScheduleCheckedData (origData: Array<ScheduleCheckedItem>, streamerInfoService: StreamerInfoService): Array<ScheduleCheckedItem> {
+export function toScheduleCheckedData (origData: Array<ScheduleCheckedItemVo>, streamerInfoService: StreamerInfoService): Array<ScheduleCheckedItemVo> {
   return origData.map((dto) => {
     return fromDto(dto.id, dto, streamerInfoService)
   })

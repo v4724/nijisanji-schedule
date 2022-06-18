@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs'
-import { Stream as ExcelStream, StreamViewItem as ExcelStreamViewItem, TBDStream, TBDStreamViewItem } from '@app/feature/schedule/data/excel-stream/Stream'
+import { ExcelStream as ExcelStream, ExcelStreamViewItem as ExcelStreamViewItem, TBDStream, TBDStreamViewItem } from '@app/model/dto/ExcelStream'
 import * as lodash from 'lodash'
 import { StreamType, StreamTypeService } from '@app/feature/schedule/toolbar/stream-type/stream-type.service'
 import { StreamGroupService } from '@app/service/stream-group.service'

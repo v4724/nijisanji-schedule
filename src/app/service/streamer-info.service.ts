@@ -10,10 +10,9 @@ import { StreamerInfoDto, toStreamerInfoData } from '@app/model/dto/StreamerInfo
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 import { sortByDefaultStreamer } from '@app/model/model'
-import { Streamer } from '@app/feature/schedule/data/Streamer'
-import { StreamDto } from '@app/feature/schedule/data/firebase-stream/Stream'
 import { distinctArray } from '@app/feature/schedule/utils'
 import { StreamGroupService } from '@app/service/stream-group.service'
+import { StreamDto } from '@app/model/dto/StreamDto'
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +36,7 @@ export class StreamerInfoService {
     })
   }
 
-  public findStreamerInfo(streamer: Streamer | string): StreamerInfoVo | undefined {
+  public findStreamerInfo(streamer: string): StreamerInfoVo | undefined {
     const streamers = this.streamerInfos$.getValue()
     return streamers.find(s => s.name === streamer)
   }

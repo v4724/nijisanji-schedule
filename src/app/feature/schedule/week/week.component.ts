@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
-import { orders, Streamer, streamerList } from '../data/Streamer'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import * as moment from 'moment-timezone'
 import { WeekHeader } from './types'
 import { Subscription } from 'rxjs'
 import { openUrl } from '@app/feature/schedule/utils'
-import { TBDStream } from '@app/feature/schedule/data/excel-stream/Stream'
+import { TBDStream } from '@app/model/dto/ExcelStream'
 import { DisplayText } from '@app/feature/schedule/common/display-text/DisplayText'
 import * as lodash from 'lodash'
 import { WeekService } from '@app/feature/schedule/week/week.service'
@@ -22,13 +21,11 @@ import { StreamGroupService } from '@app/service/stream-group.service'
 export class WeekComponent implements OnInit {
   title: string = ''
 
-  streams: Array<FirebaseStreamViewItem> = []
+  streams: Array<StreamViewItem> = []
   TBDStreams: Array<TBDStream> = []
 
   headers: Array<WeekHeader> = []
   data: Array<any> = []
-
-  streamers = streamerList()
 
   openUrl = openUrl
 

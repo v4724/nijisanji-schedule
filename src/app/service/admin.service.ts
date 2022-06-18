@@ -1,11 +1,11 @@
 import { Injectable, isDevMode } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import { EditModalComponent } from '@app/feature/schedule/common/edit-modal/edit-modal.component'
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { EditStreamerInfoModalComponent } from '@app/feature/member/edit-streamer-info-modal/edit-streamer-info-modal.component'
-import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 
 @Injectable({
   providedIn: 'root'
@@ -37,13 +37,13 @@ export class AdminService {
     this.editable$.next(!value)
   }
 
-  openModal(stream: FirebaseStreamViewItem): void {
+  openModal(stream: StreamViewItem): void {
     this.modalRef = this.modalService.open(EditModalComponent,{
       data: { item: stream },
     })
   }
 
-  openStreamerInfoModal(isNew: boolean, streamer?: StreamerInfo): void {
+  openStreamerInfoModal(isNew: boolean, streamer?: StreamerInfoVo): void {
     this.editStreamerInfoModalRef = this.modalService.open(EditStreamerInfoModalComponent,{
       data: { item: streamer, isNew: isNew },
     })

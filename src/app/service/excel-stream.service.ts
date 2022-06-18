@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone'
 import * as XLSX from 'xlsx'
 import { Subject } from 'rxjs'
-import { Stream, TBDStream } from '@app/feature/schedule/data/excel-stream/Stream'
-import { FirebaseService } from '@app/service/firebase.service'
-import { initStream, Stream as FirebaseStream, StreamDto, toDto } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { ExcelStream, TBDStream } from '@app/model/dto/ExcelStream'
+import { StreamService } from '@app/service/stream.service'
+import { initStream, StreamVo as FirebaseStream } from '@app/model/vo/StreamVo'
+import { toDto } from '@app/model/dto/StreamDto'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExcelStreamService {
 
-  origData$ = new Subject<Array<Stream>>();
+  origData$ = new Subject<Array<ExcelStream>>();
   origTBDData$ = new Subject<Array<TBDStream>>();
 
   errorList: Array<string>=[]
-  constructor(private firebaseService: FirebaseService) {
+  constructor(private firebaseService: StreamService) {
 
     this.origData$.subscribe((streams) => {
       const map = new Map<number, FirebaseStream>()

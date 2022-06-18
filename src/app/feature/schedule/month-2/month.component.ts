@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Day, HourStreams, MonthHeader, WeekItem } from './types'
 import { headers } from './data'
 import * as moment from 'moment-timezone'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import { openUrl } from '@app/feature/schedule/utils'
 import { MonthService } from '@app/feature/schedule/month-2/month.service'
 import { Moment } from 'moment-timezone'
@@ -15,12 +15,12 @@ import { Moment } from 'moment-timezone'
 })
 export class MonthComponent implements OnInit {
 
-  streams: Array<FirebaseStreamViewItem> = []
+  streams: Array<StreamViewItem> = []
 
   headers: Array<MonthHeader> = headers
   data: Array<WeekItem> = []
 
-  dateMap: Map<number, Map<String, Array<FirebaseStreamViewItem>>> = new Map<number, Map<String, Array<FirebaseStreamViewItem>>>()
+  dateMap: Map<number, Map<String, Array<StreamViewItem>>> = new Map<number, Map<String, Array<StreamViewItem>>>()
 
   today: Moment = moment()
   title: string = ''
@@ -54,11 +54,11 @@ export class MonthComponent implements OnInit {
 
   updateSchedule(): void {
 
-    this.dateMap = new Map<number, Map<String, Array<FirebaseStreamViewItem>>>()
+    this.dateMap = new Map<number, Map<String, Array<StreamViewItem>>>()
     this.streams.forEach((s) => {
       const days = s.displayMoment.date()
       if (!this.dateMap.has(days)) {
-        this.dateMap.set(days, new Map<String, Array<FirebaseStreamViewItem>>())
+        this.dateMap.set(days, new Map<String, Array<StreamViewItem>>())
       }
       const dateStreams = this.dateMap.get(days)
       if (dateStreams) {

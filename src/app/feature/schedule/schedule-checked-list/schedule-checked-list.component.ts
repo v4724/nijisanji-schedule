@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core'
-import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
 import { openUrl } from '@app/feature/schedule/utils'
 import { ScheduleCheckedListService } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
 import { AdminService } from '@app/service/admin.service'
-import {
-  ScheduleCheckedItem,
-  ScheduleCheckedState,
-  ScheduleCheckedStateValues
-} from '@app/feature/schedule/data/firebase-stream/ScheduleCheckedItem'
 import * as lodash from 'lodash'
+import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
+import { ScheduleCheckedState, ScheduleCheckedStateValues } from '@app/model/dto/ScheduleCheckedItemDto'
+import { ScheduleCheckedItemVo } from '@app/model/vo/ScheduleCheckedItemVo'
 
 @Component({
   selector: 'app-schedule-checked-list',
@@ -16,7 +13,7 @@ import * as lodash from 'lodash'
   styleUrls: ['./schedule-checked-list.component.scss']
 })
 export class ScheduleCheckedListComponent implements OnInit {
-  streamers: Array<ScheduleCheckedItem> = []
+  streamers: Array<ScheduleCheckedItemVo> = []
 
   ScheduleCheckedState = ScheduleCheckedState
   ScheduleCheckedStateValues = ScheduleCheckedStateValues
@@ -35,7 +32,7 @@ export class ScheduleCheckedListComponent implements OnInit {
 
   }
 
-  linkToTwitter(streamer: StreamerInfo | undefined): void {
+  linkToTwitter(streamer: StreamerInfoVo | undefined): void {
     const editable = this.adminService.editable$.getValue()
     if (editable) {
       return

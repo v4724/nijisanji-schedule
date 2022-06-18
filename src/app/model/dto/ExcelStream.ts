@@ -1,4 +1,4 @@
-import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
+import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 
 export interface TBDStream {
   id: number,
@@ -9,7 +9,7 @@ export interface TBDStream {
   date: number,
 }
 
-export interface Stream {
+export interface ExcelStream {
   id: number,
   streamer: string,
   title: string,
@@ -25,12 +25,12 @@ export interface Stream {
   mainStreamer: string | null
 }
 
-export interface StreamViewItem extends Stream {
+export interface ExcelStreamViewItem extends ExcelStream {
   displayDate: string
   displayTime: string
-  streamerInfo: StreamerInfo
+  streamerInfo: StreamerInfoVo
 }
 
 export interface TBDStreamViewItem extends TBDStream {
-  streamerInfo: StreamerInfo
+  streamerInfo: StreamerInfoVo
 }

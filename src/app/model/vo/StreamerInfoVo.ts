@@ -1,4 +1,4 @@
-import { Timezone } from '@app/feature/schedule/data/Timezone'
+import { Timezone } from '@app/model/enum/Timezone'
 
 export interface StreamerInfoVo {
   id: string

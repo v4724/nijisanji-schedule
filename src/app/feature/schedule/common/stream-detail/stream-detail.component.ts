@@ -1,11 +1,11 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { StreamerInfo } from '@app/feature/schedule/data/StreamerInfo'
-import { resetStream, Stream } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { resetStream, StreamVo } from '@app/model/vo/StreamVo'
 import * as moment from 'moment-timezone'
 import { Observable } from 'rxjs'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
-import { timezoneEntries } from '@app/feature/schedule/data/Timezone'
+import { timezoneEntries } from '@app/model/enum/Timezone'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
+import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 
 @Component({
   selector: 'app-stream-detail[item]',
@@ -15,7 +15,7 @@ import { StreamerInfoService } from '@app/service/streamer-info.service'
 export class StreamDetailComponent implements OnInit, OnChanges {
 
   // @ts-ignore
-  @Input() item: Stream
+  @Input() item: StreamVo
   @Input() update: boolean = false
 
   date: string = moment().format('YYYY-MM-DD')
@@ -31,7 +31,7 @@ export class StreamDetailComponent implements OnInit, OnChanges {
   items: Observable<[]> = new Observable<[]>()
 
   searchFeatStreamer: string = ''
-  findFeatStreamerInfo: StreamerInfo | undefined = undefined
+  findFeatStreamerInfo: StreamerInfoVo | undefined = undefined
 
   constructor(private timezoneService: TimezoneService,
               private streamerInfoService: StreamerInfoService) {

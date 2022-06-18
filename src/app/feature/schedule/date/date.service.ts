@@ -4,10 +4,10 @@ import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { Moment } from 'moment-timezone'
 import { setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
-import { Stream, setDisplayValue } from '@app/feature/schedule/data/firebase-stream/Stream'
-import { FirebaseService } from '@app/service/firebase.service'
+import { StreamVo, setDisplayValue } from '@app/model/vo/StreamVo'
+import { StreamService } from '@app/service/stream.service'
 import { StreamGroupService } from '@app/service/stream-group.service'
-import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 
@@ -15,8 +15,8 @@ import { StreamerInfoService } from '@app/service/streamer-info.service'
   providedIn: 'root'
 })
 export class DateService {
-  allStreams: Array<Stream> = []
-  filterStreams$: BehaviorSubject<Array<FirebaseStreamViewItem>> = new BehaviorSubject<Array<FirebaseStreamViewItem>>([])
+  allStreams: Array<StreamVo> = []
+  filterStreams$: BehaviorSubject<Array<StreamViewItem>> = new BehaviorSubject<Array<StreamViewItem>>([])
 
   date$: BehaviorSubject<Moment> = new BehaviorSubject(moment())
   startTimestamp: number = moment().valueOf()
@@ -28,7 +28,7 @@ export class DateService {
   subscription: Subscription | undefined
 
   constructor(private tzService: TimezoneService,
-              private firebaseService: FirebaseService,
+              private firebaseService: StreamService,
               private streamGroupService: StreamGroupService,
               private rainbowLoaderService: RainbowLoaderService,
               private streamerInfoService: StreamerInfoService) {
@@ -98,11 +98,11 @@ export class DateService {
     })
 
     filterStreams.map((stream) => {
-      const viewItem = stream as FirebaseStreamViewItem
+      const viewItem = stream as StreamViewItem
       setDisplayValue(viewItem, this.timezone, this.streamerInfoService)
       return viewItem
     })
 
-    this.filterStreams$.next(filterStreams as Array<FirebaseStreamViewItem>)
+    this.filterStreams$.next(filterStreams as Array<StreamViewItem>)
   }
 }

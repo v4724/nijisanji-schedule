@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment-timezone'
-import { FirebaseService } from '@app/service/firebase.service'
+import { StreamService } from '@app/service/stream.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { combineLatest } from 'rxjs'
 import { ScheduleCheckedService } from '@app/service/schedule-checked.service'

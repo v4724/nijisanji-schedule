@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { initStream, Stream, toDto } from '@app/feature/schedule/data/firebase-stream/Stream'
-import { FirebaseService } from '@app/service/firebase.service'
+import { initStream, StreamVo } from '@app/model/vo/StreamVo'
+import { StreamService } from '@app/service/stream.service'
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
+import { toDto } from '@app/model/dto/StreamDto'
 
 @Component({
   selector: 'app-modal',
@@ -11,10 +12,10 @@ import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainb
 })
 export class EditModalComponent implements OnInit {
 
-  item: Stream = initStream()
+  item: StreamVo = initStream()
 
   constructor(public modalRef: MdbModalRef<EditModalComponent>,
-              public firebaseService: FirebaseService,
+              public firebaseService: StreamService,
               private loaderService: RainbowLoaderService) { }
 
   ngOnInit(): void {

@@ -22,7 +22,3 @@ export const countries: Array<string> = [
 
 export const timezoneValues = Object.values(Timezone)
 export const timezoneEntries = Object.entries(Timezone)
-
-console.log('keys', Object.keys(Timezone))
-console.log('values', Object.values(Timezone))
-console.log('entries', Object.entries(Timezone))

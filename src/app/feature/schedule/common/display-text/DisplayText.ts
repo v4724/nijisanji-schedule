@@ -1,5 +1,5 @@
-import { FirebaseStreamViewItem } from '@app/feature/schedule/data/firebase-stream/Stream'
+import { StreamViewItem } from '@app/model/vo/StreamVo'
 
-export interface DisplayText extends FirebaseStreamViewItem {
+export interface DisplayText extends StreamViewItem {
   text: string
 }

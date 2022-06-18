@@ -6,17 +6,17 @@ import {
   QuerySnapshot
 } from '@angular/fire/compat/firestore'
 import {
-  Stream,
-  StreamDto, toStreamData
-} from '@app/feature/schedule/data/firebase-stream/Stream'
+  StreamVo
+} from '@app/model/vo/StreamVo'
 import { delay, map, tap } from 'rxjs/internal/operators'
 import { SysParam } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
+import { StreamDto, toStreamData } from '@app/model/dto/StreamDto'
 
 @Injectable({
   providedIn: 'root'
 })
-export class FirebaseService {
+export class StreamService {
 
   items: Observable<any[]>;
 
@@ -59,7 +59,7 @@ export class FirebaseService {
                })
   }
 
-  public where (start: number, end: number, optional?: any): Observable<Array<Stream>> {
+  public where (start: number, end: number, optional?: any): Observable<Array<StreamVo>> {
     return this.db.collection<Array<StreamDto>>(
       'streams',ref => {
                   const condition = ref.where('timestamp', '>=', start)
@@ -73,7 +73,7 @@ export class FirebaseService {
                   delay(500),
                   map((snapshot:QuerySnapshot<any>) => {
                     const origData = snapshot.docs
-                    const data: Array<Stream> = toStreamData(origData)
+                    const data: Array<StreamVo> = toStreamData(origData)
                     return data
                   })
                 )
