@@ -8,13 +8,9 @@ import {
 import {
   StreamVo
 } from '@app/model/vo/StreamVo'
-import { delay, map, tap } from 'rxjs/internal/operators'
+import { delay, map } from 'rxjs/internal/operators'
 import { SysParam } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
-import { StreamerInfoService } from '@app/service/streamer-info.service'
 import { StreamDto, toStreamData } from '@app/model/dto/StreamDto'
-import { getDto } from '@app/model/dto/UpdatedRecordDto'
-import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
-import { getUpdatedScheduleMessage, getUpdatedStreamMessage } from '@app/model/vo/UpdatedRecordVo'
 import { UpdatedRecordService } from '@app/service/updated-record.service'
 
 @Injectable({

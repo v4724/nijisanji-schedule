@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { StreamViewItem } from '@app/model/vo/StreamVo'
-import * as moment from 'moment-timezone'
 import { WeekHeader } from './types'
 import { Subscription } from 'rxjs'
 import { openUrl } from '@app/feature/schedule/utils'
@@ -12,6 +11,7 @@ import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 import { StreamGroupService } from '@app/service/stream-group.service'
+import * as moment from 'moment-timezone'
 
 @Component({
   selector: 'app-week',
