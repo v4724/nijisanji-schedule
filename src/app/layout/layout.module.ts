@@ -4,12 +4,14 @@ import { LayoutComponent } from './layout.component';
 import { RouterModule } from '@angular/router'
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse'
 import { LoginComponent } from '@app/layout/login/login.component'
-import { CommonComponentModule } from '@app/common-component/common-component.module'
+import { CommonComponentModule } from '@app/common-component/common-component.module';
+import { UpdatedBellComponent } from './updated-bell/updated-bell.component'
 
 @NgModule({
   declarations: [
     LayoutComponent,
-    LoginComponent
+    LoginComponent,
+    UpdatedBellComponent
   ],
 	imports: [
 		CommonModule,

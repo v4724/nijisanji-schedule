@@ -19,7 +19,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     EditStreamerInfoModalComponent,
-    StreamerInfoComponent
+    StreamerInfoComponent,
+    MemberComponent
   ],
   imports: [
     CommonModule,

@@ -1,10 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 
 import { BehaviorSubject, Observable } from 'rxjs'
-import {
-  AngularFirestore,
-  QuerySnapshot
-} from '@angular/fire/compat/firestore'
+import { AngularFirestore, QuerySnapshot } from '@angular/fire/compat/firestore'
 import { delay, map } from 'rxjs/internal/operators'
 import { StreamerInfoDto, toStreamerInfoData } from '@app/model/dto/StreamerInfoDto'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
@@ -13,6 +10,10 @@ import { sortByDefaultStreamer } from '@app/model/model'
 import { distinctArray } from '@app/feature/schedule/utils'
 import { StreamGroupService } from '@app/service/stream-group.service'
 import { StreamDto } from '@app/model/dto/StreamDto'
+import { UpdatedInfoService } from '@app/service/updated-info.service'
+import { getDto } from '@app/model/dto/UpdatedInfoDto'
+import { UpdatedInfoType } from '@app/model/enum/UpdatedInfoType'
+import { getAddMemberMessage } from '@app/model/vo/UpdatedInfoVo'
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class StreamerInfoService {
 
   constructor(private db: AngularFirestore,
               private groupService: StreamGroupService,
+              private updateBellService: UpdatedInfoService,
               private loader: RainbowLoaderService) {
     // Initialize Firebase
     this.items = db.collection('streamerInfos').valueChanges({ idField: 'id' });
@@ -47,6 +49,9 @@ export class StreamerInfoService {
     return this.db.collection('streamerInfos')
                .add(infoDto)
                .then(() => {
+
+                 this.updateBellService.addMember(infoDto)
+
                  return true;
                })
                .catch((err) => {

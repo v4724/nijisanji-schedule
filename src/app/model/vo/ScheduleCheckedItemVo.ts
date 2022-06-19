@@ -1,5 +1,5 @@
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
-import { ScheduleCheckedState } from '@app/model/dto/ScheduleCheckedItemDto'
+import { ScheduleCheckedState } from '@app/model/enum/ScheduleCheckedState'
 
 export interface ScheduleCheckedItemVo {
   id: string,

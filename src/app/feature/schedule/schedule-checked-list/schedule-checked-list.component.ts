@@ -4,7 +4,8 @@ import { ScheduleCheckedListService } from '@app/feature/schedule/schedule-check
 import { AdminService } from '@app/service/admin.service'
 import * as lodash from 'lodash'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
-import { ScheduleCheckedState, ScheduleCheckedStateValues } from '@app/model/dto/ScheduleCheckedItemDto'
+import { ScheduleCheckedStateValues } from '@app/model/dto/ScheduleCheckedItemDto'
+import { ScheduleCheckedState } from '@app/model/enum/ScheduleCheckedState'
 import { ScheduleCheckedItemVo } from '@app/model/vo/ScheduleCheckedItemVo'
 
 @Component({

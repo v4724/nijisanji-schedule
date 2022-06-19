@@ -1,12 +1,8 @@
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import * as moment from 'moment-timezone'
 import { ScheduleCheckedItemVo } from '@app/model/vo/ScheduleCheckedItemVo'
+import { ScheduleCheckedState } from '@app/model/enum/ScheduleCheckedState'
 
-export enum ScheduleCheckedState {
-  none="NONE",
-  checked="CHECKED",
-  break="BREAK",
-}
 export const ScheduleCheckedStateValues: Array<string> = Object.values(ScheduleCheckedState)
 
 export interface ScheduleCheckedItemDto {

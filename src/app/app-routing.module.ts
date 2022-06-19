@@ -24,6 +24,10 @@ const routes: Routes = [
         path: 'streamer',
         loadChildren: () => import('./feature/member/member.module').then(m => m.MemberModule),
       },
+      {
+        path: 'message',
+        loadChildren: () => import('./feature/updated-info/updated-info.module').then(m => m.UpdatedInfoModule),
+      },
     ]
   }
 ]

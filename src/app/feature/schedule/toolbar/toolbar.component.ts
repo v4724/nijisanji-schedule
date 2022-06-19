@@ -4,6 +4,7 @@ import { StreamService } from '@app/service/stream.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { combineLatest } from 'rxjs'
 import { ScheduleCheckedService } from '@app/service/schedule-checked.service'
+import { UpdatedInfoService } from '@app/service/updated-info.service'
 
 @Component({
   selector: 'app-toolbar',
@@ -14,21 +15,20 @@ export class ToolbarComponent implements OnInit {
 
   scheduleUpdatedTime: string = ''
 
-  constructor(private scheduleCheckedService: ScheduleCheckedService,
+  constructor(private updatedInfoService: UpdatedInfoService,
               private timezoneService: TimezoneService) {
 
   }
 
   ngOnInit(): void {
 
-    combineLatest([this.scheduleCheckedService.lastUpdateTimestamp$, this.timezoneService.timezone$])
-      .subscribe((result) => {
-        const tz = result[1]
-        const timestamp = result[0]
-        if (timestamp > -1) {
+    combineLatest([this.updatedInfoService.updatedBellList$, this.timezoneService.timezone$])
+      .subscribe((results) => {
+        const tz = results[1]
+        const updatedInfoList = results[0]
+        if (updatedInfoList.length) {
+          const timestamp = updatedInfoList[0].timestamp
           this.scheduleUpdatedTime = moment(timestamp).tz(tz).format('YYYY-MM-DD HH:mm')
-        } else {
-          this.scheduleUpdatedTime = 'Long Time Ago pien'
         }
       })
   }
