@@ -55,3 +55,44 @@ footer {
   padding: 0.25rem;
   border-style: solid;
 }
+
+.wrapper {
+  border-radius: 10px;
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.wave {
+  background: #adddff;
+  width: 200vw;
+  height: 200vw;
+  border-radius: 40%;
+  opacity: 0.4;
+  position: absolute;
+  top: 90%;
+  right: 0%;
+  //margin-left: -250px;
+  //margin-top: -250px;
+  transform-origin: center;
+  animation: drift 11s infinite linear;
+  z-index: -1;
+}
+.wave.two {
+  animation: drift 19s infinite linear;
+}
+.wave.three {
+  animation: drift 29s infinite linear;
+  opacity: 0.1;
+}
+
+@keyframes drift {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'message',
-        loadChildren: () => import('./feature/updated-info/updated-info.module').then(m => m.UpdatedInfoModule),
+        loadChildren: () => import('./feature/updated-record/updated-record.module').then(m => m.UpdatedRecordModule),
       },
     ]
   }

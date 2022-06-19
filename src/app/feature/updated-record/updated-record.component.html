@@ -13,9 +13,9 @@
           <div>
             {{ item.displayDateTime }}
           </div>
-          <i *ngIf="item.type === UpdatedInfoType.updateSchedule"class="bi bi-journal-text"></i>
-          <i *ngIf="item.type === UpdatedInfoType.updateStream"class="bi bi-wrench-adjustable"></i>
-          <i *ngIf="item.type === UpdatedInfoType.addMember"class="bi bi-person-plus"></i>
+          <i *ngIf="item.type === UpdatedRecordType.updateSchedule" class="bi bi-journal-text"></i>
+          <i *ngIf="item.type === UpdatedRecordType.updateStream" class="bi bi-wrench-adjustable"></i>
+          <i *ngIf="item.type === UpdatedRecordType.addMember" class="bi bi-person-plus"></i>
           <div>
             {{ item.message }}
           </div>

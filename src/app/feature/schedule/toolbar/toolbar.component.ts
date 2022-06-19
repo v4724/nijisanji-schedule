@@ -4,7 +4,7 @@ import { StreamService } from '@app/service/stream.service'
 import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
 import { combineLatest } from 'rxjs'
 import { ScheduleCheckedService } from '@app/service/schedule-checked.service'
-import { UpdatedInfoService } from '@app/service/updated-info.service'
+import { UpdatedRecordService } from '@app/service/updated-record.service'
 
 @Component({
   selector: 'app-toolbar',
@@ -15,7 +15,7 @@ export class ToolbarComponent implements OnInit {
 
   scheduleUpdatedTime: string = ''
 
-  constructor(private updatedInfoService: UpdatedInfoService,
+  constructor(private updatedInfoService: UpdatedRecordService,
               private timezoneService: TimezoneService) {
 
   }

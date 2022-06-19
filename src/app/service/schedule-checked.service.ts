@@ -9,10 +9,10 @@ import { StreamerInfoService } from '@app/service/streamer-info.service'
 import { StreamDto } from '@app/model/dto/StreamDto'
 import { ScheduleCheckedItemVo } from '@app/model/vo/ScheduleCheckedItemVo'
 import { ScheduleCheckedItemDto, toScheduleCheckedData } from '@app/model/dto/ScheduleCheckedItemDto'
-import { getDto } from '@app/model/dto/UpdatedInfoDto'
-import { UpdatedInfoType } from '@app/model/enum/UpdatedInfoType'
-import { getAddMemberMessage, getUpdatedScheduleMessage } from '@app/model/vo/UpdatedInfoVo'
-import { UpdatedInfoService } from '@app/service/updated-info.service'
+import { getDto } from '@app/model/dto/UpdatedRecordDto'
+import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
+import { getAddMemberMessage, getUpdatedScheduleMessage } from '@app/model/vo/UpdatedRecordVo'
+import { UpdatedRecordService } from '@app/service/updated-record.service'
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class ScheduleCheckedService {
 
   constructor(private db: AngularFirestore,
               private streamerInfoService: StreamerInfoService,
-              private updateBellService: UpdatedInfoService
+              private updateBellService: UpdatedRecordService
   ) {
     // Initialize Firebase
     this.items = db.collection('scheduleChecked').valueChanges({ idField: 'id' });

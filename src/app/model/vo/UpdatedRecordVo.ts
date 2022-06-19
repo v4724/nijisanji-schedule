@@ -4,7 +4,7 @@ import { StreamDto } from '@app/model/dto/StreamDto'
 import { ScheduleCheckedState } from '@app/model/enum/ScheduleCheckedState'
 import * as moment from 'moment-timezone'
 
-export interface UpdatedInfoVo {
+export interface UpdatedRecordVo {
   id: string,
   message: string,
   type: string,
@@ -12,7 +12,7 @@ export interface UpdatedInfoVo {
   displayDateTime: string,
 }
 
-export function updateVoList (list: Array<UpdatedInfoVo>, tz: string) {
+export function updateVoList (list: Array<UpdatedRecordVo>, tz: string) {
   list.forEach(vo => {
     vo.displayDateTime = moment(vo.timestamp).tz(tz).format('YYYY/MM/DD HH:mm')
   })

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UpdatedInfoService } from '@app/service/updated-info.service'
+import { UpdatedRecordService } from '@app/service/updated-record.service'
 import { skip } from 'rxjs/operators'
 
 @Component({
@@ -11,7 +11,7 @@ export class UpdatedBellComponent implements OnInit {
 
   update = false
 
-  constructor(public service: UpdatedInfoService) {
+  constructor(public service: UpdatedRecordService) {
 
   }
   ngOnInit(): void {

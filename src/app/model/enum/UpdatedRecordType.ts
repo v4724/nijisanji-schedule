@@ -1,5 +1,5 @@
 
-export enum UpdatedInfoType {
+export enum UpdatedRecordType {
   addMember='ADD_MEMBER',
   updateMember='UPDATE_MEMBER',
 

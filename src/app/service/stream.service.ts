@@ -12,10 +12,10 @@ import { delay, map, tap } from 'rxjs/internal/operators'
 import { SysParam } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import { StreamDto, toStreamData } from '@app/model/dto/StreamDto'
-import { getDto } from '@app/model/dto/UpdatedInfoDto'
-import { UpdatedInfoType } from '@app/model/enum/UpdatedInfoType'
-import { getUpdatedScheduleMessage, getUpdatedStreamMessage } from '@app/model/vo/UpdatedInfoVo'
-import { UpdatedInfoService } from '@app/service/updated-info.service'
+import { getDto } from '@app/model/dto/UpdatedRecordDto'
+import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
+import { getUpdatedScheduleMessage, getUpdatedStreamMessage } from '@app/model/vo/UpdatedRecordVo'
+import { UpdatedRecordService } from '@app/service/updated-record.service'
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class StreamService {
   items: Observable<any[]>;
 
   constructor(private db: AngularFirestore,
-              private updateBellService: UpdatedInfoService) {
+              private updateBellService: UpdatedRecordService) {
     // Initialize Firebase
     this.items = db.collection('streams').valueChanges();
   }

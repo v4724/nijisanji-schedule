@@ -10,10 +10,10 @@ import { sortByDefaultStreamer } from '@app/model/model'
 import { distinctArray } from '@app/feature/schedule/utils'
 import { StreamGroupService } from '@app/service/stream-group.service'
 import { StreamDto } from '@app/model/dto/StreamDto'
-import { UpdatedInfoService } from '@app/service/updated-info.service'
-import { getDto } from '@app/model/dto/UpdatedInfoDto'
-import { UpdatedInfoType } from '@app/model/enum/UpdatedInfoType'
-import { getAddMemberMessage } from '@app/model/vo/UpdatedInfoVo'
+import { UpdatedRecordService } from '@app/service/updated-record.service'
+import { getDto } from '@app/model/dto/UpdatedRecordDto'
+import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
+import { getAddMemberMessage } from '@app/model/vo/UpdatedRecordVo'
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class StreamerInfoService {
 
   constructor(private db: AngularFirestore,
               private groupService: StreamGroupService,
-              private updateBellService: UpdatedInfoService,
+              private updateBellService: UpdatedRecordService,
               private loader: RainbowLoaderService) {
     // Initialize Firebase
     this.items = db.collection('streamerInfos').valueChanges({ idField: 'id' });

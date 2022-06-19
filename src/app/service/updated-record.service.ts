@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { getDto, UpdatedInfoDto } from '@app/model/dto/UpdatedInfoDto'
+import { getDto, UpdatedRecordDto } from '@app/model/dto/UpdatedRecordDto'
 import { AngularFirestore } from '@angular/fire/compat/firestore'
 import { ScheduleCheckedItemDto } from '@app/model/dto/ScheduleCheckedItemDto'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
@@ -7,20 +7,20 @@ import {
   getAddMemberMessage,
   getUpdatedScheduleMessage,
   getUpdatedStreamMessage,
-  UpdatedInfoVo
-} from '@app/model/vo/UpdatedInfoVo'
+  UpdatedRecordVo
+} from '@app/model/vo/UpdatedRecordVo'
 import { StreamDto } from '@app/model/dto/StreamDto'
 import { StreamerInfoDto } from '@app/model/dto/StreamerInfoDto'
-import { UpdatedInfoType } from '@app/model/enum/UpdatedInfoType'
+import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
 import { ScheduleCheckedState } from '@app/model/enum/ScheduleCheckedState'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 
 @Injectable({
   providedIn: 'root'
 })
-export class UpdatedInfoService {
+export class UpdatedRecordService {
 
-  updatedBellList$: BehaviorSubject<Array<UpdatedInfoVo>> = new BehaviorSubject<Array<UpdatedInfoVo>>([])
+  updatedBellList$: BehaviorSubject<Array<UpdatedRecordVo>> = new BehaviorSubject<Array<UpdatedRecordVo>>([])
   updated$: Subject<boolean> = new Subject<boolean>()
 
   items: Observable<any[]>
@@ -31,7 +31,7 @@ export class UpdatedInfoService {
               private loader: RainbowLoaderService
   ) {
 
-    this.items = this.db.collection('updatedInfo', ref=> {
+    this.items = this.db.collection('updatedRecords', ref=> {
       return ref.orderBy('timestamp', 'desc')
                 .limit(100)
     }).valueChanges({ idField: 'id' });
@@ -58,12 +58,12 @@ export class UpdatedInfoService {
   }
 
   public addMember (data: StreamerInfoDto): void {
-    this.add(getDto(UpdatedInfoType.addMember, getAddMemberMessage(data)))
+    this.add(getDto(UpdatedRecordType.addMember, getAddMemberMessage(data)))
   }
 
   public addUpdatedStream (data: StreamDto): void {
     if (data.isCanceled || data.isModified) {
-      this.add(getDto(UpdatedInfoType.updateStream, getUpdatedStreamMessage(data)))
+      this.add(getDto(UpdatedRecordType.updateStream, getUpdatedStreamMessage(data)))
     }
   }
 
@@ -72,11 +72,11 @@ export class UpdatedInfoService {
       return
     }
 
-    this.add(getDto(UpdatedInfoType.updateSchedule, getUpdatedScheduleMessage(data)))
+    this.add(getDto(UpdatedRecordType.updateSchedule, getUpdatedScheduleMessage(data)))
   }
 
-  private add (infoDto: UpdatedInfoDto): void {
-    this.db.collection('updatedInfo')
+  private add (infoDto: UpdatedRecordDto): void {
+    this.db.collection('updatedRecords')
         .add(infoDto)
         .then(() => {
         })

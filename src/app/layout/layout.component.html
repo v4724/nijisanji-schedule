@@ -1,5 +1,9 @@
 
-<header class="h-100">
+<header class="h-100 wrapper">
+
+<!--  <div class="wave one"></div>-->
+<!--  <div class="wave two"></div>-->
+<!--  <div class="wave three"></div>-->
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-scroll navbar-light">
@@ -35,7 +39,7 @@
 <!--            </li>-->
           </ul>
         </div>
-
+        <a class="ms-auto"></a>
         <ng-container *ngIf="adminService.isLogin$ | async">
           <a class="me-3"
              role="button"
@@ -45,6 +49,7 @@
             ></i>
           </a>
         </ng-container>
+        <app-updated-bell class="mx-3" (click)="click()"></app-updated-bell>
         <app-login class="mx-3"></app-login>
       </div>
   </nav>
@@ -62,7 +67,7 @@
         <a href="https://codepen.io/jackrugile/pen/JddmaX">
           Rainbow Loader
         </a>
-<!--         <a href='https://.pngtree.com/free-backgrounds'>來自的免費背景照片 .pngtree.com/</a>-->
+        <!--         <a href='https://.pngtree.com/free-backgrounds'>來自的免費背景照片 .pngtree.com/</a>-->
       </div>
     </div>
     <!-- Copyright -->
