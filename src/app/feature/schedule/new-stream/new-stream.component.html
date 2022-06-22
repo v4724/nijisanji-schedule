@@ -1,7 +1,9 @@
 
-<div class="mt-2 ">
+<div class="mt-2 d-flex flex-column h-100">
 
-  <app-stream-detail #itemCmpRef [item]="item"></app-stream-detail>
+  <div class="h-1 flex-grow-1 table-block">
+    <app-stream-detail #itemCmpRef [item]="item"></app-stream-detail>
+  </div>
 
   <div class="d-flex flex-row-reverse col-gap-1 my-2">
     <button class="btn btn-primary" type="button" (click)="submit()"

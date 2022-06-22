@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UpdatedRecordService } from '@app/service/updated-record.service'
 import { UpdatedRecordVo, updateVoList } from '@app/model/vo/UpdatedRecordVo'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { combineLatest } from 'rxjs'
 import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
 

@@ -6,16 +6,20 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse'
 import { LoginComponent } from '@app/layout/login/login.component'
 import { CommonComponentModule } from '@app/common-component/common-component.module';
 import { UpdatedBellComponent } from './updated-bell/updated-bell.component'
+import { TimezoneComponent } from '@app/layout/timezone/timezone.component'
+import { FormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
     LayoutComponent,
     LoginComponent,
-    UpdatedBellComponent
+    UpdatedBellComponent,
+    TimezoneComponent,
   ],
 	imports: [
 		CommonModule,
 		RouterModule,
+    FormsModule,
 		MdbCollapseModule,
 		CommonComponentModule
 	]

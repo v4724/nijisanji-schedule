@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs'
 import { StreamService } from '@app/service/stream.service'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { StreamGroupService } from '@app/service/stream-group.service'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import { ScheduleCheckedService } from '@app/service/schedule-checked.service'

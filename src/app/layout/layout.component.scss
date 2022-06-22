@@ -96,3 +96,23 @@ footer {
     transform: rotate(360deg);
   }
 }
+
+.container-fluid .item{
+  display: flex;
+  &:not(last-child) {
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .container-fluid .item{
+    &:not(last-child) {
+      padding-right: 0.5rem;
+    }
+  }
+
+  .container-fluid .item.mobile-425-size{
+    display: none;
+  }
+}
+

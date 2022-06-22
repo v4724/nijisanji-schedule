@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { resetStream, StreamVo } from '@app/model/vo/StreamVo'
 import * as moment from 'moment-timezone'
 import { Observable } from 'rxjs'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { timezoneEntries } from '@app/model/enum/Timezone'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'

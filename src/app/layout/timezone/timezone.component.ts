@@ -1,6 +1,6 @@
 import { Component, Input, isDevMode, OnInit } from '@angular/core'
 import * as moment from 'moment-timezone'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { AdminService } from '@app/service/admin.service'
 import { timezoneEntries, timezoneValues } from '@app/model/enum/Timezone'
 

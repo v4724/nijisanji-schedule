@@ -1,5 +1,5 @@
-<div>
-  Timezone:
+<div class="d-flex">
+  <div class="mobile-462-size">Timezone:</div>
   <select
     *ngIf="adminService.editable$ | async; else textRef"
     [(ngModel)]="timezone"

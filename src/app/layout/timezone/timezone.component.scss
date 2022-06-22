@@ -1,0 +1,9 @@
+.mobile-462-size {
+ display: flex;
+}
+
+@media (max-width: 375px) {
+  .mobile-462-size {
+    display: none;
+  }
+}

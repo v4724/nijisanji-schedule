@@ -11,12 +11,10 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { HomeComponent } from './feature/home/home.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

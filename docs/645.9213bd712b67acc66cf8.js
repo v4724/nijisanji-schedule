@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunknijisanji_schedule=self.webpackChunknijisanji_schedule||[]).push([[645],{7645:(c,o,n)=>{n.r(o),n.d(o,{HomeModule:()=>s});var l=n(8583),u=n(7716);let s=(()=>{class e{}return e.\u0275fac=function(d){return new(d||e)},e.\u0275mod=u.oAB({type:e}),e.\u0275inj=u.cJS({imports:[[l.ez]]}),e})()}}]);

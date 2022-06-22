@@ -36,7 +36,8 @@ export class ScheduleComponent implements OnInit {
 
   updateCurrentByUrl(url: string): void {
     if (url.startsWith('/')) {
-      url = url.substr(1, url.length)
+      const index = url.lastIndexOf('/')
+      url = url.substr(index + 1, url.length)
     }
     this.current = url as Schedule
   }

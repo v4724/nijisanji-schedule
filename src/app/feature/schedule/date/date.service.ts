@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone'
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs'
-import { TimezoneService } from '@app/feature/schedule/toolbar/timezone/timezone.service'
+import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { Moment } from 'moment-timezone'
 import { setMidnightEndMoment, setMidnightStartMoment } from '@app/feature/schedule/utils'
 import { StreamVo, setDisplayValue } from '@app/model/vo/StreamVo'

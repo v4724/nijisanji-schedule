@@ -39,9 +39,13 @@
 <!--            </li>-->
           </ul>
         </div>
+
+        <div class="item mobile-425-size">Last updated: {{ scheduleUpdatedTime }}</div>
+        <app-timezone class="item "></app-timezone>
+
         <a class="ms-auto"></a>
         <ng-container *ngIf="adminService.isLogin$ | async">
-          <a class="me-3"
+          <a class="item"
              role="button"
              (click)="adminService.editToggle()">
             <i class="fas fa-pen-nib"
@@ -49,8 +53,8 @@
             ></i>
           </a>
         </ng-container>
-        <app-updated-bell class="mx-3" (click)="click()"></app-updated-bell>
-        <app-login class="mx-3"></app-login>
+        <app-updated-bell class="item" (click)="click()"></app-updated-bell>
+        <app-login class="item"></app-login>
       </div>
   </nav>
   <!-- Navbar -->
