@@ -1,5 +1,7 @@
-<a href="#/message" (click)="click()">
-  <i class="fas fa-bell fa-lg"></i>
+<a class="item d-flex align-items-center justify-content-center"
+   [style.width]="'30px'"
+   href="#/message" (click)="click()">
+  <i class="fas fa-bell"></i>
   <span *ngIf="update"
     class="badge bg-danger badge-dot">
   </span>

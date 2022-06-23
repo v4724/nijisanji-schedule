@@ -45,7 +45,8 @@
 
         <a class="ms-auto"></a>
         <ng-container *ngIf="adminService.isLogin$ | async">
-          <a class="item"
+          <a class="d-flex align-items-center justify-content-center"
+             [style.width]="'30px'"
              role="button"
              (click)="adminService.editToggle()">
             <i class="fas fa-pen-nib"
@@ -53,8 +54,8 @@
             ></i>
           </a>
         </ng-container>
-        <app-updated-bell class="item" (click)="click()"></app-updated-bell>
-        <app-login class="item"></app-login>
+        <app-updated-bell class="" (click)="click()"></app-updated-bell>
+        <app-login class=""></app-login>
       </div>
   </nav>
   <!-- Navbar -->

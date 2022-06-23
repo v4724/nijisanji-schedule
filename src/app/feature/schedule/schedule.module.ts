@@ -22,6 +22,8 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
 import { CommonComponentModule } from '@app/common-component/common-component.module'
 import { StreamDetailComponent } from './common/stream-detail/stream-detail.component';
 import { EditModalComponent } from './common/edit-modal/edit-modal.component'
+import { ScrollBorderDirective } from '@app/directive/scroll-border.directive'
+import { DirectiveModule } from '@app/directive/directive.module'
 
 const routes: Routes = [
   {
@@ -72,7 +74,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MdbFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    DirectiveModule
   ]
 })
 export class ScheduleModule { }
