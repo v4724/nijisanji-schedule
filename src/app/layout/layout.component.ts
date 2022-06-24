@@ -1,4 +1,4 @@
-import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { AdminService } from '@app/service/admin.service'
 import { MdbCollapseDirective } from 'mdb-angular-ui-kit/collapse'
 import { combineLatest } from 'rxjs'

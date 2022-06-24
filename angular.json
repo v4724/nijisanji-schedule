@@ -20,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "/nijisanji-schedule/",
             "outputPath": "docs",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -31,7 +32,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
+              "src/styles.scss"
             ],
             "scripts": [
             ]
@@ -71,6 +72,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "servePath": "/nijisanji-schedule/"
+          },
           "configurations": {
             "production": {
               "browserTarget": "nijisanji-schedule:build:production"

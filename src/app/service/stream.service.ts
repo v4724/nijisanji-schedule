@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs'
+import { Observable } from 'rxjs/internal/observable'
 import {
   AngularFirestore,
   QuerySnapshot

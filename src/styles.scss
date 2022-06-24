@@ -7,6 +7,9 @@
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 
+$link-color: #5877ba;
+$primary: #5877ba;
+
 // MDB SCSS
 @import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
 :root{
@@ -244,20 +247,6 @@ select {
 
 .cursor-pointer {
   cursor: pointer;
-}
-
-.form-check-input[type=radio]:checked:after {
- color: var(--mdb-primary);
- background-color: var(--mdb-primary);
-}
-
-.form-check-input:checked {
-  border-color: var(--mdb-primary);
-}
-
-.form-check-input[type=checkbox]:checked {
-  background-image: none;
-  background-color: var(--mdb-primary);
 }
 
 .h-1 {
