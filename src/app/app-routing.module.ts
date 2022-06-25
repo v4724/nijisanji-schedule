@@ -28,6 +28,10 @@ const routes: Routes = [
         path: 'message',
         loadChildren: () => import('./feature/updated-record/updated-record.module').then(m => m.UpdatedRecordModule),
       },
+      {
+        path: 'voiceButton',
+        loadChildren: () => import('./feature/voice-button/voice-button.module').then(m => m.VoiceButtonModule),
+      },
     ]
   }
 ]

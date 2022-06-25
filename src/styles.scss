@@ -249,6 +249,11 @@ select {
   cursor: pointer;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
 .h-1 {
   height: 1px;
 }

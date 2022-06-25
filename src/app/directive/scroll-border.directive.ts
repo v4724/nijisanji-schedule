@@ -7,6 +7,7 @@ export class ScrollBorderDirective {
 
   constructor(private el: ElementRef) {
     this.el.nativeElement.style.overflowY = 'auto'
+    console.log(el)
     this.checkLocation()
   }
 
@@ -23,7 +24,7 @@ export class ScrollBorderDirective {
       return
     }
 
-    if ((top + height) >= scrollHeight) {
+    if ((top + height) >= scrollHeight - 1 ) {
       this.el.nativeElement.style.borderTop = '1px solid rgba(100,121,143,0.4)'
       this.el.nativeElement.style.borderBottom = ''
     } else if (top === 0){

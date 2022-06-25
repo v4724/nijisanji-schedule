@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { StreamGroupService } from '@app/service/stream-group.service'
+import { cloneDeep } from 'lodash'
 
 export interface Group {
   text: string,
@@ -29,8 +30,19 @@ export class StreamGroupComponent implements OnInit {
         })
       })
 
-      this.selectedGroups = groups
-      this.changeGroup()
+      this.updateCheckedStatus()
+    })
+
+    this.streamGroupService.selectedGroup$.subscribe((result) => {
+      this.selectedGroups = cloneDeep(result)
+      this.updateCheckedStatus()
+    })
+  }
+
+  updateCheckedStatus(): void {
+    this.groups.forEach((group) => {
+      const isSelected = this.selectedGroups.find((s) => s === group.text)
+      group.checked = !!isSelected
     })
   }
 

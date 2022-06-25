@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore'
 import { ScheduleCheckedItemDto } from '@app/model/dto/ScheduleCheckedItemDto'
 import { BehaviorSubject, Observable, Subject } from 'rxjs'
 import {
-  getAddMemberMessage,
+  getAddMemberMessage, getUnScheduledStreamMessage,
   getUpdatedScheduleMessage,
   getUpdatedStreamMessage,
   UpdatedRecordVo
@@ -59,6 +59,12 @@ export class UpdatedRecordService {
 
   public addMember (data: StreamerInfoDto): void {
     this.add(getDto(UpdatedRecordType.addMember, getAddMemberMessage(data)))
+  }
+
+  public addUnScheduledStream (data: StreamDto): void {
+    if (!data.onSchedule) {
+      this.add(getDto(UpdatedRecordType.updateStream, getUnScheduledStreamMessage(data)))
+    }
   }
 
   public addUpdatedStream (data: StreamDto): void {

@@ -41,6 +41,15 @@ export function getUpdatedScheduleMessage (item: ScheduleCheckedItemDto) {
   return `schedule: ${message}`
 }
 
+export function getUnScheduledStreamMessage (stream: StreamDto) {
+
+  let message = ''
+  if (!stream.onSchedule) {
+    message = `${stream.streamer} add an unScheduled '${stream.title}'`
+  }
+
+  return `stream: ${message}`
+}
 export function getUpdatedStreamMessage (stream: StreamDto) {
 
   let message = ''

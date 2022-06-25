@@ -24,17 +24,14 @@ export class StreamerInfoService {
   items: Observable<any[]>;
 
   constructor(private db: AngularFirestore,
-              private groupService: StreamGroupService,
               private updateBellService: UpdatedRecordService,
               private loader: RainbowLoaderService) {
     // Initialize Firebase
     this.items = db.collection('streamerInfos').valueChanges({ idField: 'id' });
     this.items.subscribe((result) => {
       sortByDefaultStreamer<StreamerInfoVo>(result, 'name', this)
-      const groups = distinctArray(result.map(info => info.group))
 
       this.streamerInfos$.next(result)
-      this.groupService.group$.next(groups)
     })
   }
 
