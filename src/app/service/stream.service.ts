@@ -30,6 +30,7 @@ export class StreamService {
     return this.db.collection('streams')
       .add(stream)
       .then(() => {
+        this.updateBellService.addUnScheduledStream(stream)
         return true;
       })
                .catch((err) => {
