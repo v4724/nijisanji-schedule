@@ -6,6 +6,8 @@ import { EditModalComponent } from '@app/feature/schedule/common/edit-modal/edit
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { EditStreamerInfoModalComponent } from '@app/feature/member/edit-streamer-info-modal/edit-streamer-info-modal.component'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
+import { VoiceButtonInfoVo } from '@app/model/vo/VoiceButtonInfoVo'
+import { EditVoiceDetailModalComponent } from '@app/feature/voice-button/edit-voice-detail-modal/edit-voice-detail-modal.component'
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,7 @@ export class AdminService {
 
   modalRef: MdbModalRef<EditModalComponent> | null = null;
   editStreamerInfoModalRef: MdbModalRef<EditStreamerInfoModalComponent> | null = null;
+  editVoiceButtonInfoModalRef: MdbModalRef<EditVoiceDetailModalComponent> | null = null;
 
   constructor(public auth: AngularFireAuth,
               private modalService: MdbModalService) {
@@ -46,6 +49,12 @@ export class AdminService {
   openStreamerInfoModal(isNew: boolean, streamer?: StreamerInfoVo): void {
     this.editStreamerInfoModalRef = this.modalService.open(EditStreamerInfoModalComponent,{
       data: { item: streamer, isNew: isNew },
+    })
+  }
+
+  openVoiceButtonInfoModal(isNew: boolean, voiceButton?: VoiceButtonInfoVo): void {
+    this.editVoiceButtonInfoModalRef = this.modalService.open(EditVoiceDetailModalComponent,{
+      data: { item: voiceButton, isNew: isNew },
     })
   }
 }

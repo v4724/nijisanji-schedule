@@ -4,7 +4,9 @@ import { RouterModule, Routes } from '@angular/router'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
 import { FormsModule } from '@angular/forms'
 import { VoiceButtonComponent } from '@app/feature/voice-button/voice-button.component'
-import { DirectiveModule } from '@app/directive/directive.module'
+import { DirectiveModule } from '@app/directive/directive.module';
+import { VoiceDetailComponent } from './voice-detail/voice-detail.component';
+import { EditVoiceDetailModalComponent } from './edit-voice-detail-modal/edit-voice-detail-modal.component'
 
 
 
@@ -18,7 +20,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [VoiceButtonComponent],
+  declarations: [VoiceButtonComponent, VoiceDetailComponent, EditVoiceDetailModalComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

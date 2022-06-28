@@ -7,7 +7,6 @@ export class ScrollBorderDirective {
 
   constructor(private el: ElementRef) {
     this.el.nativeElement.style.overflowY = 'auto'
-    console.log(el)
     this.checkLocation()
   }
 
