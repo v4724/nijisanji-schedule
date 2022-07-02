@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScrollBorderDirective } from '@app/directive/scroll-border.directive'
+import { ScrollBorderDirective } from '@app/directive/scroll-border.directive';
 
 
 

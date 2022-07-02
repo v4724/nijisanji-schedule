@@ -45,11 +45,12 @@ export class VoiceButtonComponent implements OnInit, OnDestroy {
       this.streamGroupService.selectedGroup$
     ])
     .subscribe((results) => {
-      const groups = results[1]
-      this.streamers = results[0].filter((info) => {
-        const find = groups.find((group) => group === info.group)
-        return !!find
-      })
+      // const groups = results[1]
+      // this.streamers = results[0].filter((info) => {
+      //   const find = groups.find((group) => group === info.group)
+      //   return !!find
+      // })
+      this.streamers = results[0]
 
       if (!this.currentStreamerInfo && this.streamers.length) {
         this.changeCurrStreamer(this.streamers[0])
@@ -81,7 +82,7 @@ export class VoiceButtonComponent implements OnInit, OnDestroy {
 
   changeVoiceButton(button: VoiceButtonInfoVo): void {
     this.currentVoiceButton = button
-    this.ytIframeSource = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${button.videoId}?start=${button.start}&end=${button.end}&autoplay=1`)
+    this.ytIframeSource = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${button.videoId}?start=${button.start}&end=${button.end}&autoplay=1&rel=0`)
   }
 
   changeCurrStreamer(info: StreamerInfoVo): void {
@@ -118,7 +119,7 @@ export class VoiceButtonComponent implements OnInit, OnDestroy {
     })
   }
 
-  editVoiceButtonInfo($event: Event, info: VoiceButtonInfoVo): void {
+  editVoiceButtonInfo($event: Event, info?: VoiceButtonInfoVo): void {
     $event.stopPropagation()
     this.adminService.openVoiceButtonInfoModal(false, info)
   }

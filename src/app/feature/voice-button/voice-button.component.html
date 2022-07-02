@@ -11,9 +11,9 @@
     </button>
   </div>
 
-  <div class="h-1 flex-grow-1"
-       [style.border]="'solid 1px'">
-    <div class="row h-100 w-100">
+  <div class="voice-button-content h-1 flex-grow-1">
+    <div class="row h-100 w-100"
+         [style.border]="'solid 1px'">
         <div class="yt-iframe col-12 col-lg-7 col-md-7 position-relative"
              [style.min-height]="'300px'">
 
@@ -23,7 +23,7 @@
                   [src]="ytIframeSource"
                   frameborder="0" allow="autoplay"
                   [style.height]="'100%'"
-                  [style.width]="'100%'"></iframe>
+                  [style.width]="'calc(100% - 1.5rem * 0.5)'"></iframe>
           </ng-container>
           <ng-template #emptySourceTemplate>
             <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -33,7 +33,7 @@
 
 
         </div>
-        <div appScrollBorder class="voice-container col-7 col-lg-3 col-md-3 py-2">
+        <div appScrollBorder class="voice-container col-7 col-lg-3 col-md-3 py-2 h-100">
             <div class="streamer-figure d-flex flex-wrap align-items-center justify-content-center">
               <div class="playing-toolbar d-flex">
                 <a class="d-flex align-items-center justify-content-center"
@@ -43,6 +43,14 @@
                    role="button"
                     (click)="playAgain()">
                   <i class="fas fa-redo-alt"></i>
+                </a>
+                <a *ngIf="currentVoiceButton && adminService.editable$ | async"
+                   class="d-flex align-items-center justify-content-center"
+                   [style.width]="'30px'"
+                   [style.height]="'30px'"
+                   role="button"
+                   (click)="editVoiceButtonInfo($event, currentVoiceButton)">
+                  <i class="fas fa-pen"></i>
                 </a>
                 <a class="d-flex align-items-center justify-content-center"
                    [style.width]="'30px'"
@@ -70,7 +78,7 @@
               </a>
             </div>
 
-            <div class="voice-list">
+            <div class="voice-list d-flex flex-wrap">
               <button type="button" class="btn btn-link btn-sm btn-rounded d-flex align-items-center justify-content-center"
                       *ngFor="let button of filterVoiceButtons"
                       (click)="changeVoiceButton(button)">
@@ -87,7 +95,10 @@
             </div>
         </div>
 
-        <div appScrollBorder class="streamer-container col-5 col-lg-2 col-md-2 py-2">
+        <div appScrollBorder class="streamer-container col-5 col-lg-2 col-md-2 pb-2 h-100">
+          <div class="fs-6 d-flex align-items-center justify-content-center mt-2">
+            Streamer
+          </div>
            <button type="button" class="ms-auto btn btn-link btn-sm btn-rounded"
                    *ngFor="let streamer of streamers"
                    (click)="changeCurrStreamer(streamer)">

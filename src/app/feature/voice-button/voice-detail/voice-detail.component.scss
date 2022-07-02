@@ -1,0 +1,15 @@
+
+.cdk-overlay-pane {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: solid 1px;
+}
+
+.streamer-autocomplete {
+  background-color: rgba(243, 243, 243, 0.85);
+  height: 2rem;
+
+  &:hover {
+    background-color: #edecec;
+  }
+}

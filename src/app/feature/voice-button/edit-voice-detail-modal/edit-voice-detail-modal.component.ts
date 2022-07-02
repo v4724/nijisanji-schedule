@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component, ContentChild,
+  OnInit, ViewChild
+} from '@angular/core'
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 import { initVoiceButton, VoiceButtonInfoVo } from '@app/model/vo/VoiceButtonInfoVo'
 import { VoiceButtonInfoService } from '@app/service/voice-button-info.service'
 import { toDto } from '@app/model/dto/VoiceButtonInfoDto'
+import { VoiceDetailComponent } from '@app/feature/voice-button/voice-detail/voice-detail.component'
 
 @Component({
   selector: 'app-edit-voice-detail-modal',
@@ -11,6 +15,8 @@ import { toDto } from '@app/model/dto/VoiceButtonInfoDto'
   styleUrls: ['./edit-voice-detail-modal.component.scss']
 })
 export class EditVoiceDetailModalComponent implements OnInit {
+
+  @ViewChild('itemCmpRef') itemCmpRef: VoiceDetailComponent | undefined
 
   item: VoiceButtonInfoVo = initVoiceButton()
   isNew: boolean = true
@@ -27,7 +33,8 @@ export class EditVoiceDetailModalComponent implements OnInit {
   new(): void {
     this.loaderService.set(true)
 
-    this.voiceButtonInfoService.add(this.item)
+    const editedItem = this.itemCmpRef?.editedItem ?? initVoiceButton()
+    this.voiceButtonInfoService.add(editedItem)
         .then((success) => {
           if (success) {
             this.modalRef.close()
@@ -41,8 +48,9 @@ export class EditVoiceDetailModalComponent implements OnInit {
   edit(): void {
     this.loaderService.set(true)
 
-    const dto = toDto(this.item)
-    this.voiceButtonInfoService.update(this.item.id, dto)
+    const editedItem = this.itemCmpRef?.editedItem ?? initVoiceButton()
+    const dto = toDto(editedItem)
+    this.voiceButtonInfoService.update(editedItem.id, dto)
         .then(() => {
           this.modalRef.close()
         })
@@ -57,7 +65,9 @@ export class EditVoiceDetailModalComponent implements OnInit {
       return
     }
     this.loaderService.set(true)
-    this.voiceButtonInfoService.delete(this.item.id)
+
+    const editedItem = this.itemCmpRef?.editedItem ?? initVoiceButton()
+    this.voiceButtonInfoService.delete(editedItem.id)
         .then(() => {
           this.modalRef.close()
         })

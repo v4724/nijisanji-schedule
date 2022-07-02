@@ -11,12 +11,18 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-
+import { MAT_AUTOCOMPLETE_SCROLL_STRATEGY } from '@angular/material/autocomplete'
+import { ScrollingModule } from '@angular/cdk/scrolling'
+import { CloseScrollStrategy, Overlay } from '@angular/cdk/overlay'
+export function scrollFactory(overlay: Overlay): () => CloseScrollStrategy {
+  return () => overlay.scrollStrategies.close();
+}
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    ScrollingModule,
     BrowserModule,
     MdbModalModule,
     MdbFormsModule,
@@ -27,7 +33,10 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
   providers: [
     {
       provide: LocationStrategy, useClass: HashLocationStrategy
-    }],
+    },
+    { provide: MAT_AUTOCOMPLETE_SCROLL_STRATEGY, useFactory: scrollFactory, deps: [Overlay] }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
