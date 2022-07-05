@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { WeekComponent } from './week/week.component';
 import { MonthComponent as MonthComponent2 } from './month-2/month.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { TimezoneComponent } from '../../layout/timezone/timezone.component';
 import { StreamTypeComponent } from './toolbar/stream-type/stream-type.component';
 import { StreamGroupComponent } from './toolbar/stream-group/stream-group.component'
 import { DateComponent } from './date/date.component';
@@ -22,7 +21,6 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
 import { CommonComponentModule } from '@app/common-component/common-component.module'
 import { StreamDetailComponent } from './common/stream-detail/stream-detail.component';
 import { EditModalComponent } from './common/edit-modal/edit-modal.component'
-import { ScrollBorderDirective } from '@app/directive/scroll-border.directive'
 import { DirectiveModule } from '@app/directive/directive.module'
 
 const routes: Routes = [

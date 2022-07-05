@@ -94,6 +94,7 @@
         class="form-check-input"
         type="checkbox"
         id="flexCheckModified"
+        [disabled]="!update"
         [(ngModel)]="item.isModified"
       />
       <label class="form-check-label" for="flexCheckModified">
@@ -106,6 +107,7 @@
         class="form-check-input"
         type="checkbox"
         id="flexCheckCanceled"
+        [disabled]="!update"
         [(ngModel)]="item.isCanceled"
       />
       <label class="form-check-label" for="flexCheckCanceled">
