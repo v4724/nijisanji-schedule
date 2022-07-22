@@ -3,12 +3,15 @@ import { ScheduleCheckedItemDto } from '@app/model/dto/ScheduleCheckedItemDto'
 import { StreamDto } from '@app/model/dto/StreamDto'
 import { ScheduleCheckedState } from '@app/model/enum/ScheduleCheckedState'
 import * as moment from 'moment-timezone'
+import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 
 export interface UpdatedRecordVo {
   id: string,
+  streamer: string,
   message: string,
   type: string,
   timestamp: number,
+  streamerInfo: StreamerInfoVo,
   displayDateTime: string,
 }
 

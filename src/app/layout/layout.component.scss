@@ -8,8 +8,14 @@ footer {
   font-size: 0.5rem;
   background-color: rgba(0, 0, 0, 0.05);
 }
+
 .navbar {
-  background-color: #f8faff;
+  background-image: linear-gradient(#ffb8b8e3 0%, #fffffff2 100%)
+}
+
+.nav-link.home {
+  width: 30px;
+  right: calc(100%/2);
 }
 
 .navbar-scroll .nav-link,
@@ -104,6 +110,10 @@ footer {
   }
 }
 
+.container-fluid .mobile-425-size {
+  display: flex;
+}
+
 @media (max-width: 425px) {
   .container-fluid .item{
     &:not(last-child) {
@@ -111,7 +121,11 @@ footer {
     }
   }
 
-  .container-fluid .item.mobile-425-size{
+}
+
+@media (max-width: 375px) {
+
+  .container-fluid .mobile-425-size {
     display: none;
   }
 }

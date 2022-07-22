@@ -12,6 +12,18 @@ $primary: #5877ba;
 
 // MDB SCSS
 @import "~mdb-angular-ui-kit/assets/scss/mdb.scss";
+
+@import 'theme/blue.scss';
+//@import 'projects/menu/src/theming/theme-light.scss';
+//
+//.theme-dark {
+//  @include angular-material-theme($theme-dark)
+//}
+//
+//.theme-light {
+//  @include angular-material-theme($theme-light)
+//}
+
 :root{
   --undefine-primary-color: rgba(194, 194, 194, 0.67);
   --ike-primary-color: rgba(100, 176, 240, 0.8);
@@ -40,8 +52,11 @@ $primary: #5877ba;
   --mika-primary-color: rgba(68, 68, 68, 0.8);
 
   --column-title-color: #ffb8b8;
-
+  --group-button: #ffdedecf;
+  --group-button-color: inherit;
+  --primary-bg-color: #ffdedecf;
   --is-today: #ffdedecf;
+  --is-focus: #d20000;
   --is-streamer: #d20000;
   --is-guest: #7480be;
 }

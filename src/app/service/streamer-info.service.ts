@@ -24,7 +24,7 @@ export class StreamerInfoService {
   items: Observable<any[]>;
 
   constructor(private db: AngularFirestore,
-              private updateBellService: UpdatedRecordService,
+              // private updateBellService: UpdatedRecordService,
               private loader: RainbowLoaderService) {
     // Initialize Firebase
     this.items = db.collection('streamerInfos').valueChanges({ idField: 'id' });
@@ -47,7 +47,7 @@ export class StreamerInfoService {
                .add(infoDto)
                .then(() => {
 
-                 this.updateBellService.addMember(infoDto)
+                 // this.updateBellService.addMember(infoDto)
 
                  return true;
                })

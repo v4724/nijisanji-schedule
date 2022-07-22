@@ -14,6 +14,8 @@ import { StreamerInfoDto } from '@app/model/dto/StreamerInfoDto'
 import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
 import { ScheduleCheckedState } from '@app/model/enum/ScheduleCheckedState'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
+import { tap } from 'rxjs/internal/operators'
+import { StreamerInfoService } from '@app/service/streamer-info.service'
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +30,8 @@ export class UpdatedRecordService {
   init = true
 
   constructor(private db: AngularFirestore,
-              private loader: RainbowLoaderService
+              private loader: RainbowLoaderService,
+              private streamerInfoService: StreamerInfoService
   ) {
 
     this.items = this.db.collection('updatedRecords', ref=> {
@@ -37,7 +40,17 @@ export class UpdatedRecordService {
     }).valueChanges({ idField: 'id' });
 
     this.loader.loading$.next(true)
-    this.items.subscribe((result) => {
+    this.items
+      .pipe(
+        tap((result) => {
+          result.forEach((vo) => {
+            if (vo.streamer) {
+              vo.streamerInfo = this.streamerInfoService.findStreamerInfo(vo.streamer)
+            }
+          })
+        })
+      )
+      .subscribe((result) => {
       this.loader.loading$.next(false)
 
       const origLength = this.updatedBellList$.getValue().length
@@ -58,18 +71,18 @@ export class UpdatedRecordService {
   }
 
   public addMember (data: StreamerInfoDto): void {
-    this.add(getDto(UpdatedRecordType.addMember, getAddMemberMessage(data)))
+    this.add(getDto(data.name, UpdatedRecordType.addMember, getAddMemberMessage(data)))
   }
 
   public addUnScheduledStream (data: StreamDto): void {
     if (!data.onSchedule) {
-      this.add(getDto(UpdatedRecordType.updateStream, getUnScheduledStreamMessage(data)))
+      this.add(getDto(data.streamer, UpdatedRecordType.updateStream, getUnScheduledStreamMessage(data)))
     }
   }
 
   public addUpdatedStream (data: StreamDto): void {
     if (data.isCanceled || data.isModified) {
-      this.add(getDto(UpdatedRecordType.updateStream, getUpdatedStreamMessage(data)))
+      this.add(getDto(data.streamer, UpdatedRecordType.updateStream, getUpdatedStreamMessage(data)))
     }
   }
 
@@ -78,7 +91,7 @@ export class UpdatedRecordService {
       return
     }
 
-    this.add(getDto(UpdatedRecordType.updateSchedule, getUpdatedScheduleMessage(data)))
+    this.add(getDto(data.streamer, UpdatedRecordType.updateSchedule, getUpdatedScheduleMessage(data)))
   }
 
   private add (infoDto: UpdatedRecordDto): void {

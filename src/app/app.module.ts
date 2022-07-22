@@ -14,6 +14,7 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MAT_AUTOCOMPLETE_SCROLL_STRATEGY } from '@angular/material/autocomplete'
 import { ScrollingModule } from '@angular/cdk/scrolling'
 import { CloseScrollStrategy, Overlay } from '@angular/cdk/overlay'
+import { DirectiveModule } from '@app/directive/directive.module'
 export function scrollFactory(overlay: Overlay): () => CloseScrollStrategy {
   return () => overlay.scrollStrategies.close();
 }
@@ -26,6 +27,7 @@ export function scrollFactory(overlay: Overlay): () => CloseScrollStrategy {
     BrowserModule,
     MdbModalModule,
     MdbFormsModule,
+    DirectiveModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, AngularFireDatabaseModule

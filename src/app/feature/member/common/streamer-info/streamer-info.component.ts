@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { timezoneEntries } from '@app/model/enum/Timezone'
 import { initStreamerInfoVo, StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
+import { TimezoneService } from '@app/layout/timezone/timezone.service'
 
 @Component({
   selector: 'app-streamer-info',
@@ -12,9 +13,7 @@ export class StreamerInfoComponent implements OnInit {
   @Input() item: StreamerInfoVo = initStreamerInfoVo()
   @Input() isNew: boolean = true
 
-  timezones = timezoneEntries
-
-  constructor() { }
+  constructor(public tzService: TimezoneService) { }
 
   ngOnInit(): void {
   }

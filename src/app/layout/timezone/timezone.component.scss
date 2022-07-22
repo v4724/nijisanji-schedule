@@ -7,3 +7,26 @@
     display: none;
   }
 }
+
+.timezone-cmp {
+
+  .tz-select {
+    border: 0px solid #bdbdbd;
+    background-color: #ffffff00;
+  }
+
+  select {
+    padding-right: 0.1rem;
+    padding-left: 0.25rem;
+  }
+
+  select option{
+    &.local-timezone {
+      background-color: var(--primary-bg-color);
+    }
+    &.active {
+      color: var(--is-focus);
+    }
+  }
+
+}

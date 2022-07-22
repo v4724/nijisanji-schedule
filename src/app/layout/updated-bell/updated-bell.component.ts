@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UpdatedRecordService } from '@app/service/updated-record.service'
 import { skip } from 'rxjs/operators'
+import { combineLatest } from 'rxjs'
+import { UpdatedRecordVo, updateVoList } from '@app/model/vo/UpdatedRecordVo'
+import { TimezoneService } from '@app/layout/timezone/timezone.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-updated-bell',
@@ -9,9 +13,13 @@ import { skip } from 'rxjs/operators'
 })
 export class UpdatedBellComponent implements OnInit {
 
+  recordVos: Array<UpdatedRecordVo> = []
   update = false
 
-  constructor(public service: UpdatedRecordService) {
+  constructor(public service: UpdatedRecordService,
+              private router: Router,
+              private tzService: TimezoneService,
+              private updatedRecordService: UpdatedRecordService) {
 
   }
   ngOnInit(): void {
@@ -20,12 +28,21 @@ export class UpdatedBellComponent implements OnInit {
           skip(1)
         )
         .subscribe((result) => {
-          console.log(result)
           this.update = true
         })
+
+    combineLatest([this.updatedRecordService.updatedBellList$, this.tzService.timezone$])
+      .subscribe((results) => {
+        const list = results[0].slice(0, 5)
+        const tz = results[1]
+
+        updateVoList(list, tz)
+        this.recordVos = list
+      })
   }
 
   click (): void {
     this.update = false
+    this.router.navigate(['/message'])
   }
 }

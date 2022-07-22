@@ -64,5 +64,8 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "minimist": ">=1.2.6",
     "typescript": "~4.5.5"
+  },
+  "overrides": {
+    "autoprefixer": "10.4.5"
   }
 }

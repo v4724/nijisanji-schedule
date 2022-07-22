@@ -34,18 +34,18 @@
 
   <div class="d-flex flex-wrap col-gap-1">
     <div>Timezone:</div>
-    <div *ngFor="let tz of timezones" class="form-check form-check-inline">
+    <div *ngFor="let tz of timezoneService.timezones" class="form-check form-check-inline">
       <input
         mdbRadio
         class="form-check-input"
         type="radio"
         name="inlineRadioOptions"
-        [id]="'inlineRadio-' + tz[0]"
-        [value]="tz[1]"
+        [id]="'inlineRadio-' + tz.value"
+        [value]="tz.value"
         [(ngModel)]="timezone"
         (ngModelChange)="updateTimestampAndText()"
       />
-      <label class="form-check-label" [for]="'inlineRadio-' + tz[0]">{{tz[0]}}</label>
+      <label class="form-check-label" [for]="'inlineRadio-' + tz.value">{{tz.text}}</label>
     </div>
   </div>
 

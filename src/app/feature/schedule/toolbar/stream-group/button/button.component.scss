@@ -3,7 +3,7 @@
 .stream-group-button {
   background-color: #ffffff;
   border-radius: 20px;
-  border: 1px solid #bbbbbb;
+  //border: 1px solid #bbbbbb;
   margin-left: 0.25rem;
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
@@ -13,6 +13,7 @@
     //background-color: #cfe9ff;
     //border-color: #cfe9ff;
     background-color: var(--is-today);
+    border: 1px solid #bbbbbb;
     border-color: var(--is-today);
   }
 }

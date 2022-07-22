@@ -9,10 +9,15 @@
   padding: 0rem 0.75rem;
 
   &.active {
-    //background-color: #cfe9ff;
-    //border-color: #cfe9ff;
-    background-color: var(--is-today);
-    border-color: var(--is-today);
+    color: var(--group-button-color);
+    background-color: var(--group-button);
+    border-color: var(--group-button);
+    border-right-color: rgb(187, 187, 187);
+    border-right-style: solid;
+    border-right-width: 2px;
+    border-bottom-color: rgb(187, 187, 187);
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
   }
 }
 

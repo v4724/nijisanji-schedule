@@ -26,14 +26,12 @@ export class StreamDetailComponent implements OnInit, OnChanges {
   gmtMoment: string = ''
   datetimeFromGlobalTz: string = ''
 
-  timezones = timezoneEntries
-
   items: Observable<[]> = new Observable<[]>()
 
   searchFeatStreamer: string = ''
   findFeatStreamerInfo: StreamerInfoVo | undefined = undefined
 
-  constructor(private timezoneService: TimezoneService,
+  constructor(public timezoneService: TimezoneService,
               private streamerInfoService: StreamerInfoService) {
 
   }

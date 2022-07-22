@@ -15,23 +15,11 @@ export class LayoutComponent implements OnInit {
 
   @ViewChild('backgroundImageExample2') backgroundImageExample2: MdbCollapseDirective | undefined
 
-  scheduleUpdatedTime: string = '-'
-  constructor(public adminService: AdminService,
-              private updatedInfoService: UpdatedRecordService,
-              private timezoneService: TimezoneService) {
+  constructor(public adminService: AdminService) {
   }
 
   ngOnInit(): void {
 
-    combineLatest([this.updatedInfoService.updatedBellList$, this.timezoneService.timezone$])
-      .subscribe((results) => {
-        const tz = results[1]
-        const updatedInfoList = results[0]
-        if (updatedInfoList.length) {
-          const timestamp = updatedInfoList[0].timestamp
-          this.scheduleUpdatedTime = moment(timestamp).tz(tz).format('YYYY-MM-DD HH:mm')
-        }
-      })
   }
 
   click(): void {

@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common'
 import { RainbowLoaderComponent } from '@app/common-component/rainbow-loader/rainbow-loader.component';
 import { ToastComponent } from './toast/toast.component'
+import { PopoverComponent } from '@app/common-component/popover/popover.component'
 
 @NgModule({
   declarations: [
     RainbowLoaderComponent,
-    ToastComponent
+    ToastComponent,
+    PopoverComponent
   ],
   imports: [
     CommonModule
@@ -14,7 +16,8 @@ import { ToastComponent } from './toast/toast.component'
   ],
   exports: [
     RainbowLoaderComponent,
-    ToastComponent
+    ToastComponent,
+    PopoverComponent
   ]
 })
 export class CommonComponentModule { }
