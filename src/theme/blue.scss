@@ -1,0 +1,25 @@
+
+
+.theme-blue {
+  $link-color: #67ba58;
+  $primary: #bab558;
+
+  --column-title-color: #ffffff80;
+  --group-button: #545454b8;
+  --group-button-color: #FFFFFF;
+  --is-today: #40404026;
+  --is-streamer: #5877ba;
+
+  --is-guest: #7480be;
+
+  .navbar {
+    background-image: linear-gradient(#1677d1c2 0%, #defcff 100%) !important;
+  }
+  .content-block {
+    background-image: url("../assets/imgs/bg/15.png");
+    background-color: white;
+    /* background-repeat: no-repeat; */
+    background-position: center;
+    background-size: cover;
+  }
+}

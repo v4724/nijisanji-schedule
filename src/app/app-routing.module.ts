@@ -32,6 +32,14 @@ const routes: Routes = [
         path: 'voiceButton',
         loadChildren: () => import('./feature/voice-button/voice-button.module').then(m => m.VoiceButtonModule),
       },
+      {
+        path: 'setting',
+        loadChildren: () => import('./feature/setting/setting.module').then(m => m.SettingModule),
+      },
+      {
+        path: 'ocr',
+        loadChildren: () => import('./feature/ocr/ocr.module').then(m => m.OcrModule),
+      },
     ]
   }
 ]
