@@ -1,0 +1,54 @@
+
+.ocr-cmp {
+
+  @media (max-width: 768px) {
+    .voice-container, .streamer-container {
+      max-height: calc(100% - 300px)
+    }
+  }
+
+  .voice-list a:hover {
+    color: gold;
+  }
+
+  .voice-button-content {
+    padding-top: 1.75rem;
+  }
+
+  .text {
+    color: coral
+  }
+
+  .cdk-overlay-pane {
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: solid 1px;
+  }
+
+  .streamer-autocomplete {
+    background-color: rgba(243, 243, 243, 0.85);
+    height: 2rem;
+
+    &:hover {
+      background-color: #edecec;
+    }
+  }
+
+  .date-content {
+    background-color: #fff8f8;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+
+    .date-content-title {
+      font-size: 0.5rem;
+      font-family: fantasy;
+    }
+  }
+
+  .date-stream-content {
+    font-size: 0.5rem;
+    padding: 0.25rem;
+  }
+}
