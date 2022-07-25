@@ -54,7 +54,7 @@
                         {{ stream.streamerInfo.name }}
                       </span>
                       <div class="d-flex flex-column position-absolute streamer-detail tooltiptext"
-                           [ngClass]="stream.streamerInfo.bgColor">
+                           [style]="stream.streamerInfo.bgColor">
                         <app-display-text [stream]="stream">
                           {{ stream.title }} {{ stream.displayTime }}
                         </app-display-text>

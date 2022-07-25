@@ -39,7 +39,7 @@
             <td>
               <div *ngFor="let stream of row.streams"
                    class="d-flex d-inline-flex time-stream-block my-1 py-1 px-2"
-                   [ngClass]="stream.streamerInfo.bgColor">
+                  [style]="stream.streamerInfo.bgColor">
                 <app-display-text [stream]="stream">
                   【{{ stream.streamer }}】{{ stream.title }} {{ stream.displayTime }}
                 </app-display-text>
