@@ -12,7 +12,8 @@ export interface StreamerInfoVo {
   color: string,
   bgColor: string,
   timezone: Timezone,
-  order: number
+  order: number,
+  ocr: boolean,
 }
 
 export function initStreamerInfoVo(): StreamerInfoVo {
@@ -28,7 +29,8 @@ export function initStreamerInfoVo(): StreamerInfoVo {
     color: '',
     bgColor: '',
     timezone: Timezone.GMT,
-    order: 0
+    order: 0,
+    ocr: false,
   }
   return streamer
 }

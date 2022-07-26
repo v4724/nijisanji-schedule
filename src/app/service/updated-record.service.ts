@@ -94,6 +94,16 @@ export class UpdatedRecordService {
     this.add(getDto(data.streamer, UpdatedRecordType.updateSchedule, getUpdatedScheduleMessage(data)))
   }
 
+  public remove (id: string): void {
+    this.db.collection('updatedRecords')
+             .doc(id)
+             .delete()
+             .catch((err) => {
+               console.error(err)
+               window.alert(err)
+             })
+  }
+
   private add (infoDto: UpdatedRecordDto): void {
     this.db.collection('updatedRecords')
         .add(infoDto)
@@ -103,4 +113,5 @@ export class UpdatedRecordService {
           console.error(err)
         })
   }
+
 }

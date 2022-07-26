@@ -4,6 +4,7 @@ import { UpdatedRecordVo, updateVoList } from '@app/model/vo/UpdatedRecordVo'
 import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { combineLatest } from 'rxjs'
 import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
+import { AdminService } from '@app/service/admin.service'
 
 @Component({
   selector: 'app-updated-record',
@@ -17,7 +18,8 @@ export class UpdatedRecordComponent implements OnInit {
   UpdatedRecordType = UpdatedRecordType
 
   constructor(private updatedRecordService: UpdatedRecordService,
-              private tzService: TimezoneService) { }
+              private tzService: TimezoneService,
+              public adminService: AdminService) { }
 
   ngOnInit(): void {
 
@@ -32,4 +34,11 @@ export class UpdatedRecordComponent implements OnInit {
 
   }
 
+  removeRecord (record: UpdatedRecordVo): void {
+    const confirm = window.confirm('delete?')
+    if (!confirm) {
+      return
+    }
+    this.updatedRecordService.remove(record.id)
+  }
 }

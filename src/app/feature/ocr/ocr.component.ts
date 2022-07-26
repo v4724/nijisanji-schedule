@@ -13,6 +13,7 @@ import * as moment from 'moment-timezone'
 import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/internal/operators'
 import { Observable } from 'rxjs/internal/observable'
+import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 
 export interface TextAnnotation {
   description: string,
@@ -26,12 +27,15 @@ export interface TextAnnotation {
 }
 
 export interface Stream {
-  time: string,
   hourSystem: string,
-  timezone: string,
   title: string,
+  date: string,
+  time: string,
+  timezone: string,
+  timestamp: number,
   scheduleOrigDisplayText: string,
-  scheduleTzDisplayText: string
+  scheduleTzDisplayText: string,
+  createdStatus: string
 }
 
 export interface OCRSchedule {
@@ -63,11 +67,13 @@ export class OcrComponent implements OnInit {
   filterStreamers: Array<StreamerInfoVo> = []
 
   myControl = new FormControl('');
+  myControlTz = new FormControl('');
 
   constructor(private streamerService: StreamerInfoService,
               private streamGroupService: StreamGroupService,
-              private tzService: TimezoneService,
+              public tzService: TimezoneService,
               public adminService: AdminService,
+              private loadingService: RainbowLoaderService,
               private http: HttpClient) {
   }
 
@@ -87,7 +93,9 @@ export class OcrComponent implements OnInit {
         //   const find = groups.find((group) => group === info.group)
         //   return !!find
         // })
-        this.streamers = results[0]
+        this.streamers = results[0].filter((info) => {
+          return info.ocr === true || info.name === 'Ike'
+        })
 
         if (!this.currentStreamerInfo && this.streamers.length) {
           this.changeCurrStreamer(this.streamers[0].name)
@@ -151,7 +159,14 @@ export class OcrComponent implements OnInit {
   }
 
   changeCurrStreamer(name: string): void {
+    if (name === this.currentStreamerInfo?.name) {
+      return
+    }
+
     this.currentStreamerInfo = this.streamers.find(info => info.name === name)
+
+    this.scheduleImgSrc = ''
+    this.ocrSchedule = []
   }
 
   updateScheduleByTz(list: Array<OCRSchedule>): void {
@@ -187,6 +202,9 @@ export class OcrComponent implements OnInit {
           dateTime = dateTime.add(1, 'month')
         }
 
+        s.date = dateTime.format('YYYY-MM-DD')
+        s.time = dateTime.format('HH:mm')
+        s.timestamp = dateTime.valueOf()
         s.scheduleOrigDisplayText = dateTime.format('YYYY/MM/DD HH:mm z')
         s.scheduleTzDisplayText = dateTime.tz(tz).format('YYYY/MM/DD HH:mm z')
 
@@ -195,6 +213,7 @@ export class OcrComponent implements OnInit {
   }
 
   getTextAnnotation(): Observable<Array<TextAnnotation>> {
+    this.loadingService.loading$.next(true)
     const key = '' // TODO
     const url = `https://content-vision.googleapis.com/v1/images:annotate?alt=json&key=${key}`
     return this.http.post(url, {
@@ -213,9 +232,27 @@ export class OcrComponent implements OnInit {
         }
       ]
     }).pipe((map((res) => {
+
+      this.loadingService.loading$.next(false)
       // @ts-ignore
       return res.responses[0].textAnnotations
       // return textAnnotations
     })))
+  }
+
+  updateTimestampAndText(item: Stream): void {
+    const tz = this.tzService.timezone$.getValue()
+    const date = moment.tz(`${item.date} ${item.time}`, item.timezone)
+    item.timestamp = date.valueOf();
+// console.log(item.date, item.time, item.timezone, item.timestamp)
+    item.scheduleOrigDisplayText = moment(item.timestamp).tz(item.timezone).format('YYYY/MM/DD HH:mm z')
+    item.scheduleTzDisplayText = moment(item.timestamp).tz(tz).format('YYYY/MM/DD HH:mm z')
+  }
+
+  confirmCreate(item: Stream): void {
+    item.createdStatus = 'LOADING'
+    setTimeout(() => {
+      item.createdStatus = 'SUCCESS'
+    }, 2000)
   }
 }
