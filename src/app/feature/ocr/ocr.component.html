@@ -5,30 +5,36 @@
     Schedule OCR
   </div>
 
+  <button  type="button" class="btn btn-link btn-sm btn-rounded"
+     (click)="ocrTest = !ocrTest">
+    OCR Test
+  </button>
+
   <div class="voice-button-content h-1 flex-grow-1">
     <div class="row h-100 w-100 overflow-hidden"
          [style.border]="'solid 1px'">
         <div class="yt-iframe col-12 col-lg-9 position-relative d-flex flex-column"
              [style.min-height]="'300px'"
+             [class.overflow-scroll]="true"
+             [class.h-100]="true"
         >
-<!--          <div class="position-relative"[style.width]="'1296px'">-->
             <ng-container *ngIf="scheduleImgSrc; else imageTutorialTmp">
               <img #image [src]="scheduleImgSrc"
-                   class=""
+                   [style.width]="'1296px'"
                    (load)="load()">
-<!--              <app-popover class="position-absolute text"-->
-<!--                           *ngFor="let text of textAnnotations"-->
-<!--                           [style.left]="text.left"-->
-<!--                           [style.top]="text.top">-->
-<!--                <div icon>-->
-<!--                  T-->
-<!--                </div>-->
-<!--                <div content>-->
-<!--                  top:{{text.top}}-->
-<!--                  left:{{text.left}}-->
-<!--                </div>-->
-<!--              </app-popover>-->
-<!--          </div>-->
+              <app-popover class="position-absolute text d-flex"
+                           *ngFor="let text of textAnnotations"
+                           [style.color]="ocrTest ? 'coral' : '#ffffff00'"
+                           [style.left]="text.left"
+                           [style.top]="text.top">
+                <div icon>
+                  T
+                </div>
+                <div content>
+                  top:{{text.top}}
+                  left:{{text.left}}
+                </div>
+              </app-popover>
             </ng-container>
             <ng-template #imageTutorialTmp>
               HOW TO COPY SCHEDULE IMAGE URL

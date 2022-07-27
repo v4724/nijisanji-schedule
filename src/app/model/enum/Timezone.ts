@@ -38,3 +38,19 @@ export function getTimezoneOptions (): Array<Option> {
 
 export const timezoneValues = Object.values(Timezone)
 export const timezoneEntries = Object.entries(Timezone)
+
+export function getTimezoneValue (from: string): string {
+  if (from === 'PDT' || from === 'PST') {
+    return Timezone.PST8PDT
+  }
+  if (from === 'EDT' || from === 'EST') {
+    return Timezone.EST5EDT
+  }
+
+  const find = getTimezoneOptions().find((option) => option.text === from)
+  if (find) {
+    return find.value
+  }
+
+  return from
+}

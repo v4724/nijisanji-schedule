@@ -1,6 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { textAnnotations } from '@app/feature/ocr/data'
-import TransferScheduleOCR from '@app/model/data/ocr/ike'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import { StreamGroupService } from '@app/service/stream-group.service'
@@ -14,6 +12,12 @@ import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/internal/operators'
 import { Observable } from 'rxjs/internal/observable'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
+import * as anchors from '@app/model/data/ocr/anchors'
+import * as textAnnotations  from '@app/model/data/ocr/textAnnotations/'
+import SelenScheduleOCR from '@app/model/data/ocr/selen'
+import TransferScheduleOCR from '@app/model/data/ocr/TransferScheduleOCR'
+import IkeScheduleOCR from '@app/model/data/ocr/ike'
+import { environment } from '@environments/environment.prod'
 
 export interface TextAnnotation {
   description: string,
@@ -53,7 +57,7 @@ export class OcrComponent implements OnInit {
 
   @ViewChild('image') image: ElementRef | undefined
 
-  textAnnotations = textAnnotations as Array<TextAnnotation>
+  textAnnotations: Array<TextAnnotation> = []
 
   ocrSchedule: Array<OCRSchedule> = []
 
@@ -69,6 +73,9 @@ export class OcrComponent implements OnInit {
   myControl = new FormControl('');
   myControlTz = new FormControl('');
 
+  ocr = new TransferScheduleOCR(1, [], [])
+  ocrTest = false
+
   constructor(private streamerService: StreamerInfoService,
               private streamGroupService: StreamGroupService,
               public tzService: TimezoneService,
@@ -79,8 +86,8 @@ export class OcrComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.tzService.timezone$.subscribe(() => {
-      this.updateScheduleByTz(this.ocrSchedule)
+    this.tzService.timezone$.subscribe((tz) => {
+      this.ocrSchedule = this.ocr.updateScheduleByTz(tz, this.ocrSchedule)
     })
 
     combineLatest([
@@ -94,7 +101,7 @@ export class OcrComponent implements OnInit {
         //   return !!find
         // })
         this.streamers = results[0].filter((info) => {
-          return info.ocr === true || info.name === 'Ike'
+          return info.ocr === true || info.name === 'Ike' || info.name === 'Selen'
         })
 
         if (!this.currentStreamerInfo && this.streamers.length) {
@@ -141,13 +148,25 @@ export class OcrComponent implements OnInit {
             o.left = (x * this.zoomRatio) + 'px'
             o.top = (y * this.zoomRatio) + 'px'
           })
+          this.textAnnotations = textAnnotations
 
-          const ocr = new TransferScheduleOCR(this.clientWidth, textAnnotations)
-          console.log('ocr', ocr)
-          this.ocrSchedule = ocr.schedule
-          this.updateScheduleByTz(this.ocrSchedule)
+          this.ocr = this.getOcr()
+
+          const tz = this.tzService.timezone$.getValue()
+          this.ocrSchedule = this.ocr.updateScheduleByTz(tz, this.ocr.schedule)
         })
 
+  }
+
+  // TODO Factory
+  getOcr(): TransferScheduleOCR {
+    switch (this.currentStreamerInfo?.name) {
+      case 'Selen':
+        return new SelenScheduleOCR(this.clientWidth, anchors.selen, this.textAnnotations)
+      case 'Ike':
+      default:
+        return new IkeScheduleOCR(this.clientWidth, anchors.ike, this.textAnnotations)
+    }
   }
 
   streamerKeywordChanged(auto?: MatAutocomplete): void {
@@ -169,52 +188,9 @@ export class OcrComponent implements OnInit {
     this.ocrSchedule = []
   }
 
-  updateScheduleByTz(list: Array<OCRSchedule>): void {
-    const tz = this.tzService.timezone$.getValue()
-    const month = 7 // TODO
-
-    if (!list.length) {
-      return
-    }
-    const startDate = Number.parseInt(list[0].date)
-
-    list.forEach((dateSchedule) => {
-      const date = Number.parseInt(dateSchedule.date)
-      dateSchedule.streams.forEach(s => {
-        const timezone = s.timezone
-        const time = s.time
-        let hour = Number.parseInt(time.split(':')[0])
-        let min = Number.parseInt(time.split(':')[1])
-        const hourSystem = s.hourSystem
-        if (hourSystem === 'PM') {
-          hour += 12
-        }
-
-        let dateTime = moment()
-          .tz(timezone)
-          .set('date', date)
-          .set('hour', hour)
-          .set('minute', min)
-          .set('second', 0)
-          .set('millisecond', 0)
-          .set('month', month)
-        if (date < startDate) {
-          dateTime = dateTime.add(1, 'month')
-        }
-
-        s.date = dateTime.format('YYYY-MM-DD')
-        s.time = dateTime.format('HH:mm')
-        s.timestamp = dateTime.valueOf()
-        s.scheduleOrigDisplayText = dateTime.format('YYYY/MM/DD HH:mm z')
-        s.scheduleTzDisplayText = dateTime.tz(tz).format('YYYY/MM/DD HH:mm z')
-
-      })
-    })
-  }
-
   getTextAnnotation(): Observable<Array<TextAnnotation>> {
     this.loadingService.loading$.next(true)
-    const key = '' // TODO
+    const key = environment.firebase.apiKey
     const url = `https://content-vision.googleapis.com/v1/images:annotate?alt=json&key=${key}`
     return this.http.post(url, {
       "requests": [
@@ -236,7 +212,7 @@ export class OcrComponent implements OnInit {
       this.loadingService.loading$.next(false)
       // @ts-ignore
       return res.responses[0].textAnnotations
-      // return textAnnotations
+      // return textAnnotations.selen.textAnnotations
     })))
   }
 
