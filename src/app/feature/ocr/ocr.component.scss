@@ -19,21 +19,6 @@
     color: coral
   }
 
-  .cdk-overlay-pane {
-    background-color: #ffffff;
-    border-radius: 10px;
-    border: solid 1px;
-  }
-
-  .streamer-autocomplete {
-    background-color: rgba(243, 243, 243, 0.85);
-    height: 2rem;
-
-    &:hover {
-      background-color: #edecec;
-    }
-  }
-
   .date-content {
     background-color: #fff8f8;
     border-radius: 0.5rem;
@@ -50,5 +35,20 @@
   .date-stream-content {
     font-size: 0.5rem;
     padding: 0.25rem;
+  }
+}
+
+.cdk-overlay-pane {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: solid 1px;
+}
+
+.streamer-autocomplete {
+  background-color: rgba(243, 243, 243, 0.85);
+  height: 2rem;
+
+  &:hover {
+    background-color: #edecec;
   }
 }

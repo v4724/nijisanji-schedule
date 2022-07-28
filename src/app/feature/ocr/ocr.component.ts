@@ -12,12 +12,9 @@ import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/internal/operators'
 import { Observable } from 'rxjs/internal/observable'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
-import * as anchors from '@app/model/data/ocr/anchors'
-import * as textAnnotations  from '@app/model/data/ocr/textAnnotations/'
-import SelenScheduleOCR from '@app/model/data/ocr/selen'
 import TransferScheduleOCR from '@app/model/data/ocr/TransferScheduleOCR'
-import IkeScheduleOCR from '@app/model/data/ocr/ike'
 import { environment } from '@environments/environment.prod'
+import { TransferScheduleOCRFactory } from '@app/model/data/ocr/TransferScheduleOCRFactory'
 
 export interface TextAnnotation {
   description: string,
@@ -43,6 +40,8 @@ export interface Stream {
 }
 
 export interface OCRSchedule {
+  month: string,
+  day: string,
   date: string,
   streams: Array<Stream>
 }
@@ -101,7 +100,8 @@ export class OcrComponent implements OnInit {
         //   return !!find
         // })
         this.streamers = results[0].filter((info) => {
-          return info.ocr === true || info.name === 'Ike' || info.name === 'Selen'
+          return info.ocr === true || info.name === 'Ike' || info.name === 'Selen' || info.name === 'Uki'|| info.name === 'Shoto'
+            || info.name === 'Luca'
         })
 
         if (!this.currentStreamerInfo && this.streamers.length) {
@@ -150,23 +150,17 @@ export class OcrComponent implements OnInit {
           })
           this.textAnnotations = textAnnotations
 
-          this.ocr = this.getOcr()
-
-          const tz = this.tzService.timezone$.getValue()
-          this.ocrSchedule = this.ocr.updateScheduleByTz(tz, this.ocr.schedule)
+          this.reloadOCRSchedule()
         })
 
   }
 
-  // TODO Factory
-  getOcr(): TransferScheduleOCR {
-    switch (this.currentStreamerInfo?.name) {
-      case 'Selen':
-        return new SelenScheduleOCR(this.clientWidth, anchors.selen, this.textAnnotations)
-      case 'Ike':
-      default:
-        return new IkeScheduleOCR(this.clientWidth, anchors.ike, this.textAnnotations)
-    }
+  reloadOCRSchedule(): void {
+    const name = this.currentStreamerInfo?.name ?? ''
+    this.ocr = TransferScheduleOCRFactory.getOcr(name, this.clientWidth, this.textAnnotations)
+
+    const tz = this.tzService.timezone$.getValue()
+    this.ocrSchedule = this.ocr.updateScheduleByTz(tz, this.ocr.schedule)
   }
 
   streamerKeywordChanged(auto?: MatAutocomplete): void {

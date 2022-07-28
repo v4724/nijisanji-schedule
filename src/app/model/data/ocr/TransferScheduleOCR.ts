@@ -16,7 +16,9 @@ interface StreamAnchorPoint {
   titleCenter: AnchorPoint,
 }
 
-export interface ScheduleAnchor {
+export interface StreamAnchor {
+  month?: AnchorPoint,
+  day?: AnchorPoint,
   date: AnchorPoint,
   streamCountPoint: AnchorPoint,
   singleStream: StreamAnchorPoint,
@@ -24,6 +26,18 @@ export interface ScheduleAnchor {
     first: StreamAnchorPoint,
     second: StreamAnchorPoint
   }
+}
+
+export interface ScheduleAnchor {
+  pointHorizonBoundary: number,
+  pointVerticalBoundary: number,
+  streamCountHorizonBoundary: number,
+  streamCountVerticalBoundary: number,
+  titleHorizonBoundary: number,
+  titleVerticalBoundary: number,
+  titleMultiHorizonBoundary: number,
+  titleMultiVerticalBoundary: number,
+  streamAnchors: Array<StreamAnchor>
 }
 
 function zoom (anchor: AnchorPoint, zoomRatio: number){
@@ -48,10 +62,10 @@ export default class TransferScheduleOCR {
   titleMultiHorizonBoundary = 110
   titleMultiVerticalBoundary = 30
 
-  anchors: Array<ScheduleAnchor> =[]
+  anchors: Array<StreamAnchor> =[]
   textAnnotations: Array<TextAnnotation> = []
 
-  constructor (clientWidth: number, anchors:Array<ScheduleAnchor>, textAnnotations: Array<TextAnnotation>) {
+  constructor (clientWidth: number, anchors:Array<StreamAnchor>, textAnnotations: Array<TextAnnotation>) {
     this.clientWidth = clientWidth
     this.textAnnotations = textAnnotations
 
@@ -95,13 +109,23 @@ export default class TransferScheduleOCR {
     this.anchors.forEach((anchor) => {
 
       const streams = []
+      let month  = ''
+      let day  = ''
       let date = ''
       const streamCountP = this.getPoint(anchor.streamCountPoint.x, anchor.streamCountPoint.y, this.streamCountVerticalBoundary, this.streamCountHorizonBoundary)
       if (streamCountP.noStream(this.textAnnotations)) {
         // console.log('noStream')
+        schedule.push(<OCRSchedule>{
+          month: '',
+          day: findTextAnnotation(anchor.day, this.textAnnotations, 10, 40)?.description ?? '',
+          date: '',
+          streams: []
+        })
         return
       } else if (streamCountP.oneStream(this.textAnnotations)) {
         // console.log('single')
+        month = findTextAnnotation(anchor.month, this.textAnnotations)?.description ?? ''
+        day = findTextAnnotation(anchor.day, this.textAnnotations, 10, 40)?.description ?? ''
         date = findTextAnnotation(anchor.date, this.textAnnotations)?.description ?? ''
         const time = findTextAnnotation(anchor.singleStream.time, this.textAnnotations)?.description
         const hourSystem = findTextAnnotation(anchor.singleStream.hourSystem, this.textAnnotations)?.description
@@ -119,6 +143,8 @@ export default class TransferScheduleOCR {
       } else if (streamCountP.twoStream(this.textAnnotations)) {
 
         // console.log('multi')
+        month = findTextAnnotation(anchor.month, this.textAnnotations)?.description ?? ''
+        day = findTextAnnotation(anchor.day, this.textAnnotations, 10, 40)?.description ?? ''
         date = findTextAnnotation(anchor.date, this.textAnnotations)?.description ?? ''
 
         const titleP = new TitlePoint(anchor.multiStream.first.titleCenter.x, anchor.multiStream.first.titleCenter.y, this.titleMultiVerticalBoundary, this.titleMultiHorizonBoundary)
@@ -145,6 +171,8 @@ export default class TransferScheduleOCR {
       }
 
       schedule.push(<OCRSchedule>{
+        month: month,
+        day: day,
         date: date,
         streams: streams
       })
@@ -159,37 +187,41 @@ export default class TransferScheduleOCR {
       return []
     }
 
-    const list = lodash.cloneDeep(orig)
-    const startDate = Number.parseInt(list[0].date)
+    let list = lodash.cloneDeep(orig)
+    const startDay = list[0].day
 
-    list.forEach((dateSchedule) => {
-      const date = this.getDate(dateSchedule.date)
-      const month = this.getMonth(dateSchedule.date)
+    list.forEach((dateSchedule, index) => {
+      if (!dateSchedule.date) {
+        return
+      }
+      const date = this.getDate(dateSchedule.date, index, dateSchedule.day, startDay)
+      const month = this.getMonth(dateSchedule.date, dateSchedule.month)
+      dateSchedule.date = date.toString()
       dateSchedule.streams.forEach(s => {
         if (!s.timezone || !s.time) {
           return
         }
 
         const timezone = getTimezoneValue(s.timezone)
-        const time = s.time
+        const time = this.getTime(s.time)
         let hour = Number.parseInt(time.split(':')[0])
         let min = Number.parseInt(time.split(':')[1])
-        const hourSystem = s.hourSystem
+        const hourSystem = this.getHourSystem(s.hourSystem)
         if (hourSystem === 'PM' && hour < 12 ) {
           hour += 12
         }
 
         let dateTime = moment()
           .tz(timezone)
+          .set('month', month)
           .set('date', date)
           .set('hour', hour)
           .set('minute', min)
           .set('second', 0)
           .set('millisecond', 0)
-          .set('month', month)
-        if (date < startDate) {
-          dateTime = dateTime.add(1, 'month')
-        }
+        // if (date < startDate) {
+        //   dateTime = dateTime.add(1, 'month')
+        // }
 
         s.timezone = timezone
         s.date = dateTime.format('YYYY-MM-DD')
@@ -201,6 +233,8 @@ export default class TransferScheduleOCR {
       })
     })
 
+    list = list.filter(dateSchedule => !!dateSchedule.date)
+
     return list
   }
 
@@ -209,20 +243,35 @@ export default class TransferScheduleOCR {
   }
 
   // date only
-  getDate(date: string): number {
+  getDate(date: string, index: number, day?: string, startDay?: string): number {
     return Number.parseInt(date)
   }
 
   // month only
-  getMonth(date: string): number {
+  getMonth(date: string, month?: string): number {
+    if (month) {
+      return Number.parseInt(month)
+    }
     return moment().month()
+  }
+
+  getTime(time: string): string {
+    return time
+  }
+
+  getHourSystem(hourSystem: string): string {
+    return hourSystem.toUpperCase()
   }
 }
 
-function findTextAnnotation (anchor: any, textAnnotations: Array<TextAnnotation>): TextAnnotation | undefined {
+function findTextAnnotation (anchor: any, textAnnotations: Array<TextAnnotation>, vBoundary?: number, hBoundary?: number): TextAnnotation | undefined {
+  if (!anchor) {
+    return undefined
+  }
+
   const x = anchor.x
   const y = anchor.y
-  const anchorP: Point = new Point(x, y)
+  const anchorP: Point = new Point(x, y, vBoundary, hBoundary)
 
   const find = textAnnotations.find((text: TextAnnotation) => {
     const x = text.x ?? 1

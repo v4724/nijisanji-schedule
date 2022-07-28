@@ -1,22 +1,21 @@
 import { OCRSchedule, TextAnnotation } from '@app/feature/ocr/ocr.component'
 import * as lodash from 'lodash'
-import TransferScheduleOCR, { ScheduleAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
+import TransferScheduleOCR, { ScheduleAnchor, StreamAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
 import { Point, StreamCountPoint } from '@app/model/data/ocr/Point'
 import * as moment from 'moment-timezone'
 
 export default class SelenScheduleOCR extends TransferScheduleOCR {
-  constructor (clientWidth: number, anchors:Array<ScheduleAnchor>, textAnnotations: Array<TextAnnotation>) {
-    super(clientWidth, anchors, textAnnotations)
+  constructor (clientWidth: number, anchors: ScheduleAnchor, textAnnotations: Array<TextAnnotation>) {
+    super(clientWidth, anchors.streamAnchors, textAnnotations)
 
-    this.streamCountHorizonBoundary = 200
-    this.streamCountVerticalBoundary = 20
+    this.streamCountHorizonBoundary = anchors.streamCountHorizonBoundary
+    this.streamCountVerticalBoundary = anchors.streamCountVerticalBoundary
 
-    this.titleHorizonBoundary = 200
-    this.titleVerticalBoundary = 30
+    this.titleHorizonBoundary = anchors.titleHorizonBoundary
+    this.titleVerticalBoundary = anchors.titleVerticalBoundary
 
-    this.titleMultiHorizonBoundary = 140
-    this.titleMultiVerticalBoundary = 30
-
+    this.titleMultiHorizonBoundary = anchors.titleMultiHorizonBoundary
+    this.titleMultiVerticalBoundary = anchors.titleMultiVerticalBoundary
   }
 
   getPoint(anchorX: number, anchorY: number, vBoundary: number, hBoundary: number): SelenStreamCountPoint {
@@ -24,13 +23,13 @@ export default class SelenScheduleOCR extends TransferScheduleOCR {
   }
 
   // date only
-  getDate(date: string): number {
+  getDate(date: string, index: number, day?: string, startDay?: string): number {
     const arr = date.split('.')
     return Number.parseInt(arr[1])
   }
 
   // month only
-  getMonth(date: string): number {
+  getMonth(date: string, month?: string): number {
     const arr = date.split('.')
     return Number.parseInt(arr[0]) - 1
   }

@@ -1,7 +1,7 @@
-import { ScheduleAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
+import { ScheduleAnchor, StreamAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
 
 
-export let anchors: Array<ScheduleAnchor> = [
+let anchors: Array<StreamAnchor> = [
   {
     date: { x: 201, y: 348, },
     streamCountPoint: { x: 597, y: 367, },
@@ -163,4 +163,16 @@ export let anchors: Array<ScheduleAnchor> = [
         titleCenter: { x: 739, y: 1073, }}
     }
   }]
+
+export const anchor: ScheduleAnchor ={
+  pointHorizonBoundary: 12,
+  pointVerticalBoundary: 10,
+  streamCountHorizonBoundary: 200,
+  streamCountVerticalBoundary: 20,
+  titleHorizonBoundary: 200,
+  titleVerticalBoundary: 30,
+  titleMultiHorizonBoundary: 140,
+  titleMultiVerticalBoundary: 30,
+  streamAnchors: anchors
+}
 // anchors = [anchors[0]]

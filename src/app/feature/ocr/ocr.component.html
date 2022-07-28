@@ -13,7 +13,7 @@
   <div class="voice-button-content h-1 flex-grow-1">
     <div class="row h-100 w-100 overflow-hidden"
          [style.border]="'solid 1px'">
-        <div class="yt-iframe col-12 col-lg-9 position-relative d-flex flex-column"
+        <div class="yt-iframe col-8 position-relative d-flex flex-column"
              [style.min-height]="'300px'"
              [class.overflow-scroll]="true"
              [class.h-100]="true"
@@ -28,7 +28,7 @@
                            [style.left]="text.left"
                            [style.top]="text.top">
                 <div icon>
-                  T
+                  <i class="fas fa-dot-circle"></i>
                 </div>
                 <div content>
                   top:{{text.top}}
@@ -40,7 +40,7 @@
               HOW TO COPY SCHEDULE IMAGE URL
             </ng-template>
         </div>
-        <div appScrollBorder class="voice-container col-12 col-lg-3 py-2 h-100">
+        <div appScrollBorder class="voice-container col-4 py-2 h-100">
             <div class="streamer-figure d-flex flex-wrap align-items-center justify-content-center">
               <img class="rounded-circle m-2"
                    [src]="currentStreamerInfo?.img"
