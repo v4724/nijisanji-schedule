@@ -1,9 +1,10 @@
-import { TextAnnotation } from '@app/feature/ocr/ocr.component'
-import TransferScheduleOCR, { ScheduleAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
+import { OCRSchedule, TextAnnotation } from '@app/feature/ocr/ocr.component'
+import * as lodash from 'lodash'
+import TransferScheduleOCR, { ScheduleAnchor, StreamAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
 import { Point, StreamCountPoint } from '@app/model/data/ocr/Point'
-import * as moment from 'moment'
+import * as moment from 'moment-timezone'
 
-export default class LucaScheduleOCR extends TransferScheduleOCR {
+export default class SonnyScheduleOCR extends TransferScheduleOCR {
   constructor (clientWidth: number, anchors: ScheduleAnchor, textAnnotations: Array<TextAnnotation>, tz?: string) {
     super(clientWidth, anchors.streamAnchors, textAnnotations, tz)
 
@@ -17,27 +18,28 @@ export default class LucaScheduleOCR extends TransferScheduleOCR {
     this.titleMultiVerticalBoundary = anchors.titleMultiVerticalBoundary
   }
 
-  getPoint(anchorX: number, anchorY: number, vBoundary: number, hBoundary: number): LucaStreamCountPoint {
-    return new LucaStreamCountPoint(anchorX, anchorY, vBoundary, hBoundary)
+  getPoint(anchorX: number, anchorY: number, vBoundary: number, hBoundary: number): SonnyStreamCountPoint {
+    return new SonnyStreamCountPoint(anchorX, anchorY, vBoundary, hBoundary)
   }
 
-  // month only
-  getDate(date: string, index: number, origDay?: string, startDay?: string): number {
-    console.log('date', date)
-    const arr = date.split('-')
-    return Number.parseInt(arr[0]) + index
+  // date only
+  getDate(date: string, index: number, day?: string, startDay?: string): number {
+    return Number.parseInt(date)
   }
 
   // month only
   getMonth(date: string, month?: string): number {
-    console.log('month', month)
     if (month) {
-      return Number.parseInt(month) - 1
+      const m = moment().month(month).month()
+
+      return m
     }
+
     return -1
   }
 
   getTime(time: string): string {
+    console.log('time', time, `${time.slice(0, time.length - 2)}:00`)
     return `${time.slice(0, time.length - 2)}:00`
   }
 
@@ -46,12 +48,12 @@ export default class LucaScheduleOCR extends TransferScheduleOCR {
   }
 }
 
-class LucaStreamCountPoint extends StreamCountPoint {
+class SonnyStreamCountPoint extends StreamCountPoint {
 
   findStream (targets: Array<TextAnnotation>): Array<TextAnnotation> {
     const find = targets.filter(t => {
       const target = new Point(t.x ?? 1, t.y ?? 1)
-      return this.contains(target) && t.description === 'AEST'
+      return this.contains(target) && t.description === 'JST'
     })
     return find
   }

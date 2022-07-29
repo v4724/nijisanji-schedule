@@ -78,8 +78,8 @@ export class TitlePoint extends Point {
     title = title.replace(' : ', ': ')
     title = title.replace(' . ', '. ')
     title = title.replace(' , ', ', ')
-    title = title.replace(' - ', '-')
-    title = title.replace(' / ', '/')
+    // title = title.replace(' - ', '-')
+    // title = title.replace(' / ', '/')
     return title
   }
 }

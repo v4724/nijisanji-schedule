@@ -3,4 +3,9 @@ export { anchor as selen }  from './selen'
 export { anchor as uki }  from './uki'
 export { anchor as shoto }  from './shoto'
 export { anchor as luca }  from './luca'
-
+export { anchor as sonny }  from './sonny'
+export { anchor as alban }  from './alban'
+export { anchor as shu }  from './shu'
+export { anchor as fulgur }  from './fulgur'
+export { anchor as enna }  from './enna'
+``

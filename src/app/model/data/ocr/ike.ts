@@ -3,8 +3,8 @@ import { TextAnnotation } from '@app/feature/ocr/ocr.component'
 
 export default class IkeScheduleOCR extends TransferScheduleOCR {
 
-  constructor (clientWidth: number, anchors:ScheduleAnchor, textAnnotations: Array<TextAnnotation>) {
-    super(clientWidth, anchors.streamAnchors, textAnnotations)
+  constructor (clientWidth: number, anchors:ScheduleAnchor, textAnnotations: Array<TextAnnotation>, tz?: string) {
+    super(clientWidth, anchors.streamAnchors, textAnnotations, tz)
 
     this.streamCountHorizonBoundary = anchors.streamCountHorizonBoundary
     this.streamCountVerticalBoundary = anchors.streamCountVerticalBoundary

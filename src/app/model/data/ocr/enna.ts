@@ -3,9 +3,12 @@ import TransferScheduleOCR, { ScheduleAnchor } from '@app/model/data/ocr/Transfe
 import { Point, StreamCountPoint } from '@app/model/data/ocr/Point'
 import * as moment from 'moment'
 
-export default class ShotoScheduleOCR extends TransferScheduleOCR {
+export default class EnnaScheduleOCR extends TransferScheduleOCR {
   constructor (clientWidth: number, anchors: ScheduleAnchor, textAnnotations: Array<TextAnnotation>, tz?: string) {
     super(clientWidth, anchors.streamAnchors, textAnnotations, tz)
+
+    this.pointHorizonBoundary = anchors.pointHorizonBoundary
+    this.pointVerticalBoundary = anchors.pointVerticalBoundary
 
     this.streamCountHorizonBoundary = anchors.streamCountHorizonBoundary
     this.streamCountVerticalBoundary = anchors.streamCountVerticalBoundary
@@ -17,40 +20,42 @@ export default class ShotoScheduleOCR extends TransferScheduleOCR {
     this.titleMultiVerticalBoundary = anchors.titleMultiVerticalBoundary
   }
 
-  getPoint(anchorX: number, anchorY: number, vBoundary: number, hBoundary: number): UkiStreamCountPoint {
-    return new UkiStreamCountPoint(anchorX, anchorY, vBoundary, hBoundary)
+  getPoint(anchorX: number, anchorY: number, vBoundary: number, hBoundary: number): EnnaStreamCountPoint {
+    return new EnnaStreamCountPoint(anchorX, anchorY, vBoundary, hBoundary)
   }
 
-  // month only
-  getDate(date: string, index: number, origDay?: string, startDay?: string): number {
-    if (origDay && startDay) {
-      let s_day = moment().day(startDay).day() // MON=1
-      let day = moment().day(origDay).day() // MON=1
-      day = day === 0 ? 7 : day
-      const arr = date.split('-')
-      if ((index + 1) !== day) {
-        return Number.parseInt(arr[0]) + index
-      }
-      return Number.parseInt(arr[0]) + day - 1 - (s_day - 1)
-    }
-    return -1
+  // date only
+  getDate(date: string, index: number, day?: string, startDay?: string): number {
+    return Number.parseInt(date) + index
   }
 
   // month only
   getMonth(date: string, month?: string): number {
     if (month) {
-      return Number.parseInt(month) - 1
+      const m = moment().month(month).month()
+      return m
     }
-    return -1
+
+    return 0
   }
+
+  getTime(time: string): string {
+    console.log('time', time)
+    return `${time.slice(0, time.length - 2)}:00`
+  }
+
+  getHourSystem(hourSystem: string): string {
+    return hourSystem.slice(hourSystem.length - 2, hourSystem.length).toUpperCase()
+  }
+
 }
 
-class UkiStreamCountPoint extends StreamCountPoint {
+class EnnaStreamCountPoint extends StreamCountPoint {
 
   findStream (targets: Array<TextAnnotation>): Array<TextAnnotation> {
     const find = targets.filter(t => {
       const target = new Point(t.x ?? 1, t.y ?? 1)
-      return this.contains(target) && t.description === 'EDT'
+      return this.contains(target) && t.description === 'PDT'
     })
     return find
   }

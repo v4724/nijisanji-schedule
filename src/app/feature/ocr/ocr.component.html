@@ -5,14 +5,28 @@
     Schedule OCR
   </div>
 
-  <button  type="button" class="btn btn-link btn-sm btn-rounded"
-     (click)="ocrTest = !ocrTest">
-    OCR Test
-  </button>
+<!--  <button  type="button" class="btn btn-link btn-sm btn-rounded"-->
+<!--     (click)="ocrTest = !ocrTest">-->
+<!--    OCR Test-->
+<!--  </button>-->
+  <!-- Checked switch -->
+  <div class="form-check form-switch d-flex justify-content-end">
+    <input
+      mdbCheckbox
+      class="form-check-input"
+      type="checkbox"
+      id="flexSwitchCheckChecked"
+      [(ngModel)]="ocrTest"
+    />
+    <label class="form-check-label" for="flexSwitchCheckChecked"
+    >Text Annotation</label
+    >
+  </div>
+  <!-- Default disabled switch -->
 
-  <div class="voice-button-content h-1 flex-grow-1">
-    <div class="row h-100 w-100 overflow-hidden"
-         [style.border]="'solid 1px'">
+  <div class="voice-button-content h-1 flex-grow-1"
+       [style.border]="'solid 1px'">
+    <div class="row h-100 w-100 overflow-hidden">
         <div class="yt-iframe col-8 position-relative d-flex flex-column"
              [style.min-height]="'300px'"
              [class.overflow-scroll]="true"

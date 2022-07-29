@@ -101,11 +101,12 @@ export class OcrComponent implements OnInit {
         // })
         this.streamers = results[0].filter((info) => {
           return info.ocr === true || info.name === 'Ike' || info.name === 'Selen' || info.name === 'Uki'|| info.name === 'Shoto'
-            || info.name === 'Luca'
+            || info.name === 'Luca' || info.name === 'Sonny'|| info.name === 'Alban'|| info.name === 'Shu'|| info.name === 'Fulgur'
+            || info.name === 'Enna'
         })
 
         if (!this.currentStreamerInfo && this.streamers.length) {
-          this.changeCurrStreamer(this.streamers[0].name)
+          this.changeCurrStreamer('Enna')
           // @ts-ignore
           this.streamerKeyword = this.currentStreamerInfo.name
         }
@@ -157,7 +158,8 @@ export class OcrComponent implements OnInit {
 
   reloadOCRSchedule(): void {
     const name = this.currentStreamerInfo?.name ?? ''
-    this.ocr = TransferScheduleOCRFactory.getOcr(name, this.clientWidth, this.textAnnotations)
+    const streamerTz = this.currentStreamerInfo?.timezone
+    this.ocr = TransferScheduleOCRFactory.getOcr(name, this.clientWidth, this.textAnnotations, streamerTz)
 
     const tz = this.tzService.timezone$.getValue()
     this.ocrSchedule = this.ocr.updateScheduleByTz(tz, this.ocr.schedule)

@@ -64,10 +64,12 @@ export default class TransferScheduleOCR {
 
   anchors: Array<StreamAnchor> =[]
   textAnnotations: Array<TextAnnotation> = []
+  tz: string = ''
 
-  constructor (clientWidth: number, anchors:Array<StreamAnchor>, textAnnotations: Array<TextAnnotation>) {
+  constructor (clientWidth: number, anchors:Array<StreamAnchor>, textAnnotations: Array<TextAnnotation>, tz?: string) {
     this.clientWidth = clientWidth
     this.textAnnotations = textAnnotations
+    this.tz = tz ?? ''
 
     this.pointHorizonBoundary = this.pointHorizonBoundary * this.zoomRatio
     this.pointVerticalBoundary = this.pointVerticalBoundary * this.zoomRatio
@@ -197,18 +199,27 @@ export default class TransferScheduleOCR {
       const date = this.getDate(dateSchedule.date, index, dateSchedule.day, startDay)
       const month = this.getMonth(dateSchedule.date, dateSchedule.month)
       dateSchedule.date = date.toString()
+
+      // shu
+      dateSchedule.streams = dateSchedule.streams.filter(s => s.time !== '-')
+
       dateSchedule.streams.forEach(s => {
-        if (!s.timezone || !s.time) {
+        if (!s.time) {
           return
         }
 
-        const timezone = getTimezoneValue(s.timezone)
+        const timezone = this.tz ? this.tz : getTimezoneValue(s.timezone)
         const time = this.getTime(s.time)
         let hour = Number.parseInt(time.split(':')[0])
         let min = Number.parseInt(time.split(':')[1])
         const hourSystem = this.getHourSystem(s.hourSystem)
         if (hourSystem === 'PM' && hour < 12 ) {
           hour += 12
+        }
+
+        // shu
+        if (Number.isNaN(hour)) {
+          return
         }
 
         let dateTime = moment()
@@ -219,9 +230,6 @@ export default class TransferScheduleOCR {
           .set('minute', min)
           .set('second', 0)
           .set('millisecond', 0)
-        // if (date < startDate) {
-        //   dateTime = dateTime.add(1, 'month')
-        // }
 
         s.timezone = timezone
         s.date = dateTime.format('YYYY-MM-DD')
@@ -230,7 +238,9 @@ export default class TransferScheduleOCR {
         s.scheduleOrigDisplayText = dateTime.format('YYYY/MM/DD HH:mm z')
         s.scheduleTzDisplayText = dateTime.tz(tz).format('YYYY/MM/DD HH:mm z')
 
+        console.log('s', s, month, date, hour, min, timezone)
       })
+
     })
 
     list = list.filter(dateSchedule => !!dateSchedule.date)
@@ -260,7 +270,7 @@ export default class TransferScheduleOCR {
   }
 
   getHourSystem(hourSystem: string): string {
-    return hourSystem.toUpperCase()
+    return hourSystem?.toUpperCase()
   }
 }
 

@@ -3,8 +3,8 @@ import TransferScheduleOCR, { ScheduleAnchor } from '@app/model/data/ocr/Transfe
 import { Point, StreamCountPoint } from '@app/model/data/ocr/Point'
 
 export default class UkiScheduleOCR extends TransferScheduleOCR {
-  constructor (clientWidth: number, anchors: ScheduleAnchor, textAnnotations: Array<TextAnnotation>) {
-    super(clientWidth, anchors.streamAnchors, textAnnotations)
+  constructor (clientWidth: number, anchors: ScheduleAnchor, textAnnotations: Array<TextAnnotation>, tz?: string) {
+    super(clientWidth, anchors.streamAnchors, textAnnotations, tz)
 
     this.streamCountHorizonBoundary = anchors.streamCountHorizonBoundary
     this.streamCountVerticalBoundary = anchors.streamCountVerticalBoundary
