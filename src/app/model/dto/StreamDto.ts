@@ -1,6 +1,7 @@
 import * as moment from 'moment-timezone'
 import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
 import { getFeatStream, StreamVo } from '@app/model/vo/StreamVo'
+import { OCRSchedule, OCRStream } from '@app/feature/ocr/ocr.component'
 
 // for firebase
 export interface StreamDto {
@@ -29,6 +30,23 @@ export function toDto (item: StreamVo): StreamDto {
     isModified: item.isModified,
     isCanceled: item.isCanceled,
     featStreamers: featStreamers,
+    updatedTimestamp: moment().valueOf()
+  }
+
+  return itemDto
+}
+
+export function OCRtoDto (streamer: string, item: OCRStream): StreamDto {
+  const itemDto: StreamDto = {
+    streamer: streamer,
+    title: item.title,
+    onSchedule: true,
+    link: '',
+    timestamp: item.timestamp,
+    isUncertain: false,
+    isModified: false,
+    isCanceled: false,
+    featStreamers: '',
     updatedTimestamp: moment().valueOf()
   }
 

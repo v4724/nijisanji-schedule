@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { openUrl } from '@app/feature/schedule/utils'
 import { ScheduleCheckedListService } from '@app/feature/schedule/schedule-checked-list/schedule-checked-list.service'
 import { AdminService } from '@app/service/admin.service'
@@ -14,6 +14,8 @@ import { ScheduleCheckedItemVo } from '@app/model/vo/ScheduleCheckedItemVo'
   styleUrls: ['./popover.component.scss']
 })
 export class PopoverComponent implements OnInit {
+
+  @Input() hidden: boolean = false
 
   constructor() {
 

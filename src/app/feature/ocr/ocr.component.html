@@ -38,7 +38,7 @@
                    (load)="load()">
               <app-popover class="position-absolute text d-flex"
                            *ngFor="let text of textAnnotations"
-                           [style.color]="ocrTest ? 'coral' : '#ffffff00'"
+                           [hidden]="!ocrTest"
                            [style.left]="text.left"
                            [style.top]="text.top">
                 <div icon>
@@ -81,7 +81,9 @@
               </mdb-form-control>
 
               <mdb-form-control>
-                <input mdbInput type="text" id="formControlSearch" class="form-control" [(ngModel)]="scheduleImgSrc"/>
+                <input mdbInput type="text" id="formControlSearch" class="form-control"
+                       [(ngModel)]="scheduleImgSrc"
+                       [disabled]="!currentStreamerInfo"/>
                 <label mdbLabel class="form-label" for="formControlSearch">Schedule Url</label>
               </mdb-form-control>
             </div>
@@ -130,20 +132,6 @@
                       </mat-autocomplete>
                     </mdb-form-control>
 
-<!--                      <div>Timezone:</div>-->
-<!--                    <div *ngFor="let tz of tzService.timezones" class="form-check form-check-inline">-->
-<!--                      <input-->
-<!--                        mdbRadio-->
-<!--                        class="form-check-input"-->
-<!--                        type="radio"-->
-<!--                        name="inlineRadioOptions"-->
-<!--                        [id]="'inlineRadio-' + tz.value"-->
-<!--                        [value]="tz.value"-->
-<!--                        [(ngModel)]="stream.timezone"-->
-<!--                        (ngModelChange)="updateTimestampAndText(stream)"-->
-<!--                      />-->
-<!--                      <label class="form-check-label" [for]="'inlineRadio-' + tz.value">{{tz.text}}</label>-->
-<!--                    </div>-->
                   </div>
                 </div>
                 <div>TZ: {{stream.scheduleOrigDisplayText}}</div>

@@ -15,6 +15,9 @@ import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainb
 import TransferScheduleOCR from '@app/model/data/ocr/TransferScheduleOCR'
 import { environment } from '@environments/environment.prod'
 import { TransferScheduleOCRFactory } from '@app/model/data/ocr/TransferScheduleOCRFactory'
+import { StreamService } from '@app/service/stream.service'
+import { OCRtoDto, toDto } from '@app/model/dto/StreamDto'
+import { ToastService } from '@app/common-component/toast/toast.service'
 
 export interface TextAnnotation {
   description: string,
@@ -27,7 +30,7 @@ export interface TextAnnotation {
   left?: string
 }
 
-export interface Stream {
+export interface OCRStream {
   hourSystem: string,
   title: string,
   date: string,
@@ -43,7 +46,7 @@ export interface OCRSchedule {
   month: string,
   day: string,
   date: string,
-  streams: Array<Stream>
+  streams: Array<OCRStream>
 }
 
 
@@ -63,7 +66,6 @@ export class OcrComponent implements OnInit {
   currentStreamerInfo: StreamerInfoVo | undefined;
 
   scheduleImgSrc = ''
-  // scheduleImgSrc = 'https://pbs.twimg.com/media/FWO7_3CXEAAsjJu?format=jpg&name=large'
 
   streamerKeyword = ''
   streamers: Array<StreamerInfoVo> = []
@@ -80,6 +82,8 @@ export class OcrComponent implements OnInit {
               public tzService: TimezoneService,
               public adminService: AdminService,
               private loadingService: RainbowLoaderService,
+              private streamService: StreamService,
+              private toastService: ToastService,
               private http: HttpClient) {
   }
 
@@ -100,16 +104,14 @@ export class OcrComponent implements OnInit {
         //   return !!find
         // })
         this.streamers = results[0].filter((info) => {
-          return info.ocr === true || info.name === 'Ike' || info.name === 'Selen' || info.name === 'Uki'|| info.name === 'Shoto'
-            || info.name === 'Luca' || info.name === 'Sonny'|| info.name === 'Alban'|| info.name === 'Shu'|| info.name === 'Fulgur'
-            || info.name === 'Enna'
+          return info.ocr === true
         })
 
-        if (!this.currentStreamerInfo && this.streamers.length) {
-          this.changeCurrStreamer('Enna')
-          // @ts-ignore
-          this.streamerKeyword = this.currentStreamerInfo.name
-        }
+        // if (!this.currentStreamerInfo && this.streamers.length) {
+        //   this.changeCurrStreamer('Enna')
+        //   // @ts-ignore
+        //   this.streamerKeyword = this.currentStreamerInfo.name
+        // }
 
         if (this.ocrSchedule.length) {
           this.streamerKeywordChanged()
@@ -144,10 +146,10 @@ export class OcrComponent implements OnInit {
           textAnnotations.forEach(o => {
             const x = o.boundingPoly.vertices[0].x
             const y = o.boundingPoly.vertices[0].y
-            o.x = (x * this.zoomRatio)
-            o.y = (y * this.zoomRatio)
-            o.left = (x * this.zoomRatio) + 'px'
-            o.top = (y * this.zoomRatio) + 'px'
+            o.x = Math.floor(x * this.zoomRatio)
+            o.y = Math.floor(y * this.zoomRatio)
+            o.left = Math.floor(x * this.zoomRatio) + 'px'
+            o.top = Math.floor(y * this.zoomRatio) + 'px'
           })
           this.textAnnotations = textAnnotations
 
@@ -212,7 +214,7 @@ export class OcrComponent implements OnInit {
     })))
   }
 
-  updateTimestampAndText(item: Stream): void {
+  updateTimestampAndText(item: OCRStream): void {
     const tz = this.tzService.timezone$.getValue()
     const date = moment.tz(`${item.date} ${item.time}`, item.timezone)
     item.timestamp = date.valueOf();
@@ -221,10 +223,23 @@ export class OcrComponent implements OnInit {
     item.scheduleTzDisplayText = moment(item.timestamp).tz(tz).format('YYYY/MM/DD HH:mm z')
   }
 
-  confirmCreate(item: Stream): void {
+  confirmCreate(item: OCRStream): void {
+    const confirm = window.confirm('add?')
+    if (!confirm) {
+      return
+    }
+
     item.createdStatus = 'LOADING'
-    setTimeout(() => {
-      item.createdStatus = 'SUCCESS'
-    }, 2000)
+
+    const streamer = this.currentStreamerInfo?.name ?? ''
+    const dto = OCRtoDto(streamer, item)
+
+    this.streamService.add(dto)
+        .then(() => {
+          item.createdStatus = 'SUCCESS'
+        })
+        .catch(() => {
+          item.createdStatus = ''
+        })
   }
 }
