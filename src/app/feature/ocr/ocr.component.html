@@ -57,12 +57,12 @@
         <div appScrollBorder class="voice-container col-4 py-2 h-100">
             <div class="streamer-figure d-flex flex-wrap align-items-center justify-content-center">
               <img class="rounded-circle m-2"
-                   [src]="currentStreamerInfo?.img"
+                   [src]="currentStreamerInfo ? currentStreamerInfo.img : 'assets/imgs/OCR_default.png'"
                    [style.width]="'100px'"
                    [style.height]="'100px'">
             </div>
-            <div class="voice-block-search d-flex flex-column align-items-center justify-content-center">
-              <mdb-form-control class="mb-2">
+            <div class="voice-block-search d-flex flex-column align-items-center justify-content-center gap-2">
+              <mdb-form-control class="">
 
                   <input matInput
                          [formControl]="myControl"
@@ -88,7 +88,7 @@
               </mdb-form-control>
             </div>
 
-          <div class="voice-list d-flex flex-wrap">
+          <div class="voice-list d-flex flex-wrap mt-2 gap-2">
 
             <div *ngFor="let ocr of ocrSchedule"
               class="date-content">

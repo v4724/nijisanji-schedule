@@ -2,7 +2,8 @@ import { ScheduleAnchor, StreamAnchor } from '@app/model/data/ocr/TransferSchedu
 
 let anchors: Array<StreamAnchor> = [
   {
-    date: { x: 735, y: 96, },
+    month: { x: 561, y: 57, },
+    date: { x: 520, y: 57, },
     streamCountPoint: { x: 968, y: 101, },
     singleStream: {
       time: { x: 920, y: 89, },
@@ -25,7 +26,8 @@ let anchors: Array<StreamAnchor> = [
     }
   },
   {
-    date: { x: 736, y: 180, },
+    month: { x: 561, y: 55, },
+    date: { x: 520, y: 57, },
     streamCountPoint: { x: 968, y: 185, },
     singleStream: {
       time: { x: 920, y: 173, },
@@ -48,7 +50,8 @@ let anchors: Array<StreamAnchor> = [
     }
   },
   {
-    date: { x: 736, y: 267, },
+    month: { x: 561, y: 55, },
+    date: { x: 520, y: 57, },
     streamCountPoint: { x: 968, y: 272, },
     singleStream: {
       time: { x: 918, y: 261, },
@@ -71,7 +74,8 @@ let anchors: Array<StreamAnchor> = [
     }
   },
   {
-    date: { x: 736, y: 357, },
+    month: { x: 561, y: 55, },
+    date: { x: 520, y: 57, },
     streamCountPoint: { x: 968, y: 361, },
     singleStream: {
       time: { x: 919, y: 348, },
@@ -94,7 +98,8 @@ let anchors: Array<StreamAnchor> = [
     }
   },
   {
-    date: { x: 736, y: 445, },
+    month: { x: 561, y: 55, },
+    date: { x: 520, y: 57, },
     streamCountPoint: { x: 968, y: 450, },
     singleStream: {
       time: { x: 920, y: 438, },
@@ -117,7 +122,8 @@ let anchors: Array<StreamAnchor> = [
     }
   },
   {
-    date: { x: 735, y: 533, },
+    month: { x: 561, y: 55, },
+    date: { x: 520, y: 57, },
     streamCountPoint: { x: 968, y: 538, },
     singleStream: {
       time: { x: 918, y: 526, },
@@ -140,7 +146,8 @@ let anchors: Array<StreamAnchor> = [
     }
   },
   {
-    date: { x: 737, y: 621, },
+    month: { x: 561, y: 55, },
+    date: { x: 520, y: 57, },
     streamCountPoint: { x: 968, y: 626, },
     singleStream: {
       time: { x: 918, y: 613, },
