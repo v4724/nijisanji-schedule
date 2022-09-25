@@ -1,0 +1,14 @@
+
+.btn-outline-primary {
+  &.active {
+    color: var(--third-color-oppsite);
+    background-color: var(--third-color);
+    border-color: var(--third-color);
+    //border-right-color: #bbbbbb;
+    //border-right-style: solid;
+    //border-right-width: 2px;
+    //border-bottom-color: #bbbbbb;
+    //border-bottom-style: solid;
+    //border-bottom-width: 2px;
+  }
+}

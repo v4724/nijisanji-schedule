@@ -15,6 +15,8 @@ import { MAT_AUTOCOMPLETE_SCROLL_STRATEGY } from '@angular/material/autocomplete
 import { ScrollingModule } from '@angular/cdk/scrolling'
 import { CloseScrollStrategy, Overlay } from '@angular/cdk/overlay'
 import { DirectiveModule } from '@app/directive/directive.module'
+import { HttpClientModule } from '@angular/common/http'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 export function scrollFactory(overlay: Overlay): () => CloseScrollStrategy {
   return () => overlay.scrollStrategies.close();
 }
@@ -25,6 +27,8 @@ export function scrollFactory(overlay: Overlay): () => CloseScrollStrategy {
   imports: [
     ScrollingModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     MdbModalModule,
     MdbFormsModule,
     DirectiveModule,

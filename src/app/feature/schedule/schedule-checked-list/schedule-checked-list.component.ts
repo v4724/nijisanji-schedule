@@ -33,14 +33,14 @@ export class ScheduleCheckedListComponent implements OnInit {
 
   }
 
-  linkToTwitter(streamer: StreamerInfoVo | undefined): void {
+  linkToTwitter(event: MouseEvent, streamer: StreamerInfoVo | undefined): void {
     const editable = this.adminService.editable$.getValue()
     if (editable) {
       return
     }
 
     const ytLink = streamer?.twitterLink ?? ''
-    openUrl(ytLink)
+    openUrl(ytLink, event)
   }
 
   clear(): void {

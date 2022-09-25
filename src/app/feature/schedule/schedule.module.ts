@@ -22,7 +22,11 @@ import { CommonComponentModule } from '@app/common-component/common-component.mo
 import { StreamDetailComponent } from './common/stream-detail/stream-detail.component';
 import { EditModalComponent } from './common/edit-modal/edit-modal.component'
 import { DirectiveModule } from '@app/directive/directive.module'
-import { CommonViewModule } from '@app/common-view/common-view.module'
+import { CommonViewModule } from '@app/common-view/common-view.module';
+import { FormatStatePipe } from './schedule-checked-list/format-state.pipe'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 const routes: Routes = [
   {
@@ -66,7 +70,8 @@ const routes: Routes = [
     TBDTagComponent,
     NewStreamComponent,
     StreamDetailComponent,
-    EditModalComponent
+    EditModalComponent,
+    FormatStatePipe
   ],
   imports: [
     CommonComponentModule,
@@ -75,6 +80,7 @@ const routes: Routes = [
     FormsModule,
     CommonModule,
     CommonViewModule,
+    MdbTooltipModule,
     DirectiveModule
   ]
 })

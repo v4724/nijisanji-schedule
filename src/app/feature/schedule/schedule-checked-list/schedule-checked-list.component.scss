@@ -6,19 +6,10 @@
 }
 
 .checked-list-block {
-  display: none;
-  right: 0px;
-  top: 1rem;
-  z-index: 1;
   width: auto;
-  border: 1px rgba(0, 0, 0, 0.05) solid;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px 5px #6a696926;
-  background-color: #ffffff;
-  cursor: default;
 
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 266px;
+  max-width: 266px;
 }
 
 .mask {
@@ -32,13 +23,6 @@
 
   select {
     font-size: 0.8rem;
-  }
-}
-
-
-.week-checked-schedule:hover {
-  .checked-list-block {
-    display: flex;
   }
 }
 
@@ -64,36 +48,6 @@
 .change-week-icon:hover {
   border-radius: 50%;
   background-color: rgba(32,33,36,0.039);
-}
-
-
-/* Tooltip container */
-.tooltip-div {
-  position: relative;
-  display: inline-block;
-  //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
-
-/* Tooltip text */
-.tooltip-div .tooltiptext {
-  visibility: hidden;
-  font-size: 0.6rem;
-  width: 70px;
-  background-color: rgba(0, 0, 0, 0.3);
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  bottom: -0.75rem;
-  right: 0px;
-  z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip-div:hover .tooltiptext {
-  visibility: visible;
 }
 
 .checked-icon-block {

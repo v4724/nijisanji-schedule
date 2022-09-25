@@ -1,37 +1,61 @@
 
 <div class="modal-header">
   <h5 class="modal-title">
-    Create
+    New
   </h5>
   <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"
           (click)="modalRef.close()"></button>
 </div>
 <div class="modal-body">
-  <mdb-form-control class="">
 
-      <input matInput
-             [formControl]="myControl"
-             [matAutocomplete]="auto"
-             [(ngModel)]="streamerKeyword"
-             (ngModelChange)="streamerKeywordChanged(auto)"
-             mdbInput
-             type="text" id="formControlTwitchLink" class="form-control"/>
-      <label mdbLabel class="form-label" for="formControlTwitchLink">Streamer</label>
+  <div class="d-flex flex-column gap-2">
 
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateStreamer($event.option.value)">
-        <mat-option class="streamer-autocomplete"
-                    *ngFor="let info of filterStreamers" [value]="info.name">{{ info.name }}</mat-option>
-      </mat-autocomplete>
+    <mdb-form-control class="">
 
-  </mdb-form-control>
+        <input matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto"
+               [(ngModel)]="streamerKeyword"
+               (ngModelChange)="streamerKeywordChanged(auto)"
+               mdbInput
+               type="text" id="formControlTwitchLink" class="form-control"/>
+        <label mdbLabel class="form-label" for="formControlTwitchLink">Streamer</label>
 
-  <app-anchor-detail [ocrAnchorVo]="ocrAnchorVo" ></app-anchor-detail>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="updateStreamer($event.option.value)">
+          <mat-option class="streamer-autocomplete"
+                      *ngFor="let info of filterStreamers" [value]="info.name">{{ info.name }}</mat-option>
+        </mat-autocomplete>
+
+    </mdb-form-control>
+
+    <mdb-form-control class="">
+        <input matInput
+               [(ngModel)]="templateVo.name"
+               mdbInput
+               type="text"
+               id="formControlTemplateName"
+               class="form-control"/>
+        <label mdbLabel class="form-label" for="formControlTemplateName">Name</label>
+    </mdb-form-control>
+
+    <mdb-form-control class="">
+        <input matInput
+               [(ngModel)]="templateVo.templateUrl"
+               mdbInput
+               type="text"
+               id="formControlTemplateUrl"
+               class="form-control"/>
+        <label mdbLabel class="form-label" for="formControlTemplateUrl">Url</label>
+    </mdb-form-control>
+  </div>
+
 </div>
 <div class="modal-footer">
 
-      <button class="btn btn-outline-primary" type="button"
-              [disabled]="!streamer"
+      <button class="btn btn-primary" type="button"
+              [disabled]="!templateVo.streamer || !templateVo.templateUrl || !templateVo.name"
               (click)="add()">
-        Add
+        Confirm
       </button>
+
 </div>

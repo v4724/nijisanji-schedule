@@ -92,7 +92,6 @@ export class StreamService {
                .get()
                .pipe(
                  map((snapshot:QuerySnapshot<any>) => {
-                   console.log(snapshot)
                    const doc = snapshot.docs[0]
                    return doc?.exists
                      ? Object.assign({id: doc.id}, doc.data())

@@ -1,0 +1,29 @@
+
+<div class="stream-anchor-point-cmp d-flex flex-column">
+
+  <div class="title d-flex align-items-center gap-3"
+       [attr.aria-expanded]="!basicCollapse.collapsed"
+       [attr.aria-controls]="collapseIndex"
+       (click)="basicCollapse.toggle()"
+  >
+    <div class="title-text">
+      {{title}}
+    </div>
+    <ng-container *ngIf="basicCollapse.collapsed; else collapseIconRef">
+      <i class="fas fa-caret-down"></i>
+    </ng-container>
+    <ng-template #collapseIconRef>
+      <i class="fas fa-caret-up"></i>
+    </ng-template>
+  </div>
+
+  <div [id]="collapseIndex" mdbCollapse #basicCollapse="mdbCollapse">
+    <div class="mt-1 mb-2 d-flex flex-column gap-1">
+
+      <app-polygon-button text="Time" [data]="singleStreamAnchor.time"></app-polygon-button>
+      <app-polygon-button text="HourSystem" [data]="singleStreamAnchor.hourSystem"></app-polygon-button>
+      <app-polygon-button text="Title" [data]="singleStreamAnchor.title"></app-polygon-button>
+
+    </div>
+  </div>
+</div>

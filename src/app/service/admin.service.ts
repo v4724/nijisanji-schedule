@@ -8,9 +8,7 @@ import { EditStreamerInfoModalComponent } from '@app/feature/member/edit-streame
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 import { VoiceButtonInfoVo } from '@app/model/vo/VoiceButtonInfoVo'
 import { EditVoiceDetailModalComponent } from '@app/feature/voice-button/edit-voice-detail-modal/edit-voice-detail-modal.component'
-import { EditModalComponent as EditAnchorModalComponent } from '@app/feature/ocr/edit-modal/edit-modal.component'
 import { CreateModalComponent as CreateAnchorModalComponent } from '@app/feature/ocr/create-modal/create-modal.component'
-import { OCRAnchorVo } from '@app/model/vo/OCRAnchorVo'
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +22,6 @@ export class AdminService {
   modalRef: MdbModalRef<EditModalComponent> | null = null;
   editStreamerInfoModalRef: MdbModalRef<EditStreamerInfoModalComponent> | null = null;
   editVoiceButtonInfoModalRef: MdbModalRef<EditVoiceDetailModalComponent> | null = null;
-  editAnchorInfoModalRef: MdbModalRef<EditAnchorModalComponent> | null = null;
   createAnchorInfoModalRef: MdbModalRef<CreateAnchorModalComponent> | null = null;
 
   constructor(public auth: AngularFireAuth,
@@ -60,12 +57,6 @@ export class AdminService {
   openVoiceButtonInfoModal(isNew: boolean, voiceButton?: VoiceButtonInfoVo): void {
     this.editVoiceButtonInfoModalRef = this.modalService.open(EditVoiceDetailModalComponent,{
       data: { item: voiceButton, isNew: isNew },
-    })
-  }
-
-  openEditAnchorInfoModal(vo?: OCRAnchorVo): void {
-    this.editAnchorInfoModalRef = this.modalService.open(EditAnchorModalComponent,{
-      data: { ocrAnchorVo: vo },
     })
   }
 

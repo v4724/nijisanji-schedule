@@ -1,0 +1,40 @@
+
+<div
+  class="d-inline-flex position-sticky single-rect-editing-content p-2 gap-2 rounded-pill align-items-center"
+  cdkDragBoundary=".schedule-template-img" cdkDrag
+  [style.top]="'0px'"
+  [style.left]="'0px'"
+  [style.z-index]="'1'"
+  [style.background-color]="'rgba(255,255,255,0.66)'">
+    <div class="example-handle" cdkDragHandle>
+      <i class="fas fa-arrows-alt"></i>
+    </div>
+
+    <button class="btn btn-primary btn-sm" type="button" [disabled]="!clearable" (click)="clearRect($event)">Clear</button>
+    <button class="btn btn-primary btn-sm" type="button" [disabled]="!resetable" (click)="resetRect()">Reset</button>
+    <div *ngFor="let vertex of currVertices">
+      (x:{{vertex.x}}, y: {{vertex.y}}),
+    </div>
+</div>
+
+<div
+  class="position-absolute"
+  [style.top]="'0px'"
+  [style.width]="'100%'"
+  [style.height]="'100%'">
+
+  <app-rect-list-canvas
+    #rectListCanvas
+    class="position-absolute"
+    [style.width]="'100%'"
+    [style.height]="'100%'"
+    [data]="templateVertices"></app-rect-list-canvas>
+
+  <app-rect-canvas
+    #rectCanvas
+    class="position-absolute"
+    [style.width]="'100%'"
+    [style.height]="'100%'"
+    [data]="currVertices"
+    (drown)="updateRect($event)"></app-rect-canvas>
+</div>

@@ -63,3 +63,6 @@ firebase-debug.*.log*
 
 
 /.github
+
+# env
+/src/environments/environment.local.ts

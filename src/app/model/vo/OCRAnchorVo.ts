@@ -1,4 +1,4 @@
-import { ScheduleAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
+import { ScheduleAnchor } from '@app/model/factory/ocr/transferScheduleOCR/TransferScheduleOCR'
 import * as anchors from '@app/model/data/ocr/anchors'
 import * as lodash from 'lodash'
 

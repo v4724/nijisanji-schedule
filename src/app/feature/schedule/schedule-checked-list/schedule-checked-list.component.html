@@ -1,65 +1,66 @@
-<div class="week-checked-schedule position-absolute cursor-pointer">
-  <div class="position-relative">
-
-    <i class="bi bi-clipboard-check icon "></i>
-    <div class="checked-list-block position-absolute p-3 align-items-center justify-content-center flex-column">
-      <div class="d-flex flex-column"
-           [style]="'overflow-y: auto; max-height: calc(100vh - 100px);padding: 0.5rem 0rem;'">
-        <div class="mb-3 d-flex flex-column justify-content-center align-items-center">
-          <div class="fs-5">
-            Schedule Updated On Twitter
-          </div>
-          <div class="fs-6 d-flex align-items-center">
-            <i class="bi bi-twitter mx-1" [style.color]="'cornflowerblue'"></i>
-            This week's schedule
-          </div>
-        </div>
-        <div class="d-flex flex-wrap">
-          <div class="streamer-icon-block d-flex align-items-center tooltip-div cursor-pointer" *ngFor="let item of streamers"
-              (click)="linkToTwitter(item.streamerInfo)">
-            <img class="streamer-icon me-1" [src]="item.streamerInfo?.img"/>
-
-            <div *ngIf="adminService.editable$ | async; else viewTmp">
-              <select
-                [(ngModel)]="item.state">
-                <option *ngFor="let value of ScheduleCheckedStateValues"
-                        [value]="value">
-                  {{ value }}
-                </option>
-              </select>
-            </div>
-
-            <ng-template #viewTmp>
-              <div class="checked-icon-block"
-                  [class.checked]="item.state !== ScheduleCheckedState.none">
-                <i *ngIf="item.state === ScheduleCheckedState.none" class="bi bi-question"></i>
-                <i *ngIf="item.state === ScheduleCheckedState.checked" class="bi bi-check"></i>
-                <i *ngIf="item.state === ScheduleCheckedState.break" class="bi bi-check"></i>
-              </div>
-            </ng-template>
-
-            <span class="tooltiptext tooltip-right">twitter</span>
-          </div>
-        </div>
-
-        <div class="d-flex justify-content-center editable-btn-block col-gap-1" *ngIf="adminService.editable$ | async">
-          <button class="btn btn-outline-primary" type="button" (click)="clear()">
-            CLEAR
-          </button>
-          <button class="btn btn-primary" type="button" (click)="update()">
-            UPDATE
-          </button>
-        </div>
-
-        <div *ngIf="service.loading$ | async"
-           class="mask d-flex align-items-center justify-content-center w-100 h-100">
-          <div class="spinner-grow" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-      </div>
-      </div>
+<app-popover
+  class="week-checked-schedule position-absolute text d-flex">
+    <div icon>
+        <i class="bi bi-clipboard-check icon "></i>
     </div>
+    <div content>
+        <div class="d-flex flex-column checked-list-block position-relative">
+          <div class="mb-3 d-flex flex-column justify-content-center align-items-center">
+            <div class="fs-5">
+              Schedule Updated On Twitter
+            </div>
+            <div class="fs-6 d-flex align-items-center">
+              <i class="bi bi-twitter mx-1" [style.color]="'cornflowerblue'"></i>
+              This week's schedule
+            </div>
+          </div>
+          <div class="d-flex flex-wrap">
+            <div class="streamer-icon-block d-flex align-items-center" *ngFor="let item of streamers"
+            >
+              <a [href]="item.streamerInfo?.twitterLink" target="_blank"
+                 [mdbTooltip]="(item.state | formatState) + ''"
+                 placement="bottom">
+                <img class="streamer-icon me-1" [src]="item.streamerInfo?.img"/>
+              </a>
 
-  </div>
+              <div *ngIf="adminService.editable$ | async; else viewTmp">
+                <select
+                  [(ngModel)]="item.state">
+                  <option *ngFor="let value of ScheduleCheckedStateValues"
+                          [value]="value">
+                    {{ value }}
+                  </option>
+                </select>
+              </div>
 
-</div>
+              <ng-template #viewTmp>
+                <div class="checked-icon-block"
+                     [class.checked]="item.state !== ScheduleCheckedState.none">
+                  <i *ngIf="item.state === ScheduleCheckedState.none" class="bi bi-question"></i>
+                  <i *ngIf="item.state === ScheduleCheckedState.checked" class="bi bi-check"></i>
+                  <i *ngIf="item.state === ScheduleCheckedState.break" class="bi bi-check"></i>
+                </div>
+              </ng-template>
+
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center editable-btn-block position-sticky gap-2" *ngIf="adminService.editable$ | async"
+          [style.bottom]="0">
+            <button class="btn btn-outline-primary" type="button" (click)="clear()">
+              CLEAR
+            </button>
+            <button class="btn btn-primary" type="button" (click)="update()">
+              UPDATE
+            </button>
+          </div>
+
+          <div *ngIf="service.loading$ | async"
+               class="mask d-flex align-items-center justify-content-center w-100 h-100">
+            <div class="spinner-grow" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        </div>
+    </div>
+</app-popover>

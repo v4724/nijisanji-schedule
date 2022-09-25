@@ -7,12 +7,19 @@
 
   <div class="h-1 flex-grow-1 table-block">
     <ul class="list-group list-group-flush h-100">
-      <li *ngFor="let item of list" class="list-group-item">
+      <li *ngFor="let item of list; let index=index" class="list-group-item"
+        [style.margin-top]="isDateDifferentThanPrevious(index) ? '1.5rem' : ''">
 
         <div class="d-flex col-gap-1">
           <div>
             {{ item.displayDateTime }}
           </div>
+          <img
+            [src]="item.streamerInfo?.img"
+            alt=""
+            style="width: 25px; height: 25px"
+            class="rounded-circle"
+          />
           <i *ngIf="item.type === UpdatedRecordType.updateSchedule" class="bi bi-journal-text"></i>
           <i *ngIf="item.type === UpdatedRecordType.updateStream" class="bi bi-wrench-adjustable"></i>
           <i *ngIf="item.type === UpdatedRecordType.addMember" class="bi bi-person-plus"></i>

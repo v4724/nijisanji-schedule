@@ -1,13 +1,12 @@
 import { Component, ContentChild, OnInit, ViewChild } from '@angular/core'
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal'
 import { OcrAnchorService } from '@app/service/ocr-anchor.service'
-import { AnchorDetailComponent } from '@app/feature/ocr/anchor-detail/anchor-detail.component'
-import { initOCRAnchor, OCRAnchorVo } from '@app/model/vo/OCRAnchorVo'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
-import { toDto } from '@app/model/dto/OCRAnchorDto'
 import { MatAutocomplete } from '@angular/material/autocomplete'
 import { FormControl } from '@angular/forms'
+import { ScheduleTemplateVo } from '@app/model/vo/ScheduleTemplate/ScheduleTemplateVo'
+import { toDto } from '@app/model/dto/ScheduleTemplateDto'
 
 @Component({
   selector: 'app-modal',
@@ -16,10 +15,8 @@ import { FormControl } from '@angular/forms'
 })
 export class CreateModalComponent implements OnInit {
 
-  @ViewChild(AnchorDetailComponent) detail: AnchorDetailComponent | undefined
-  ocrAnchorVo: OCRAnchorVo = initOCRAnchor()
+  templateVo: ScheduleTemplateVo = new ScheduleTemplateVo()
 
-  streamer: string = ''
   streamerKeyword = ''
   streamers: Array<StreamerInfoVo> = []
   filterStreamers: Array<StreamerInfoVo> = []
@@ -30,15 +27,12 @@ export class CreateModalComponent implements OnInit {
               private ocrAnchorService: OcrAnchorService) { }
 
   ngOnInit(): void {
-    this.streamers = this.streamerInfoService.streamerInfos$.getValue().filter(i => i.ocr)
+    this.streamers = this.streamerInfoService.streamerInfos$.getValue()
   }
 
   add(): void {
-    console.log(!this.detail?.cloneScheduleAnchor, this.detail)
-    if (!this.detail?.cloneScheduleAnchor)
-      return
 
-    const dto = toDto(this.streamer, this.detail.cloneScheduleAnchor)
+    const dto = toDto(this.templateVo)
     this.ocrAnchorService.add(dto)
         .then((result) => {
           if (result) {
@@ -57,6 +51,6 @@ export class CreateModalComponent implements OnInit {
   }
 
   updateStreamer(value: string): void {
-    this.streamer = value
+    this.templateVo.streamer = value
   }
 }

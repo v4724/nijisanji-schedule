@@ -1,0 +1,92 @@
+<div content class="edit-anchor-detail-cmp d-flex flex-column gap-2" *ngIf="editingVo">
+  <mdb-form-control>
+    <input
+      mdbInput type="text" id="formControlTemplateName" class="form-control"
+      [(ngModel)]="editingVo.name"/>
+    <label mdbLabel class="form-label" for="formControlTemplateName">Name</label>
+  </mdb-form-control>
+
+  <mdb-form-control>
+    <input
+      mdbInput type="text" id="formControlTemplateUrl" class="form-control"
+      [ngModel]="editingVo.templateUrl"
+      (ngModelChange)="urlChange($event)"/>
+    <label mdbLabel class="form-label" for="formControlTemplateUrl">Url</label>
+  </mdb-form-control>
+
+  <div class="d-flex gap-2">
+    Default
+    <app-polygon-button text="Start Month" [data]="editingVo.anchor.defaultMonth"></app-polygon-button>
+    <app-polygon-button text="Start Date" [data]="editingVo.anchor.defaultStartDate"></app-polygon-button>
+  </div>
+
+  <div
+    class="daily-stream-content mt-2 d-flex flex-column gap-2 position-relative"
+    *ngFor="let streamAnchor of editingVo.anchor.streamAnchors; let index=index">
+
+    <div
+      class="title d-inline-flex align-items-center gap-3 position-absolute"
+      [attr.aria-expanded]="!basicCollapse.collapsed"
+      [attr.aria-controls]="'collapseExample-daily-'+ this.index"
+      (click)="basicCollapse.toggle()"
+    >
+      <div class="title-text">
+        No. {{ index + 1}}
+      </div>
+
+      <ng-container *ngIf="basicCollapse.collapsed; else collapseIconRef">
+        <i class="fas fa-caret-down"></i>
+      </ng-container>
+      <ng-template #collapseIconRef>
+        <i class="fas fa-caret-up"></i>
+      </ng-template>
+    </div>
+
+    <div [id]="'collapseExample-daily-'+ this.index" mdbCollapse #basicCollapse="mdbCollapse">
+
+        <div class="d-flex gap-2">
+          <app-polygon-button text="Month" [data]="streamAnchor.month"></app-polygon-button>
+          <app-polygon-button text="Date" [data]="streamAnchor.date"></app-polygon-button>
+          <app-polygon-button text="Stream Counter" [data]="streamAnchor.streamCounter"></app-polygon-button>
+        </div>
+
+        <div>
+          <div>
+            Once A Day
+          </div>
+          <app-stream-anchor-point
+            [singleStreamAnchor]="streamAnchor.singleStream" [title]="'First'"> </app-stream-anchor-point>
+        </div>
+
+        <div>
+          <div>
+            Twice A Day
+          </div>
+          <app-stream-anchor-point
+            [singleStreamAnchor]="streamAnchor.multiStream.first" [title]="'First'"> </app-stream-anchor-point>
+          <app-stream-anchor-point
+            [singleStreamAnchor]="streamAnchor.multiStream.second" [title]="'Second'"> </app-stream-anchor-point>
+        </div>
+    </div>
+  </div>
+
+  <div class="d-inline-flex position-sticky justify-content-around"
+       [style.bottom]="'0px'">
+      <button class="btn btn-outline-primary btn-sm" type="button"
+              (click)="apply()">
+        Apply
+      </button>
+      <button class="btn btn-outline-primary btn-sm" type="button"
+              (click)="reset()">
+        Reset
+      </button>
+      <button class="btn btn-primary btn-sm" type="button"
+              (click)="save()">
+        Save
+      </button>
+      <button class="btn btn-outline-primary btn-sm" type="button" (click)="delete()">
+        delete
+      </button>
+  </div>
+
+</div>

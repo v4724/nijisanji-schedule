@@ -1,0 +1,7 @@
+<button
+  type="button" class="btn-outline-primary btn btn-link btn-sm btn-rounded"
+  [class.border]="hasData"
+  [class.active]="isSelected$ | async"
+  (click)="click()">
+  {{ text }}
+</button>

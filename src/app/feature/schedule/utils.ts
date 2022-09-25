@@ -4,8 +4,12 @@ export function enumList (enumObj :any): Array<string> {
   return Object.keys(enumObj)
 }
 
-export function openUrl (url: string) {
-  window.open(url, '_blank')
+export function openUrl (url: string, event?: MouseEvent) {
+  if (event?.button === 1) {
+
+  } else {
+    window.open(url, '_blank')
+  }
 }
 
 export function setMidnightStartMoment (moment: Moment): Moment {

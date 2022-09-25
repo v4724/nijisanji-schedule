@@ -40,9 +40,9 @@ export class PopoverComponent implements OnInit, AfterContentInit, AfterContentI
   get currMaxHeight (): string {
     const defaultTop = 100
     const boundingClientRect = this.icon?.nativeElement.getBoundingClientRect()
-    const top = boundingClientRect?.top + boundingClientRect?.height
-    const absoluteTop = boundingClientRect ? top : defaultTop
-      // console.log(this.icon?.nativeElement.getBoundingClientRect())
+    const bottom = boundingClientRect?.bottom
+
+    const absoluteTop = boundingClientRect ? bottom : defaultTop
     return `calc(100vh - ${absoluteTop}px - 1.2rem - 2rem)`
   }
 

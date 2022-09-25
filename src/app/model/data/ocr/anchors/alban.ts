@@ -1,4 +1,4 @@
-import { PointBoundary, ScheduleAnchor, StreamAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
+import { ScheduleAnchor, StreamAnchor } from '@app/model/factory/ocr/transferScheduleOCR/TransferScheduleOCR'
 
 let anchors: Array<StreamAnchor> = [
   {

@@ -1,0 +1,117 @@
+<div class="d-flex align-items-center my-3">
+
+    <mdb-form-control>
+        <input
+          mdbInput type="text" id="formControlSearch" class="form-control"
+          [(ngModel)]="scheduleImgSrc"
+          (ngModelChange)="service.scheduleImgSrc$.next(scheduleImgSrc)"
+          [disabled]="!streamerInfo"/>
+        <label mdbLabel class="form-label" for="formControlSearch">Schedule Url</label>
+    </mdb-form-control>
+
+    <a
+      *ngIf="scheduleImgSrc"
+      class="d-flex align-items-center justify-content-center"
+      [style.width]="'30px'"
+      [style.height]="'30px'"
+      role="button"
+      (click)="reParseSchedule()">
+      <i class="fas fa-redo-alt"></i>
+    </a>
+
+    <a
+      *ngIf="scheduleImgSrc"
+      class="d-flex align-items-center justify-content-center"
+      [style.width]="'30px'"
+      [style.height]="'30px'"
+      role="button"
+      (click)="checkedSchedule()">
+      <i class="bi bi-clipboard-check icon "></i>
+    </a>
+
+</div>
+
+<div class="template-form-result d-flex flex-column gap-2">
+
+    <div
+      *ngFor="let ocr of service.scheduleResult$ | async"
+      class="date-content">
+
+      <div class="date-content-title">Date: {{ocr.date}}</div>
+      <div *ngFor="let stream of ocr.streams; let index=index" class="date-stream-content">
+        <div>{{index + 1}}.
+          <div class="d-flex flex-column w-100 gap-2">
+            <mdb-form-control>
+              <input
+                mdbInput type="text" [id]="'formControlLg-'+index" class="form-control form-control-sm"
+                [(ngModel)]="stream.title"/>
+              <label mdbLabel class="form-label" [for]="'formControlLg-'+index">title</label>
+            </mdb-form-control>
+
+            <mdb-form-control>
+              <input
+                mdbInput type="text" [id]="'formControlDate-'+index" class="form-control form-control-sm"
+                placeholder="YYYY-MM-DD"
+                [(ngModel)]="stream.date"
+                (ngModelChange)="updateTimestampAndText(stream)"/>
+              <label mdbLabel class="form-label" [for]="'formControlDate-'+index">Date</label>
+            </mdb-form-control>
+            <mdb-form-control>
+              <input
+                mdbInput type="text" [id]="'formControlTime'+index" class="form-control form-control-sm"
+                placeholder="HH:mm"
+                [(ngModel)]="stream.time"
+                (ngModelChange)="updateTimestampAndText(stream)"/>
+              <label mdbLabel class="form-label" [for]="'formControlTime'+index">Time</label>
+            </mdb-form-control>
+
+            <mdb-form-control class="mb-2">
+              <input
+                matInput
+                [formControl]="stream.formControl"
+                [matAutocomplete]="autoTz"
+                [(ngModel)]="stream.timezone"
+                mdbInput
+                type="text" [id]="'formControlTimezone-'+index" class="form-control form-control-sm"/>
+              <label mdbLabel class="form-label" [for]="'formControlTimezone-'+index">Timezone</label>
+
+              <mat-autocomplete #autoTz="matAutocomplete" (optionSelected)="updateTimestampAndText(stream)">
+                <mat-option
+                  class="streamer-autocomplete"
+                  *ngFor="let tz of tzService.timezones" [value]="tz.value">{{ tz.text }}</mat-option>
+              </mat-autocomplete>
+            </mdb-form-control>
+
+          </div>
+        </div>
+        <div>TZ: {{stream.scheduleOrigDisplayText}}</div>
+        <div>Current TZ: {{stream.scheduleTzDisplayText}}</div>
+
+        <app-feat-streamer
+          class="mt-1"
+          [smallStyle]="true"
+          [featStreamers]="stream.featStreamers"></app-feat-streamer>
+
+        <div class="d-flex flex-row-reverse">
+          <ng-container *ngIf="stream.createdStatus === 'SUCCESS'; else isLoadingTmp">
+            <i class="fas fa-check"></i>
+          </ng-container>
+          <ng-template #isLoadingTmp>
+            <ng-container *ngIf="stream.createdStatus === 'LOADING'; else uncreatedTmp">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template #uncreatedTmp>
+            <button
+              type="button" class="btn btn-link btn-sm btn-rounded"
+              (click)="confirmCreate(stream)">
+              Confirm
+            </button>
+          </ng-template>
+        </div>
+
+      </div>
+    </div>
+</div>

@@ -8,15 +8,18 @@ import { DirectiveModule } from '@app/directive/directive.module'
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation'
-import { HttpClientModule } from '@angular/common/http'
 import { CommonViewModule } from '@app/common-view/common-view.module';
-import { AnchorDetailComponent } from './anchor-detail/anchor-detail.component';
-import { AnchorPointComponent } from './components/anchor-point/anchor-point.component';
-import { StreamAnchorPointComponent } from './components/stream-anchor-point/stream-anchor-point.component'
+import { StreamAnchorPointComponent } from './template-form-editor/components/stream-anchor-point/stream-anchor-point.component'
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse'
-import { PointBoundaryComponent } from '@app/feature/ocr/components/point-boundary/point-boundary.component'
-import { EditModalComponent } from '@app/feature/ocr/edit-modal/edit-modal.component'
-import { CreateModalComponent } from '@app/feature/ocr/create-modal/create-modal.component'
+import { CreateModalComponent } from '@app/feature/ocr/create-modal/create-modal.component';
+import { TemplateFormEditorComponent } from './template-form-editor/template-form-editor.component';
+import { PolygonButtonComponent } from './template-form-editor/components/polygon-button/polygon-button.component';
+import { TemplateFormResultComponent } from './template-form-result/template-form-result.component';
+import { TemplateEditingCanvasComponent } from './template-form-editor/components/template-editing-canvas/template-editing-canvas.component';
+import { MyCanvasComponent } from './components/canvas/my-canvas/my-canvas.component';
+import { RectCanvasComponent } from './components/canvas/rect-canvas/rect-canvas.component';
+import { RectListCanvasComponent } from './components/canvas/rect-list-canvas/rect-list-canvas.component'
+import { DragDropModule } from '@angular/cdk/drag-drop'
 
 
 const routes: Routes = [
@@ -30,12 +33,15 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     OcrComponent,
-    AnchorDetailComponent,
-    AnchorPointComponent,
     StreamAnchorPointComponent,
-    PointBoundaryComponent,
-    EditModalComponent,
-    CreateModalComponent
+    CreateModalComponent,
+    TemplateFormEditorComponent,
+    PolygonButtonComponent,
+    TemplateFormResultComponent,
+    TemplateEditingCanvasComponent,
+    MyCanvasComponent,
+    RectCanvasComponent,
+    RectListCanvasComponent
   ],
   imports: [
     CommonModule,
@@ -47,9 +53,9 @@ const routes: Routes = [
     MatAutocompleteModule,
     MdbValidationModule,
     ReactiveFormsModule,
-    HttpClientModule,
     CommonViewModule,
     MdbCollapseModule,
+    DragDropModule,
   ]
 })
 export class OcrModule { }

@@ -1,4 +1,4 @@
-import { ScheduleAnchor, StreamAnchor } from '@app/model/data/ocr/TransferScheduleOCR'
+import { ScheduleAnchor, StreamAnchor } from '@app/model/factory/ocr/transferScheduleOCR'
 import { OCRAnchorVo } from '@app/model/vo/OCRAnchorVo'
 import { QueryDocumentSnapshot } from '@angular/fire/compat/firestore'
 

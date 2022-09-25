@@ -5,6 +5,7 @@ import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { combineLatest } from 'rxjs'
 import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
 import { AdminService } from '@app/service/admin.service'
+import * as moment from 'moment-timezone'
 
 @Component({
   selector: 'app-updated-record',
@@ -32,6 +33,16 @@ export class UpdatedRecordComponent implements OnInit {
       this.list = list
     })
 
+  }
+
+  isDateDifferentThanPrevious(index: number): boolean {
+    if (index === 0) {
+      return false
+    }
+    const tz = this.tzService.timezone$.getValue()
+    const date1 = moment(this.list[index-1].timestamp).tz(tz).format('DD')
+    const date2 = moment(this.list[index].timestamp).tz(tz).format('DD')
+    return date1 !== date2
   }
 
   removeRecord (record: UpdatedRecordVo): void {
