@@ -1,4 +1,4 @@
-import { OCRSchedule } from '@app/feature/ocr/ocr.component'
+import { OCRSchedule, OCRStream } from '@app/feature/ocr/ocr.component'
 import * as lodash from 'lodash'
 import { Point } from '@app/model/factory/ocr/Point'
 import * as moment from 'moment-timezone'
@@ -8,6 +8,7 @@ import { TemplateAnchor } from '@app/model/vo/ScheduleTemplate/TemplateAnchor'
 import { StreamAnchor } from '@app/model/vo/ScheduleTemplate/StreamAnchor'
 import { BoundingBox } from '@app/model/vo/ScheduleTemplate/BoundingBox'
 import { TextAnnotation } from '@app/model/factory/ocr/TextAnnotation'
+import { FormControl } from '@angular/forms'
 
 function zoom (boundingBox: BoundingBox | undefined, zoomRatio: number) {
   if (!boundingBox)
@@ -42,6 +43,9 @@ export default class ScheduleResult {
   textAnnotations: Array<TextAnnotation> = []
   tz: string = ''
 
+  private manuallyStartMonth: string = ''
+  private manuallyStartDate: string = ''
+
   constructor (clientWidth: number, scheduleAnchor: TemplateAnchor, textAnnotations: Array<TextAnnotation>, tz?: string) {
     this.clientWidth = clientWidth
     this.textAnnotations = textAnnotations
@@ -65,6 +69,14 @@ export default class ScheduleResult {
     })
   }
 
+  set manuallySpecifiedMonth (value: string) {
+    this.manuallyStartMonth = value
+  }
+
+  set manuallySpecifiedDate (value: string) {
+    this.manuallyStartDate = value
+  }
+
   get zoomRatio (): number {
     const clientW = this.clientWidth
     const baseW = this.baseWidth
@@ -75,9 +87,19 @@ export default class ScheduleResult {
   get schedule (): Array<OCRSchedule> {
     const schedule: Array<OCRSchedule> = []
 
-    const defaultStartDate = this.findTextAnnotation(this.defaultStartDate, this.textAnnotations)?.description ?? ''
-    const defaultMonth = this.findTextAnnotation(this.defaultMonth, this.textAnnotations)?.description ?? ''
-    // console.log('defaultMonth', defaultMonth)
+    let defaultStartMonth = ''
+    let defaultStartDate = ''
+    if (!!this.manuallyStartMonth) {
+      defaultStartMonth = this.manuallyStartMonth
+    } else {
+      defaultStartMonth = this.findTextAnnotation(this.defaultMonth, this.textAnnotations)?.description ?? ''
+    }
+    if (!!this.manuallyStartDate) {
+      defaultStartDate = this.manuallyStartDate
+    } else {
+      defaultStartDate = this.findTextAnnotation(this.defaultStartDate, this.textAnnotations)?.description ?? ''
+    }
+    // console.log('defaultStartMonth', defaultStartMonth)
     // console.log('defaultStartDate', defaultStartDate)
 
     this.anchors.forEach((anchor: StreamAnchor, index: number) => {
@@ -123,7 +145,7 @@ export default class ScheduleResult {
         })
       }
 
-      let month = defaultMonth
+      let month = defaultStartMonth
       let day = ''
       let date = defaultStartDate
       if (anchor.month?.exist) {
@@ -166,45 +188,7 @@ export default class ScheduleResult {
       dateSchedule.streams.forEach(s => {
         // console.log('orig s', lodash.cloneDeep(s))
 
-        s.featStreamers = []
-
-        const timezone = getTimezoneValue(this.tz)
-        let dateTime = moment().tz(timezone)
-                               .set('month', Number.parseInt(dateSchedule.month))
-                               .set('date', Number.parseInt(dateSchedule.date))
-                               .set('hour', 0)
-                               .set('minute', 0)
-                               .set('second', 0)
-                               .set('millisecond', 0)
-
-        if (s.time) {
-          const time = this.getTime(s.time)
-          let hour = Number.parseInt(time.split(':')[0])
-          let min = Number.parseInt(time.split(':')[1])
-          const hourSystem = this.getHourSystem(s.hourSystem)
-          if (hourSystem === 'PM' && hour < 12) {
-            hour += 12
-          }
-
-          dateTime = dateTime
-            .set('hour', hour)
-            .set('minute', min)
-            .set('second', 0)
-            .set('millisecond', 0)
-
-          // shu
-          // if (Number.isNaN(hour)) {
-          //   return
-          // }
-        }
-
-        s.timezone = timezone
-        s.date = dateTime.format('YYYY-MM-DD')
-        s.time = dateTime.format('HH:mm')
-        s.timestamp = dateTime.valueOf()
-        s.scheduleOrigDisplayText = dateTime.format('YYYY/MM/DD HH:mm z')
-        s.scheduleTzDisplayText = dateTime.tz(tz).format('YYYY/MM/DD HH:mm z')
-
+        this.updateStreamForForm(dateSchedule, s, tz)
         // console.log('new s', s)
       })
 
@@ -256,9 +240,19 @@ export default class ScheduleResult {
   // date only
   getDate (date: string, index: number): number {
     // console.log('date', date)
+    // LUCA
     if (date.indexOf('-') > 0) {
       const arr = date.split('-')
       return Number.parseInt(arr[0]) + index
+    }
+    // COMMON
+    if (date.indexOf('/') > 0) {
+      const arr = date.split('/')
+      return Number.parseInt(arr[1]) + index
+    }
+    if (date.indexOf('.') > 0) {
+      const arr = date.split('.')
+      return Number.parseInt(arr[1]) + index
     }
 
     return Number.parseInt(date) + index
@@ -335,12 +329,13 @@ export default class ScheduleResult {
     const find = targets.filter(t => {
       const target = new Point(t.x ?? 1, t.y ?? 1)
       const contains = boundary.contains(target)
+      const timezone = t.description.toUpperCase()
       // if ((t.description === 'PDT' || t.description === 'PST')) {
       //   console.log(contains, this.targetTz, this.targetTz2, t.description === this.targetTz, (this.targetTz2 && t.description === this.targetTz2))
       // console.log(t.description === 'PDT', this.targetTz, t.description === this.targetTz)
       // console.log(t.description === 'PST', this.targetTz2, t.description === this.targetTz2)
       // }
-      return contains && targetTzList.indexOf(t.description) > -1
+      return contains && targetTzList.indexOf(timezone) > -1
     })
     // console.log('find re', find)
     return find
@@ -388,5 +383,62 @@ export default class ScheduleResult {
     // title = title.replace(' - ', '-')
     // title = title.replace(' / ', '/')
     return title
+  }
+
+  getDefaultStreamForForm (dateSchedule: OCRSchedule, localTz: string): OCRStream {
+    const defaultStream: OCRStream = {
+      hourSystem: '',
+      title: '',
+      date: '',
+      time: '',
+      timezone: '',
+      timestamp: -1,
+      scheduleOrigDisplayText: '',
+      scheduleTzDisplayText: '',
+      createdStatus: '',
+      formControl: new FormControl(''),
+      searchFeatStreamer: '',
+      featStreamers: []
+    }
+    this.updateStreamForForm(dateSchedule, defaultStream, localTz)
+    return defaultStream
+  }
+
+  updateStreamForForm (dateSchedule: OCRSchedule, target: OCRStream, localTz: string): void {
+    target.featStreamers = []
+
+    const timezone = getTimezoneValue(this.tz)
+    let dateTime = moment().tz(timezone)
+                           .set('month', Number.parseInt(dateSchedule.month))
+                           .set('date', Number.parseInt(dateSchedule.date))
+                           .set('hour', 0)
+                           .set('minute', 0)
+                           .set('second', 0)
+                           .set('millisecond', 0)
+
+    if (target.time) {
+      const time = this.getTime(target.time)
+      let hour = Number.parseInt(time.split(':')[0])
+      let min = Number.parseInt(time.split(':')[1])
+      const hourSystem = this.getHourSystem(target.hourSystem)
+      if (hourSystem === 'PM' && hour < 12) {
+        hour += 12
+      }
+
+      dateTime = dateTime
+        .set('hour', hour)
+        .set('minute', min)
+        .set('second', 0)
+        .set('millisecond', 0)
+
+    }
+
+    target.timezone = timezone
+    target.date = dateTime.format('YYYY-MM-DD')
+    target.time = dateTime.format('HH:mm')
+    target.timestamp = dateTime.valueOf()
+    target.scheduleOrigDisplayText = dateTime.format('YYYY/MM/DD HH:mm z')
+    target.scheduleTzDisplayText = dateTime.tz(localTz).format('YYYY/MM/DD HH:mm z')
+
   }
 }

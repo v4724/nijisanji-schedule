@@ -25,7 +25,7 @@
     *ngFor="let streamAnchor of editingVo.anchor.streamAnchors; let index=index">
 
     <div
-      class="title d-inline-flex align-items-center gap-3 position-absolute"
+      class="title d-inline-flex align-items-center gap-3 position-absolute cursor-pointer"
       [attr.aria-expanded]="!basicCollapse.collapsed"
       [attr.aria-controls]="'collapseExample-daily-'+ this.index"
       (click)="basicCollapse.toggle()"

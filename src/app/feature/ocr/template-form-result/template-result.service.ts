@@ -14,6 +14,8 @@ import { OcrService } from '@app/feature/ocr/ocr.service'
 export class TemplateResultService {
 
   scheduleImgSrc$ = new BehaviorSubject<string>('')
+  manuallySpecifiedMonth$ = new BehaviorSubject<string>('')
+  manuallySpecifiedDate$ = new BehaviorSubject<string>('')
   scheduleResult$ = new BehaviorSubject<Array<OCRSchedule>>([])
 
   ocr: ScheduleResult | undefined
@@ -53,6 +55,8 @@ export class TemplateResultService {
 
     const streamerTz = streamerInfo?.timezone
     this.ocr = ScheduleResultFactory.getOcr(templateAnchorVo, clientWidth, textAnnotations, streamerTz)
+    this.ocr.manuallySpecifiedMonth = this.manuallySpecifiedMonth$.getValue()
+    this.ocr.manuallySpecifiedDate = this.manuallySpecifiedDate$.getValue()
 
     const tz = this.tzService.timezone$.getValue()
     const schedule = this.ocr.schedule
@@ -65,5 +69,12 @@ export class TemplateResultService {
 
     // TODO ocrSchedule always return 7 days result
     this.scheduleResult$.next(ocrSchedule)
+  }
+
+  manuallyAddStream(dateSchedule: OCRSchedule): void {
+    const tz = this.tzService.timezone$.getValue()
+    if (this.ocr) {
+      dateSchedule.streams.push(this.ocr.getDefaultStreamForForm(dateSchedule, tz))
+    }
   }
 }

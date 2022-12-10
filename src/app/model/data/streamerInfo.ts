@@ -49,7 +49,6 @@ const luxiem: Array<StreamerInfoDto> = [{
   bgColor: 'ike-primary-bg-color',
   timezone: Timezone.EST5EDT,
   order: 1,
-  ocr: false
 }, {
   img: 'assets/imgs/vox_profile.jpg',
   name: Streamer.Vox,
@@ -62,7 +61,6 @@ const luxiem: Array<StreamerInfoDto> = [{
   bgColor: 'vox-primary-bg-color',
   timezone: Timezone.JST,
   order: 2,
-  ocr: false
 }, {
   img: 'assets/imgs/luca_profile.jpg',
   name: Streamer.Luca,
@@ -75,7 +73,6 @@ const luxiem: Array<StreamerInfoDto> = [{
   bgColor: 'luca-primary-bg-color',
   timezone: Timezone.AEST,
   order: 5,
-  ocr: false
 }, {
   img: 'assets/imgs/mysta_profile.jpg',
   name: Streamer.Mysta,
@@ -88,7 +85,6 @@ const luxiem: Array<StreamerInfoDto> = [{
   bgColor: 'mysta-primary-bg-color',
   timezone: Timezone.BST,
   order: 3,
-  ocr: false
 }, {
   img: 'assets/imgs/shu_profile.jpg',
   name: Streamer.Shu,
@@ -101,7 +97,6 @@ const luxiem: Array<StreamerInfoDto> = [{
   bgColor: 'shu-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order: 4,
-  ocr: false
 }]
 
 const noctyx: Array<StreamerInfoDto> = [{
@@ -116,7 +111,6 @@ const noctyx: Array<StreamerInfoDto> = [{
   bgColor: 'fulgur-primary-bg-color',
   timezone: Timezone.EST5EDT,
   order: 6,
-  ocr: false
 }, {
   img: 'assets/imgs/alban_profile.jpg',
   name: Streamer.Alban,
@@ -129,7 +123,6 @@ const noctyx: Array<StreamerInfoDto> = [{
   bgColor: 'alban-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order: 8,
-  ocr: false
 }, {
   img: 'assets/imgs/sonny_profile.jpg',
   name: Streamer.Sonny,
@@ -142,7 +135,6 @@ const noctyx: Array<StreamerInfoDto> = [{
   bgColor: 'sonny-primary-bg-color',
   timezone: Timezone.JST,
   order: 9,
-  ocr: false
 }, {
   img: 'assets/imgs/uki_profile.jpg',
   name: Streamer.Uki,
@@ -155,7 +147,6 @@ const noctyx: Array<StreamerInfoDto> = [{
   bgColor: 'uki-primary-bg-color',
   timezone: Timezone.EST5EDT,
   order: 7,
-  ocr: false
 }, {
   img: 'assets/imgs/yugo_profile.jpg',
   name: Streamer.Yugo,
@@ -168,7 +159,6 @@ const noctyx: Array<StreamerInfoDto> = [{
   bgColor: 'yugo-primary-bg-color',
   timezone: Timezone.JST,
   order: 10,
-  ocr: false
 }]
 
 const ethyria: Array<StreamerInfoDto> = [{
@@ -183,7 +173,6 @@ const ethyria: Array<StreamerInfoDto> = [{
   bgColor: 'enna-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order: 12,
-  ocr: false
 }, {
   img: 'assets/imgs/nina_profile.jpg',
   name: Streamer.Nina,
@@ -196,7 +185,6 @@ const ethyria: Array<StreamerInfoDto> = [{
   bgColor: 'nina-primary-bg-color',
   timezone: Timezone.EST5EDT,
   order: 14,
-  ocr: false
 }, {
   img: 'assets/imgs/millie_profile.jpg',
   name: Streamer.Millie,
@@ -209,7 +197,6 @@ const ethyria: Array<StreamerInfoDto> = [{
   bgColor: 'millie-primary-bg-color',
   timezone: Timezone.EST5EDT,
   order: 13,
-  ocr: false
 }, {
   img: 'assets/imgs/reimu_profile.jpg',
   name: Streamer.Reimu,
@@ -222,7 +209,6 @@ const ethyria: Array<StreamerInfoDto> = [{
   bgColor: 'reimu-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order: 11,
-  ocr: false
 }]
 
 
@@ -238,7 +224,6 @@ const obsydia: Array<StreamerInfoDto> = [{
   bgColor: 'selen-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order: 15,
-  ocr: false
 }, {
   img: 'assets/imgs/rosemi_profile.jpg',
   name: Streamer.Rosemi,
@@ -251,7 +236,6 @@ const obsydia: Array<StreamerInfoDto> = [{
   bgColor: 'rosemi-primary-bg-color',
   timezone: Timezone.EST5EDT,
   order: 16,
-  ocr: false
 }, {
   img: 'assets/imgs/petra_profile.jpg',
   name: Streamer.Petra,
@@ -264,7 +248,6 @@ const obsydia: Array<StreamerInfoDto> = [{
   bgColor: 'petra-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order: 17,
-  ocr: false
 }]
 
 
@@ -280,7 +263,6 @@ const lazuLight: Array<StreamerInfoDto> = [{
   bgColor: 'elira-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order: 19,
-  ocr: false
 }, {
   img: 'assets/imgs/pomu_profile.jpg',
   name: Streamer.Pomu,
@@ -293,7 +275,6 @@ const lazuLight: Array<StreamerInfoDto> = [{
   bgColor: 'pomu-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order:18,
-  ocr: false
 }, {
   img: 'assets/imgs/finana_profile.jpg',
   name: Streamer.Finana,
@@ -306,7 +287,6 @@ const lazuLight: Array<StreamerInfoDto> = [{
   bgColor: 'finana-primary-bg-color',
   timezone: Timezone.PST8PDT,
   order: 20,
-  ocr: false
 }]
 
 const NIJISANJI: Array<StreamerInfoDto> = [{
@@ -321,7 +301,6 @@ const NIJISANJI: Array<StreamerInfoDto> = [{
   color: 'mika-primary-color',
   timezone: Timezone.WIB,
   order: 21,
-  ocr: false
 }]
 
 export let defaultStreamers: Array<StreamerInfoDto> = []

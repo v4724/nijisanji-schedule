@@ -14,7 +14,6 @@ export interface StreamerInfoDto {
   bgColor: string,
   timezone: Timezone,
   order: number,
-  ocr: boolean
 }
 
 export function initStreamerDto(): StreamerInfoDto {
@@ -30,7 +29,6 @@ export function initStreamerDto(): StreamerInfoDto {
     bgColor: '',
     timezone: Timezone.GMT,
     order: 0,
-    ocr: false
   }
   return streamer
 }
@@ -48,7 +46,6 @@ export function toDto (item: StreamerInfoVo): StreamerInfoDto {
     bgColor: item.bgColor,
     timezone: item.timezone,
     order: item.order,
-    ocr: item.ocr
   }
 
   return itemDto
@@ -68,7 +65,6 @@ export function fromDto (id: string, dto: StreamerInfoDto): StreamerInfoVo {
     bgColor: dto.bgColor,
     timezone: dto.timezone,
     order: dto.order,
-    ocr: dto.ocr
   }
   return item
 }

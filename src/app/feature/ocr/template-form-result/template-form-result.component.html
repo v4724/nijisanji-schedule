@@ -31,13 +31,48 @@
 
 </div>
 
+<div class="d-flex align-items-center my-3">
+
+  <mdb-form-control>
+      <input
+        mdbInput type="text" id="formControlSpecifiedMonth" class="form-control"
+        [(ngModel)]="manuallySpecifiedMonth"
+        (ngModelChange)="service.manuallySpecifiedMonth$.next(manuallySpecifiedMonth)"
+        [disabled]="!streamerInfo"/>
+      <label mdbLabel class="form-label" for="formControlSpecifiedMonth">Manually Specified Month</label>
+  </mdb-form-control>
+
+</div>
+<div class="d-flex align-items-center my-3">
+
+  <mdb-form-control>
+      <input
+        mdbInput type="text" id="formControlSpecifiedDate" class="form-control"
+        [(ngModel)]="manuallySpecifiedDate"
+        (ngModelChange)="service.manuallySpecifiedDate$.next(manuallySpecifiedDate)"
+        [disabled]="!streamerInfo"/>
+      <label mdbLabel class="form-label" for="formControlSpecifiedDate">Manually Specified Date</label>
+  </mdb-form-control>
+
+</div>
+
 <div class="template-form-result d-flex flex-column gap-2">
 
     <div
       *ngFor="let ocr of service.scheduleResult$ | async"
       class="date-content">
 
-      <div class="date-content-title">Date: {{ocr.date}}</div>
+      <div class="date-content-title d-flex align-items-center">
+        Date: {{ocr.date}}
+        <a
+          class="d-flex mr-auto align-items-center justify-content-center"
+          [style.width]="'30px'"
+          [style.height]="'30px'"
+          role="button"
+          (click)="manuallyAddStream(ocr)">
+          <i class="fas fa-plus"></i>
+        </a>
+      </div>
       <div *ngFor="let stream of ocr.streams; let index=index" class="date-stream-content">
         <div>{{index + 1}}.
           <div class="d-flex flex-column w-100 gap-2">

@@ -4,6 +4,9 @@ import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainb
 import { initStreamerInfoVo, StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 import { StreamerInfoService } from '@app/service/streamer-info.service'
 import { toDto } from '@app/model/dto/StreamerInfoDto'
+import { ScheduleCheckedService } from '@app/service/schedule-checked.service'
+import { ScheduleCheckedState } from '@app/model/enum/ScheduleCheckedState'
+import * as moment from 'moment-timezone'
 
 @Component({
   selector: 'app-edit-streamer-info-modal',
@@ -17,6 +20,7 @@ export class EditStreamerInfoModalComponent implements OnInit {
 
   constructor(public modalRef: MdbModalRef<EditStreamerInfoModalComponent>,
               private streamerInfoService: StreamerInfoService,
+              private scheduleCheckedService: ScheduleCheckedService,
               private loaderService: RainbowLoaderService) {
 
   }
@@ -33,6 +37,13 @@ export class EditStreamerInfoModalComponent implements OnInit {
     this.streamerInfoService.add(this.item)
         .then((success) => {
           if (success) {
+
+            this.scheduleCheckedService.add({
+              streamer: this.item.name,
+              state: ScheduleCheckedState.none,
+              updatedTimestamp: moment().valueOf()
+            }).then()
+
             this.modalRef.close()
           }
         })
@@ -63,6 +74,12 @@ export class EditStreamerInfoModalComponent implements OnInit {
     this.streamerInfoService.delete(this.item.id)
         .then(() => {
           this.modalRef.close()
+
+          const streamer = this.item.name
+          const findCheckedItem = this.scheduleCheckedService.scheduleCheckedList$.getValue().find((item) => item.streamer === streamer)
+          if (findCheckedItem) {
+            this.scheduleCheckedService.delete(findCheckedItem.id).then()
+          }
         })
         .finally(() => {
           this.loaderService.set(false)

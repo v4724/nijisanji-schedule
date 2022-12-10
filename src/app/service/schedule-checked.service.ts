@@ -36,6 +36,19 @@ export class ScheduleCheckedService {
     })
   }
 
+  public add (infoDto: ScheduleCheckedItemDto): Promise<boolean> {
+    return this.db.collection('scheduleChecked')
+               .add(infoDto)
+               .then(() => {
+                 return true;
+               })
+               .catch((err) => {
+                 console.error(err)
+                 window.alert(err)
+                 return false;
+               })
+  }
+
   public updateScheduleChecked (id: string, data: ScheduleCheckedItemDto): Promise<void> {
     return this.db.collection<StreamDto>('scheduleChecked')
                .doc(id)
@@ -45,6 +58,17 @@ export class ScheduleCheckedService {
                  this.updateBellService.addUpdatedSchedule(data)
 
                })
+               .catch((err) => {
+                 console.error(err)
+                 window.alert(err)
+               })
+  }
+
+
+  public delete (id: string): Promise<void> {
+    return this.db.collection<StreamDto>('scheduleChecked')
+               .doc(id)
+               .delete()
                .catch((err) => {
                  console.error(err)
                  window.alert(err)

@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
-import { OCRStream } from '@app/feature/ocr/ocr.component'
+import { OCRSchedule, OCRStream } from '@app/feature/ocr/ocr.component'
 import { Subscription } from 'rxjs'
 import { TimezoneService } from '@app/layout/timezone/timezone.service'
 import { ScheduleCheckedService } from '@app/service/schedule-checked.service'
@@ -25,6 +25,8 @@ export class TemplateFormResultComponent implements OnInit, OnChanges, OnDestroy
   @Input() streamerInfo: StreamerInfoVo | undefined
 
   scheduleImgSrc = ''
+  manuallySpecifiedMonth = ''
+  manuallySpecifiedDate = ''
   templateAnchorList: Array<ScheduleTemplateVo> = []
 
   subscriptions: Array<Subscription> = []
@@ -41,14 +43,22 @@ export class TemplateFormResultComponent implements OnInit, OnChanges, OnDestroy
 
     const s1 = this.ocrService.currentStreamerInfo$.subscribe((info) => {
       this.scheduleImgSrc = ''
+      this.manuallySpecifiedMonth = ''
+      this.manuallySpecifiedDate = ''
       this.service.scheduleImgSrc$.next('')
+      this.service.manuallySpecifiedMonth$.next('')
+      this.service.manuallySpecifiedDate$.next('')
       this.service.scheduleResult$.next([])
     })
     this.subscriptions.push(s1)
 
     const s2 = this.ocrService.currentTemplateAnchor$.subscribe(() => {
       this.scheduleImgSrc = ''
+      this.manuallySpecifiedDate = ''
+      this.manuallySpecifiedMonth = ''
       this.service.scheduleImgSrc$.next('')
+      this.service.manuallySpecifiedMonth$.next('')
+      this.service.manuallySpecifiedDate$.next('')
       this.service.scheduleResult$.next([])
     })
     this.subscriptions.push(s2)
@@ -60,6 +70,8 @@ export class TemplateFormResultComponent implements OnInit, OnChanges, OnDestroy
 
   ngOnDestroy(): void {
     this.service.scheduleImgSrc$.next('')
+    this.service.manuallySpecifiedMonth$.next('')
+    this.service.manuallySpecifiedDate$.next('')
     this.subscriptions.forEach((s) => {
       if (s) {
         s.unsubscribe()
@@ -116,5 +128,9 @@ export class TemplateFormResultComponent implements OnInit, OnChanges, OnDestroy
             this.loadingService.loading$.next(false)
           })
     }
+  }
+
+  manuallyAddStream (ocr: OCRSchedule): void {
+    this.service.manuallyAddStream(ocr)
   }
 }

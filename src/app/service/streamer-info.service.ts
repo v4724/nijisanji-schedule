@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core'
 
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, Observable, of } from 'rxjs'
 import { AngularFirestore, QuerySnapshot } from '@angular/fire/compat/firestore'
 import { delay, map } from 'rxjs/internal/operators'
 import { StreamerInfoDto, toStreamerInfoData } from '@app/model/dto/StreamerInfoDto'
 import { StreamerInfoVo } from '@app/model/vo/StreamerInfoVo'
 import { RainbowLoaderService } from '@app/common-component/rainbow-loader/rainbow-loader.service'
 import { sortByDefaultStreamer } from '@app/model/model'
-import { distinctArray } from '@app/feature/schedule/utils'
-import { StreamGroupService } from '@app/service/stream-group.service'
 import { StreamDto } from '@app/model/dto/StreamDto'
-import { UpdatedRecordService } from '@app/service/updated-record.service'
-import { getDto } from '@app/model/dto/UpdatedRecordDto'
-import { UpdatedRecordType } from '@app/model/enum/UpdatedRecordType'
-import { getAddMemberMessage } from '@app/model/vo/UpdatedRecordVo'
 
 @Injectable({
   providedIn: 'root'
