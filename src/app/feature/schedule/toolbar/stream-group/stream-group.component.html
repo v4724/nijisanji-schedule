@@ -1,7 +1,10 @@
-<div class="d-flex flex-wrap align-items-center">
+<div class="d-flex align-items-center example-list"
+     cdkDropList cdkDropListOrientation="horizontal"
+     (cdkDropListDropped)="drop($event)">
   Group:
   <button *ngFor="let group of groups"
           class="stream-group-button"
+          cdkDrag
           [class.active]="group.checked"
           (click)="toggleSelection(group)" >
     {{ group.text }}

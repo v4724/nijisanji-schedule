@@ -218,7 +218,7 @@ export default class ScheduleResult {
         targetTzList.push('PT')
         break
       case Timezone.GMT:
-        targetTzList.push('PST')
+        targetTzList.push('GMT')
         break
       case Timezone.JST:
         targetTzList.push('JST')

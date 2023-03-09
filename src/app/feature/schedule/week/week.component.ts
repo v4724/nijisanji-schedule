@@ -42,6 +42,13 @@ export class WeekComponent implements OnInit {
     this.weekService.filterStreams$.subscribe((streams) => {
       this.streams = streams
       this.update()
+
+      const groupList = this.streamerGroupService.groupOrderChanged$.getValue()
+      this.data = this.sortByGroupOrder(this.data, groupList)
+    })
+
+    this.streamerGroupService.groupOrderChanged$.subscribe((groupList) => {
+      this.data = this.sortByGroupOrder(this.data, groupList)
     })
 
   }
@@ -105,6 +112,7 @@ export class WeekComponent implements OnInit {
       if (!streamerMap.has(streamer)) {
         streamerMap.set(streamer, {
           streamer: streamer,
+          group: item.streamerInfo.group
         })
       }
 
@@ -169,9 +177,24 @@ export class WeekComponent implements OnInit {
       if (selectedGroups.indexOf(streamer.group) > -1) {
         this.data.push({
           streamer: streamer.name,
+          group: streamer.group,
         })
         return
       }
     })
+  }
+
+  sortByGroupOrder(data: Array<any>, groupList: string[]): Array<any> {
+    return data.sort((a: any, b: any) => {
+      const groupOrder1 = groupList.indexOf(a.group)
+      const groupOrder2 = groupList.indexOf(b.group)
+
+      if (groupOrder1 > -1 && groupOrder2 > -1) {
+        return groupOrder1 - groupOrder2
+      }
+
+      return 0
+    })
+
   }
 }

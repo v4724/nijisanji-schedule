@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { StreamGroupService } from '@app/service/stream-group.service'
 import { cloneDeep } from 'lodash'
+import {  moveItemInArray } from '@angular/cdk/drag-drop'
 
 export interface Group {
   text: string,
@@ -61,5 +62,14 @@ export class StreamGroupComponent implements OnInit {
 
   changeGroup(): void {
     this.streamGroupService.selectedGroup$.next(this.selectedGroups)
+  }
+
+  drop(event: any) {
+    moveItemInArray(this.groups, event.previousIndex, event.currentIndex);
+    if (event.previousIndex !== event.currentIndex) {
+      const newOrderList = this.groups.map(group => group.text)
+      this.streamGroupService.groupOrderChanged$.next(newOrderList)
+      localStorage.setItem('streamerGroupOrderList', JSON.stringify(newOrderList));
+    }
   }
 }

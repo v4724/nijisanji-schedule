@@ -26,7 +26,7 @@ import { CommonViewModule } from '@app/common-view/common-view.module';
 import { FormatStatePipe } from './schedule-checked-list/format-state.pipe'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { DragDropModule } from '@angular/cdk/drag-drop'
 
 const routes: Routes = [
   {
@@ -81,7 +81,8 @@ const routes: Routes = [
     CommonModule,
     CommonViewModule,
     MdbTooltipModule,
-    DirectiveModule
+    DirectiveModule,
+    DragDropModule
   ]
 })
 export class ScheduleModule { }

@@ -29,19 +29,19 @@
 <!--              <a class="nav-link" aria-current="page" href="#" (click)="click()">Home</a>-->
 <!--            </li>-->
             <li class="nav-item">
-              <a class="nav-link" href="#/streamer" (click)="click()">Streamer</a>
+              <a class="nav-link" [routerLink]="'streamer'" (click)="click()">Streamer</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#/schedule" (click)="click()">Schedule</a>
+              <a class="nav-link" [routerLink]="'schedule'" (click)="click()">Schedule</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#/voiceButton" (click)="click()">Voice Button</a>
+              <a class="nav-link" [routerLink]="'voiceButton'" (click)="click()">Voice Button</a>
             </li>
 <!--            <li class="nav-item">-->
 <!--              <a class="nav-link" href="#/setting" (click)="click()">Setting</a>-->
 <!--            </li>-->
             <li class="nav-item">
-              <a class="nav-link" href="#/ocr" (click)="click()">OCR</a>
+              <a class="nav-link" [routerLink]="'ocr'" (click)="click()">OCR</a>
             </li>
 <!--            <li class="nav-item">-->
 <!--              <a class="nav-link" href="#" (click)="backgroundImageExample2.toggle()">About</a>-->
@@ -50,7 +50,7 @@
 
         </div>
 
-        <a class="nav-link nav-link-icon home mobile-425-size position-absolute" href="#/schedule">
+        <a class="nav-link nav-link-icon home mobile-425-size position-absolute" [routerLink]="'schedule'">
           <i class="fas fa-home"></i>
         </a>
 

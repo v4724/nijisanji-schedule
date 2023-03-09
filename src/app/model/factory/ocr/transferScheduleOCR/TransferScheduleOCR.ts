@@ -277,7 +277,7 @@ export default class TransferScheduleOCR {
         targetTz2 = 'PDT'
         break;
       case Timezone.GMT:
-        targetTz = 'PST'
+        targetTz = 'GMT'
         break;
       case Timezone.JST:
         targetTz = 'JST'
