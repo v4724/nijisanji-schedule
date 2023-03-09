@@ -2,12 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component'
 import { LayoutModule } from './layout/layout.module'
+import { WebsiteInfoComponent } from '@app/feature/website-info/website-info.component'
 
 const routes: Routes = [
   {
     path: '',
+    component: WebsiteInfoComponent
+  },
+  {
+    path: 'home',
     component: LayoutComponent,
-    children: [{
+    children: [
+      {
         path: '',
         redirectTo: 'schedule',
         pathMatch: 'full',
@@ -40,8 +46,8 @@ const routes: Routes = [
         path: 'ocr',
         loadChildren: () => import('./feature/ocr/ocr.module').then(m => m.OcrModule),
       },
-    ]
-  }
+    ],
+  },
 ]
 
 @NgModule({

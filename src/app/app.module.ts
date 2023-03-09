@@ -16,13 +16,15 @@ import { ScrollingModule } from '@angular/cdk/scrolling'
 import { CloseScrollStrategy, Overlay } from '@angular/cdk/overlay'
 import { DirectiveModule } from '@app/directive/directive.module'
 import { HttpClientModule } from '@angular/common/http'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WebsiteInfoComponent } from './feature/website-info/website-info.component'
 export function scrollFactory(overlay: Overlay): () => CloseScrollStrategy {
   return () => overlay.scrollStrategies.close();
 }
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WebsiteInfoComponent
   ],
   imports: [
     ScrollingModule,
